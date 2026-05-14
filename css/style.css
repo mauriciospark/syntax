@@ -1,0 +1,970 @@
+/*
+  ============================================================================
+  PROPRIETÁRIO: Mauricio Spark
+  MARCA: SparkMaurício
+  PROJETO: Syntax
+  VERSÃO: 0.1.0
+  LINHAGEM: SPARK
+  ============================================================================
+  Documento de Planejamento de Escopo
+  COPYRIGHT: © 2026  / Mauricio Spark.
+  ============================================================================
+*/
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-primary: #1e1e1e;
+    --bg-secondary: #252526;
+    --bg-tertiary: #2d2d30;
+    --text-primary: #d4d4d4;
+    --text-secondary: #858585;
+    --accent-green: #4ec9b0;
+    --accent-red: #f44747;
+    --accent-blue: #569cd6;
+    --accent-yellow: #dcdcaa;
+    --border-color: #3c3c3c;
+    --terminal-bg: #1e1e1e;
+    --terminal-header: #323233;
+    --input-bg: #1e1e1e;
+    --input-border: #3c3c3c;
+    --success-glow: rgba(78, 201, 176, 0.3);
+    --error-glow: rgba(244, 71, 71, 0.3);
+    --header-bg: #121212;
+    --header-height: 64px;
+}
+
+body {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* App Container */
+#app-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* App Main */
+.app-main {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+/* Main App Header */
+.app-header {
+    height: 64px;
+    background-color: #121212;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    flex-shrink: 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    line-height: 1;
+}
+
+.brand-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent-blue);
+    margin: 0;
+    line-height: 1;
+}
+
+.brand-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-left: 0.5rem;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.header-level-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.header-level-label {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.header-level-value {
+    color: var(--accent-green);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.github-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.github-link:hover {
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+    background-color: var(--bg-tertiary);
+}
+
+.github-icon {
+    font-size: 1rem;
+}
+
+/* Instructions Panel (Left Side) */
+.instructions-panel {
+    flex: 1;
+    width: 40%;
+    height: 100%;
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    overflow-y: auto;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    transition: all 0.3s ease;
+    min-width: 0;
+}
+
+.instructions-panel.collapsed {
+    flex: 0;
+    padding: 0;
+    overflow: hidden;
+    min-width: 0;
+    border-right: none;
+}
+
+/* Toggle Button */
+.toggle-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.toggle-btn:hover {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+}
+
+.toggle-btn .toggle-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.toggle-btn.rotated .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.instructions-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.instructions-header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--accent-blue);
+    margin-bottom: 0.5rem;
+}
+
+.instructions-content {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.instructions-content h2 {
+    color: var(--accent-blue);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.instructions-content h3 {
+    color: var(--accent-yellow);
+    font-size: 1.2rem;
+    margin: 1.5rem 0 0.75rem 0;
+}
+
+.instructions-content p {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+.instructions-content ul {
+    color: var(--text-primary);
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.instructions-content li {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.instructions-content code {
+    background-color: var(--bg-tertiary);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    color: var(--accent-yellow);
+    font-size: 0.9rem;
+}
+
+/* Terminal Panel (Right Side) */
+.terminal-panel {
+    flex: 1;
+    width: 60%;
+    height: 100%;
+    background-color: var(--bg-primary);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Progress Section */
+.progress-section {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.level-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.level-indicator {
+    color: var(--accent-blue);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.progress-text {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background-color: var(--bg-tertiary);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
+    border-radius: 4px;
+    transition: width 0.5s ease-in-out;
+    width: 0%;
+}
+
+/* Level Up Animation */
+.level-up-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.level-up-animation.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.level-up-content {
+    text-align: center;
+    color: var(--text-primary);
+    animation: levelUpPop 0.5s ease-out;
+}
+
+@keyframes levelUpPop {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.level-up-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: iconBounce 1s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.level-up-content h2 {
+    font-size: 2.5rem;
+    color: var(--accent-green);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 20px var(--success-glow);
+}
+
+.level-up-content p {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.level-up-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+
+/* Terminal */
+.terminal {
+    background-color: var(--terminal-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.terminal-header {
+    background-color: var(--terminal-header);
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.terminal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.terminal-dot.red {
+    background-color: #ff5f56;
+}
+
+.terminal-dot.yellow {
+    background-color: #ffbd2e;
+}
+
+.terminal-dot.green {
+    background-color: #27ca40;
+}
+
+.terminal-title {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-left: 0.5rem;
+}
+
+/* Terminal Body */
+.terminal-body {
+    padding: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Output Area */
+.output-area {
+    flex: 1;
+    margin-bottom: 1rem;
+    overflow-y: auto;
+}
+
+.welcome-message {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.welcome-message p {
+    margin-bottom: 0.5rem;
+}
+
+.welcome-message code {
+    background-color: var(--bg-tertiary);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    color: var(--accent-yellow);
+}
+
+/* Command Result */
+.command-result {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 6px;
+    border-left: 4px solid;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.command-result.correct {
+    background-color: rgba(78, 201, 176, 0.1);
+    border-left-color: var(--accent-green);
+    box-shadow: 0 0 10px var(--success-glow);
+}
+
+.command-result.incorrect {
+    background-color: rgba(244, 71, 71, 0.1);
+    border-left-color: var(--accent-red);
+    box-shadow: 0 0 10px var(--error-glow);
+}
+
+.result-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.result-header.correct {
+    color: var(--accent-green);
+}
+
+.result-header.incorrect {
+    color: var(--accent-red);
+}
+
+.result-command {
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+    background-color: var(--bg-tertiary);
+    padding: 0.3rem 0.6rem;
+    border-radius: 3px;
+    font-size: 0.9rem;
+}
+
+.category-badge {
+    background-color: var(--bg-tertiary);
+    color: var(--accent-blue);
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    margin-left: auto;
+    border: 1px solid var(--border-color);
+}
+
+.success-message {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: rgba(78, 201, 176, 0.1);
+    border-radius: 4px;
+    border-left: 3px solid var(--accent-green);
+}
+
+.success-message p {
+    color: var(--accent-green);
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+/* Correction Card */
+.correction-card {
+    margin-top: 0.75rem;
+    padding: 1rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+}
+
+.correction-card h3 {
+    color: var(--accent-yellow);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.correction-card .description {
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+}
+
+.correction-card .example {
+    color: var(--accent-blue);
+    font-size: 0.85rem;
+}
+
+.correction-card .example code {
+    background-color: var(--bg-tertiary);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+}
+
+/* Markdown Styles in Correction Card */
+.correction-card h1,
+.correction-card h2,
+.correction-card h3,
+.correction-card h4 {
+    color: var(--accent-blue);
+    margin: 0.75rem 0 0.5rem 0;
+}
+
+.correction-card h1 { font-size: 1.1rem; }
+.correction-card h2 { font-size: 1rem; }
+.correction-card h3 { font-size: 0.95rem; }
+.correction-card h4 { font-size: 0.9rem; }
+
+.correction-card p {
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+}
+
+.correction-card code {
+    background-color: var(--bg-tertiary);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    color: var(--accent-yellow);
+    font-size: 0.85rem;
+}
+
+.correction-card pre {
+    background-color: var(--bg-tertiary);
+    padding: 0.75rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 0.5rem 0;
+}
+
+.correction-card pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.correction-card ul,
+.correction-card ol {
+    margin-left: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.correction-card li {
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+}
+
+.correction-card a {
+    color: var(--accent-blue);
+    text-decoration: underline;
+}
+
+/* Input Line */
+.input-line {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+/* Hint Button */
+.hint-btn {
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.hint-btn:hover {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+}
+
+.hint-btn:active {
+    transform: scale(0.98);
+}
+
+/* Hint Display */
+.hint-display {
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    background-color: rgba(86, 156, 214, 0.1);
+    border: 1px solid var(--accent-blue);
+    border-left: 3px solid var(--accent-blue);
+    border-radius: 4px;
+    color: var(--accent-blue);
+    font-size: 0.85rem;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.hint-display.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hint-display p {
+    margin: 0;
+}
+
+.hint-display code {
+    background-color: rgba(86, 156, 214, 0.2);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    color: var(--accent-blue);
+}
+
+/* Hint Button Disabled State */
+.hint-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--bg-tertiary);
+    border-color: var(--border-color);
+}
+
+.hint-btn:disabled:hover {
+    background-color: var(--bg-tertiary);
+    border-color: var(--border-color);
+    color: var(--text-secondary);
+}
+
+.prompt {
+    color: var(--accent-green);
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.command-input {
+    flex: 1;
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    padding: 0.6rem 0.75rem;
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.command-input:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 2px rgba(86, 156, 214, 0.2);
+}
+
+.command-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.command-input.success {
+    border-color: var(--accent-green);
+    box-shadow: 0 0 0 2px var(--success-glow);
+}
+
+.command-input.error {
+    border-color: var(--accent-red);
+    box-shadow: 0 0 0 2px var(--error-glow);
+}
+
+.command-input.success-preview {
+    border-color: var(--accent-green);
+    box-shadow: 0 0 0 2px var(--success-glow);
+}
+
+.command-input.error-preview {
+    border-color: var(--accent-red);
+    box-shadow: 0 0 0 2px var(--error-glow);
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 1.5rem 0;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.footer kbd {
+    background-color: var(--bg-tertiary);
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    border: 1px solid var(--border-color);
+    font-size: 0.8rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .app-header {
+        padding: 0 1.5rem;
+    }
+    
+    .brand-name {
+        font-size: 1.25rem;
+    }
+    
+    .brand-subtitle {
+        display: none;
+    }
+    
+    .header-level-indicator {
+        padding: 0.4rem 0.75rem;
+    }
+    
+    .split-container {
+        flex-direction: column;
+    }
+    
+    .instructions-panel {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        max-height: 40vh;
+    }
+    
+    .terminal-panel {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-header {
+        padding: 0 1rem;
+        height: 56px;
+    }
+    
+    :root {
+        --header-height: 56px;
+    }
+    
+    .logo {
+        font-size: 1.25rem;
+    }
+    
+    .brand-name {
+        font-size: 1.1rem;
+    }
+    
+    .header-right {
+        gap: 1rem;
+    }
+    
+    .header-level-indicator {
+        padding: 0.35rem 0.6rem;
+    }
+    
+    .header-level-label {
+        font-size: 0.75rem;
+    }
+    
+    .header-level-value {
+        font-size: 0.9rem;
+    }
+    
+    .github-link svg {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .instructions-panel {
+        padding: 1.5rem;
+        max-height: 35vh;
+    }
+    
+    .instructions-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .instructions-content h2 {
+        font-size: 1.2rem;
+    }
+    
+    .instructions-content h3 {
+        font-size: 1rem;
+    }
+    
+    .instructions-content p {
+        font-size: 0.85rem;
+    }
+    
+    .instructions-content li {
+        font-size: 0.8rem;
+    }
+    
+    .terminal-panel {
+        padding: 1rem;
+    }
+
+    .terminal-body {
+        padding: 1rem;
+        min-height: 300px;
+    }
+
+    .input-line {
+        flex-wrap: wrap;
+    }
+
+    .prompt {
+        font-size: 0.8rem;
+    }
+
+    .command-input {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .instructions-panel {
+        padding: 1rem;
+        max-height: 30vh;
+    }
+    
+    .instructions-header h1 {
+        font-size: 1.25rem;
+    }
+    
+    .instructions-header {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+    }
+    
+    .progress-section {
+        margin-top: 1rem;
+        padding: 0.75rem;
+    }
+    
+    .terminal-panel {
+        padding: 0.75rem;
+    }
+
+    .terminal-body {
+        padding: 0.75rem;
+        min-height: 250px;
+    }
+
+    .command-result {
+        padding: 0.75rem;
+    }
+
+    .correction-card {
+        padding: 0.75rem;
+    }
+}
+
+/* Scrollbar Styling */
+.output-area::-webkit-scrollbar,
+.instructions-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.output-area::-webkit-scrollbar-track,
+.instructions-panel::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+.output-area::-webkit-scrollbar-thumb,
+.instructions-panel::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+.output-area::-webkit-scrollbar-thumb:hover,
+.instructions-panel::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}

@@ -1,0 +1,178 @@
+[
+  {
+    "id": 1,
+    "categoria": "Início",
+    "comando": "git init",
+    "regex": "^git init$",
+    "ajuda": "Inicia um novo repositório Git no diretório atual.",
+    "exemplo": "git init",
+    "nivel": 1,
+    "titulo": "Iniciando um Repositório Git",
+    "descricao": "Todo projeto Git começa com a inicialização. O comando `git init` cria um novo repositório Git no diretório atual, preparando-o para rastrear mudanças.",
+    "objetivos": [
+      "Entender como iniciar um repositório Git",
+      "Aprender o primeiro comando essencial do Git",
+      "Preparar o ambiente para versionamento"
+    ]
+  },
+  {
+    "id": 2,
+    "categoria": "Stage",
+    "comando": "git add",
+    "regex": "^git add (.+|\\.)$",
+    "ajuda": "Adiciona arquivos ao palco (stage). Use '.' para todos ou o nome do arquivo.",
+    "exemplo": "git add index.html",
+    "nivel": 1,
+    "titulo": "Adicionando Arquivos ao Stage",
+    "descricao": "Antes de commitar mudanças, você precisa adicioná-las ao staging area. O comando `git add` prepara os arquivos para serem commitados.",
+    "objetivos": [
+      "Compreender o conceito de staging area",
+      "Aprender a adicionar arquivos específicos",
+      "Saber como adicionar todos os arquivos de uma vez"
+    ]
+  },
+  {
+    "id": 3,
+    "categoria": "Commit",
+    "comando": "git commit",
+    "regex": "^git commit -m \".+\"$",
+    "ajuda": "Grava as alterações no histórico. Requer uma mensagem entre aspas.",
+    "exemplo": "git commit -m \"primeiro commit\"",
+    "nivel": 1,
+    "titulo": "Criando seu Primeiro Commit",
+    "descricao": "O commit é o momento em que você salva suas mudanças no histórico do Git. Cada commit deve ter uma mensagem descritiva clara.",
+    "objetivos": [
+      "Entender o conceito de commit",
+      "Aprender a escrever mensagens de commit",
+      "Salvar mudanças no histórico do projeto"
+    ]
+  },
+  {
+    "id": 7,
+    "categoria": "Status",
+    "comando": "git status",
+    "regex": "^git status$",
+    "ajuda": "Lista todos os arquivos novos ou modificados que ainda não foram commitados.",
+    "exemplo": "git status",
+    "nivel": 1,
+    "titulo": "Verificando o Status do Repositório",
+    "descricao": "O comando `git status` mostra o estado atual do seu repositório, indicando quais arquivos foram modificados, adicionados ou ainda não rastreados.",
+    "objetivos": [
+      "Aprender a verificar o estado do repositório",
+      "Entender os diferentes estados dos arquivos",
+      "Identificar arquivos que precisam de atenção"
+    ]
+  },
+  {
+    "id": 8,
+    "categoria": "Log",
+    "comando": "git log",
+    "regex": "^git log$",
+    "ajuda": "Exibe o histórico de commits do repositório.",
+    "exemplo": "git log --oneline",
+    "nivel": 2,
+    "titulo": "Visualizando o Histórico de Commits",
+    "descricao": "O comando `git log` exibe o histórico completo de commits do seu repositório, permitindo que você veja quem fez cada mudança e quando.",
+    "objetivos": [
+      "Aprender a visualizar o histórico de commits",
+      "Entender as informações disponíveis no log",
+      "Navegar pelo histórico do projeto"
+    ]
+  },
+  {
+    "id": 5,
+    "categoria": "Branches",
+    "comando": "git branch -M main",
+    "regex": "^git branch -M [\\w\\.-]+$",
+    "ajuda": "Renomeia a branch principal (geralmente para 'main').",
+    "exemplo": "git branch -M main",
+    "nivel": 2,
+    "titulo": "Renomeando a Branch Principal",
+    "descricao": "O comando `git branch -M` renomeia a branch principal do seu repositório. É comum renomear para 'main' em vez de 'master'.",
+    "objetivos": [
+      "Entender o conceito de branches",
+      "Aprender a renomear branches",
+      "Adotar boas práticas de nomenclatura"
+    ]
+  },
+  {
+    "id": 4,
+    "categoria": "Conexão",
+    "comando": "git remote add origin",
+    "regex": "^git remote add origin https?:\\/\\/[\\w\\.-]+\\/[\\w\\.-]+\\.git$",
+    "ajuda": "Conecta seu repositório local a um servidor remoto (GitHub/GitLab).",
+    "exemplo": "git remote add origin https://github.com/usuario/projeto.git",
+    "nivel": 2,
+    "titulo": "Conectando a um Repositório Remoto",
+    "descricao": "O comando `git remote add origin` conecta seu repositório local a um servidor remoto como GitHub ou GitLab, permitindo colaboração e backup.",
+    "objetivos": [
+      "Entender o conceito de repositórios remotos",
+      "Aprender a conectar a GitHub/GitLab",
+      "Preparar o projeto para colaboração"
+    ]
+  },
+  {
+    "id": 6,
+    "categoria": "Sincronização",
+    "comando": "git push",
+    "regex": "^git push( -u origin [\\w\\.-]+)?$",
+    "ajuda": "Envia seus commits locais para o repositório remoto.",
+    "exemplo": "git push -u origin main",
+    "nivel": 3,
+    "titulo": "Enviando Commits para o Remoto",
+    "descricao": "O comando `git push` envia seus commits locais para o repositório remoto, atualizando o servidor com suas mudanças.",
+    "objetivos": [
+      "Aprender a enviar mudanças para o remoto",
+      "Entender o fluxo de sincronização",
+      "Compartilhar trabalho com a equipe"
+    ]
+  },
+  {
+    "id": 9,
+    "categoria": "Sincronização",
+    "comando": "git pull",
+    "regex": "^git pull( [\\w\\.-]+ [\\w\\.-]+)?$",
+    "ajuda": "Atualiza seu repositório local com as mudanças do remoto.",
+    "exemplo": "git pull origin main",
+    "nivel": 3,
+    "titulo": "Atualizando do Repositório Remoto",
+    "descricao": "O comando `git pull` atualiza seu repositório local com as mudanças mais recentes do repositório remoto, mantendo seu trabalho sincronizado.",
+    "objetivos": [
+      "Aprender a atualizar do remoto",
+      "Entender o fluxo de pull vs push",
+      "Manter o trabalho atualizado"
+    ]
+  },
+  {
+    "id": 10,
+    "categoria": "Branches",
+    "comando": "git checkout",
+    "regex": "^git checkout( -b [\\w\\.-]+|[\\w\\.-]+)$",
+    "ajuda": "Alterna entre branches ou cria um novo branch.",
+    "exemplo": "git checkout main",
+    "nivel": 3,
+    "titulo": "Navegando entre Branches",
+    "descricao": "O comando `git checkout` permite alternar entre branches existentes ou criar novos branches, essencial para trabalhar em múltiplas features simultaneamente.",
+    "objetivos": [
+      "Aprender a alternar entre branches",
+      "Criar novos branches para features",
+      "Gerenciar múltiplas linhas de trabalho"
+    ]
+  },
+  {
+    "id": 11,
+    "categoria": "Merge",
+    "comando": "git merge",
+    "regex": "^git merge [\\w\\.-]+$",
+    "ajuda": "Combina as mudanças de um branch no branch atual.",
+    "exemplo": "git merge feature",
+    "nivel": 3,
+    "titulo": "Combinando Branches com Merge",
+    "descricao": "O comando `git merge` combina as mudanças de um branch no branch atual, integrando diferentes linhas de trabalho em uma única história.",
+    "objetivos": [
+      "Entender o conceito de merge",
+      "Aprender a combinar branches",
+      "Resolver conflitos básicos de merge"
+    ]
+  }
+]

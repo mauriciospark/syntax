@@ -1,0 +1,120 @@
+<!--
+  ============================================================================
+  PROPRIETÁRIO: Mauricio Spark
+  MARCA: SparkMaurício
+  PROJETO: Syntax
+  VERSÃO: 0.1.0
+  LINHAGEM: SPARK
+  ============================================================================
+  Documento de Planejamento de Escopo
+  COPYRIGHT: © 2026  / Mauricio Spark.
+  ============================================================================
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>syntax</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+    <div id="app-container">
+        <!-- Fixed Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <img src="favicon/logo.png" alt="Linhagem SPARK Logo" class="logo">
+                <h1 class="brand-name">Syntax</h1>
+                <span class="brand-subtitle">by Linhagem SPARK</span>
+            </div>
+            <div class="header-right">
+                <div class="header-level-indicator">
+                    <span class="header-level-label">Nível</span>
+                    <span id="headerLevelIndicator" class="header-level-value">1</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Left Side: Instructions -->
+            <aside id="instrucoes" class="instructions-panel">
+                <button id="toggleInstructions" class="toggle-btn" title="Ocultar/Mostrar Instruções">
+                    <span class="toggle-icon">◀</span>
+                </button>
+                <header class="instructions-header">
+                    <p class="subtitle">Git Command Validator</p>
+                    <div class="progress-section">
+                        <div class="level-info">
+                            <span id="levelIndicator" class="level-indicator">Nível 1</span>
+                            <span id="progressText" class="progress-text">0/4 comandos</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div id="progressBar" class="progress-bar"></div>
+                        </div>
+                    </div>
+                </header>
+
+                <div id="instrucoes-content" class="instructions-content">
+                    <!-- Instructions will be rendered here via JavaScript -->
+                </div>
+            </aside>
+
+            <!-- Right Side: Terminal -->
+            <section id="terminal" class="terminal-panel">
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <span class="terminal-dot red"></span>
+                        <span class="terminal-dot yellow"></span>
+                        <span class="terminal-dot green"></span>
+                        <span class="terminal-title">spark@syntax:~</span>
+                    </div>
+
+                    <div class="terminal-body">
+                        <div class="output-area" id="outputArea">
+                            <div class="welcome-message">
+                                <p>Digite o comando Git no terminal para validar a sintaxe.</p>
+                            </div>
+                        </div>
+
+                        <div class="input-line">
+                            <span class="prompt">spark@syntax:~$</span>
+                            <input type="text" id="commandInput" class="command-input"
+                                placeholder="Digite um comando Git..." autocomplete="off" autofocus>
+                            <button id="hintButton" class="hint-btn" title="Pedir uma dica">Dica</button>
+                        </div>
+                        <div id="hintDisplay" class="hint-display"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
