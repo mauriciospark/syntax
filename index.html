@@ -101,13 +101,15 @@
                             </div>
                         </div>
 
-                        <div class="input-line">
-                            <span class="prompt">spark@syntax:~$</span>
-                            <input type="text" id="commandInput" class="command-input"
-                                placeholder="Digite um comando Git..." autocomplete="off" autofocus>
-                            <button id="hintButton" class="hint-btn" title="Pedir uma dica">Dica</button>
+                        <div class="terminal-footer">
+                            <div class="input-line">
+                                <span class="prompt">spark@syntax:~$</span>
+                                <input type="text" id="commandInput" class="command-input"
+                                    placeholder="Digite um comando Git..." autocomplete="off" autofocus>
+                                <button id="hintButton" class="hint-btn" title="Pedir uma dica">Dica</button>
+                            </div>
+                            <div id="hintDisplay" class="hint-display"></div>
                         </div>
-                        <div id="hintDisplay" class="hint-display"></div>
                     </div>
                 </div>
             </section>

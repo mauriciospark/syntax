@@ -17,38 +17,6 @@
   },
   {
     "id": 2,
-    "categoria": "Stage",
-    "comando": "git add",
-    "regex": "^git add (.+|\\.)$",
-    "ajuda": "Adiciona arquivos ao palco (stage). Use '.' para todos ou o nome do arquivo.",
-    "exemplo": "git add index.html",
-    "nivel": 1,
-    "titulo": "Adicionando Arquivos ao Stage",
-    "descricao": "Antes de commitar mudanças, você precisa adicioná-las ao staging area. O comando `git add` prepara os arquivos para serem commitados.",
-    "objetivos": [
-      "Compreender o conceito de staging area",
-      "Aprender a adicionar arquivos específicos",
-      "Saber como adicionar todos os arquivos de uma vez"
-    ]
-  },
-  {
-    "id": 3,
-    "categoria": "Commit",
-    "comando": "git commit",
-    "regex": "^git commit -m \".+\"$",
-    "ajuda": "Grava as alterações no histórico. Requer uma mensagem entre aspas.",
-    "exemplo": "git commit -m \"primeiro commit\"",
-    "nivel": 1,
-    "titulo": "Criando seu Primeiro Commit",
-    "descricao": "O commit é o momento em que você salva suas mudanças no histórico do Git. Cada commit deve ter uma mensagem descritiva clara.",
-    "objetivos": [
-      "Entender o conceito de commit",
-      "Aprender a escrever mensagens de commit",
-      "Salvar mudanças no histórico do projeto"
-    ]
-  },
-  {
-    "id": 7,
     "categoria": "Status",
     "comando": "git status",
     "regex": "^git status$",
@@ -64,47 +32,223 @@
     ]
   },
   {
-    "id": 8,
-    "categoria": "Log",
-    "comando": "git log",
-    "regex": "^git log$",
-    "ajuda": "Exibe o histórico de commits do repositório.",
-    "exemplo": "git log --oneline",
-    "nivel": 2,
-    "titulo": "Visualizando o Histórico de Commits",
-    "descricao": "O comando `git log` exibe o histórico completo de commits do seu repositório, permitindo que você veja quem fez cada mudança e quando.",
+    "id": 3,
+    "categoria": "Stage",
+    "comando": "git add .",
+    "regex": "^git add \\.$",
+    "ajuda": "Adiciona todos os arquivos modificados ao palco (stage).",
+    "exemplo": "git add .",
+    "nivel": 1,
+    "titulo": "Adicionando Todos os Arquivos ao Stage",
+    "descricao": "O comando `git add .` adiciona todos os arquivos modificados do diretório atual ao staging area de uma vez.",
     "objetivos": [
-      "Aprender a visualizar o histórico de commits",
-      "Entender as informações disponíveis no log",
-      "Navegar pelo histórico do projeto"
-    ]
-  },
-  {
-    "id": 5,
-    "categoria": "Branches",
-    "comando": "git branch -M main",
-    "regex": "^git branch -M [\\w\\.-]+$",
-    "ajuda": "Renomeia a branch principal (geralmente para 'main').",
-    "exemplo": "git branch -M main",
-    "nivel": 2,
-    "titulo": "Renomeando a Branch Principal",
-    "descricao": "O comando `git branch -M` renomeia a branch principal do seu repositório. É comum renomear para 'main' em vez de 'master'.",
-    "objetivos": [
-      "Entender o conceito de branches",
-      "Aprender a renomear branches",
-      "Adotar boas práticas de nomenclatura"
+      "Aprender a adicionar múltiplos arquivos",
+      "Compreender o uso do curinga '.'",
+      "Agilizar o fluxo de trabalho"
     ]
   },
   {
     "id": 4,
-    "categoria": "Conexão",
-    "comando": "git remote add origin",
-    "regex": "^git remote add origin https?:\\/\\/[\\w\\.-]+\\/[\\w\\.-]+\\.git$",
-    "ajuda": "Conecta seu repositório local a um servidor remoto (GitHub/GitLab).",
+    "categoria": "Stage",
+    "comando": "git add README.md",
+    "regex": "^git add .+$",
+    "ajuda": "Adiciona um arquivo específico ao palco (stage).",
+    "exemplo": "git add README.md",
+    "nivel": 1,
+    "titulo": "Adicionando Arquivo Específico ao Stage",
+    "descricao": "O comando `git add` seguido do nome do arquivo adiciona apenas aquele arquivo específico ao staging area.",
+    "objetivos": [
+      "Aprender a adicionar arquivos individualmente",
+      "Controlar quais arquivos serão commitados",
+      "Praticar seleção seletiva de arquivos"
+    ]
+  },
+  {
+    "id": 5,
+    "categoria": "Stage",
+    "comando": "git add -A",
+    "regex": "^git add -A$",
+    "ajuda": "Adiciona todos os arquivos (incluindo deletados) ao stage.",
+    "exemplo": "git add -A",
+    "nivel": 1,
+    "titulo": "Adicionando Todos os Arquivos Incluindo Deletados",
+    "descricao": "O comando `git add -A` adiciona todos os arquivos modificados, novos e deletados ao staging area.",
+    "objetivos": [
+      "Entender a diferença entre git add . e git add -A",
+      "Aprender a incluir arquivos deletados no stage",
+      "Gerenciar mudanças completas do projeto"
+    ]
+  },
+  {
+    "id": 6,
+    "categoria": "Commit",
+    "comando": "git commit -m \"Initial commit\"",
+    "regex": "^git commit -m \".+\"$",
+    "ajuda": "Grava as alterações no histórico com uma mensagem.",
+    "exemplo": "git commit -m \"Initial commit\"",
+    "nivel": 1,
+    "titulo": "Criando seu Primeiro Commit",
+    "descricao": "O commit salva suas mudanças no histórico do Git. Cada commit deve ter uma mensagem descritiva clara.",
+    "objetivos": [
+      "Entender o conceito de commit",
+      "Aprender a escrever mensagens de commit",
+      "Salvar mudanças no histórico do projeto"
+    ]
+  },
+  {
+    "id": 7,
+    "categoria": "Commit",
+    "comando": "git commit --amend -m \"Mensagem corrigida\"",
+    "regex": "^git commit --amend -m \".+\"$",
+    "ajuda": "Corrige a mensagem do último commit.",
+    "exemplo": "git commit --amend -m \"Mensagem corrigida\"",
+    "nivel": 2,
+    "titulo": "Corrigindo a Mensagem do Último Commit",
+    "descricao": "O comando `git commit --amend` permite corrigir a mensagem do último commit sem criar um novo.",
+    "objetivos": [
+      "Aprender a corrigir erros em commits",
+      "Entender quando usar amend",
+      "Manter o histórico limpo"
+    ]
+  },
+  {
+    "id": 8,
+    "categoria": "Commit",
+    "comando": "git commit -am \"Salva mudancas de arquivos rastreados\"",
+    "regex": "^git commit -am \".+\"$",
+    "ajuda": "Adiciona e commita arquivos já rastreados de uma vez.",
+    "exemplo": "git commit -am \"Salva mudancas\"",
+    "nivel": 2,
+    "titulo": "Commitando Arquivos Rastreados Diretamente",
+    "descricao": "O comando `git commit -am` combina o add e o commit para arquivos que já estão sendo rastreados pelo Git.",
+    "objetivos": [
+      "Aprender o atalho para arquivos rastreados",
+      "Compreender a diferença para arquivos novos",
+      "Agilizar o fluxo de trabalho"
+    ]
+  },
+  {
+    "id": 9,
+    "categoria": "Log",
+    "comando": "git log",
+    "regex": "^git log$",
+    "ajuda": "Exibe o histórico completo de commits.",
+    "exemplo": "git log",
+    "nivel": 2,
+    "titulo": "Visualizando o Histórico de Commits",
+    "descricao": "O comando `git log` exibe o histórico completo de commits do seu repositório.",
+    "objetivos": [
+      "Aprender a visualizar o histórico",
+      "Entender as informações disponíveis",
+      "Navegar pelo histórico do projeto"
+    ]
+  },
+  {
+    "id": 10,
+    "categoria": "Log",
+    "comando": "git log --oneline",
+    "regex": "^git log --oneline$",
+    "ajuda": "Exibe o histórico em uma linha por commit.",
+    "exemplo": "git log --oneline",
+    "nivel": 2,
+    "titulo": "Visualizando Histórico em Linha Única",
+    "descricao": "O comando `git log --oneline` mostra cada commit em uma única linha, facilitando a leitura.",
+    "objetivos": [
+      "Aprender a visualizar histórico resumido",
+      "Melhorar a legibilidade do log",
+      "Identificar commits rapidamente"
+    ]
+  },
+  {
+    "id": 11,
+    "categoria": "Log",
+    "comando": "git log --graph --oneline --all",
+    "regex": "^git log --graph --oneline --all$",
+    "ajuda": "Exibe o histórico com gráfico de branches.",
+    "exemplo": "git log --graph --oneline --all",
+    "nivel": 3,
+    "titulo": "Visualizando Histórico com Gráfico de Branches",
+    "descricao": "O comando mostra o histórico com um gráfico visual das branches e merges.",
+    "objetivos": [
+      "Visualizar a estrutura de branches",
+      "Entender o fluxo de merges",
+      "Identificar pontos de divergência"
+    ]
+  },
+  {
+    "id": 12,
+    "categoria": "Log",
+    "comando": "git log -n 5",
+    "regex": "^git log -n \\d+$",
+    "ajuda": "Exibe apenas os últimos N commits.",
+    "exemplo": "git log -n 5",
+    "nivel": 2,
+    "titulo": "Limitando o Número de Commits Exibidos",
+    "descricao": "O comando `git log -n` limita a exibição a um número específico de commits recentes.",
+    "objetivos": [
+      "Aprender a limitar a saída do log",
+      "Focar em commits recentes",
+      "Melhorar a performance em repositórios grandes"
+    ]
+  },
+  {
+    "id": 13,
+    "categoria": "Diff",
+    "comando": "git diff",
+    "regex": "^git diff$",
+    "ajuda": "Mostra as diferenças não commitadas.",
+    "exemplo": "git diff",
+    "nivel": 2,
+    "titulo": "Visualizando Mudanças Não Commitadas",
+    "descricao": "O comando `git diff` mostra as diferenças entre o diretório de trabalho e o último commit.",
+    "objetivos": [
+      "Aprender a visualizar mudanças",
+      "Entender o que foi modificado",
+      "Revisar alterações antes de commitar"
+    ]
+  },
+  {
+    "id": 14,
+    "categoria": "Diff",
+    "comando": "git diff --staged",
+    "regex": "^git diff --staged$",
+    "ajuda": "Mostra as diferenças no staging area.",
+    "exemplo": "git diff --staged",
+    "nivel": 2,
+    "titulo": "Visualizando Mudanças no Stage",
+    "descricao": "O comando `git diff --staged` mostra as diferenças entre o staging area e o último commit.",
+    "objetivos": [
+      "Revisar arquivos antes do commit",
+      "Verificar o que será commitado",
+      "Evitar commits indesejados"
+    ]
+  },
+  {
+    "id": 15,
+    "categoria": "Show",
+    "comando": "git show",
+    "regex": "^git show$",
+    "ajuda": "Mostra detalhes do último commit.",
+    "exemplo": "git show",
+    "nivel": 2,
+    "titulo": "Visualizando Detalhes do Último Commit",
+    "descricao": "O comando `git show` exibe informações detalhadas do último commit, incluindo as mudanças.",
+    "objetivos": [
+      "Aprender a inspecionar commits",
+      "Ver mudanças específicas",
+      "Entender o conteúdo de commits"
+    ]
+  },
+  {
+    "id": 16,
+    "categoria": "Remoto",
+    "comando": "git remote add origin https://github.com/usuario/projeto.git",
+    "regex": "^git remote add origin https?:\\/\\/.+$",
+    "ajuda": "Conecta o repositório local a um remoto.",
     "exemplo": "git remote add origin https://github.com/usuario/projeto.git",
     "nivel": 2,
     "titulo": "Conectando a um Repositório Remoto",
-    "descricao": "O comando `git remote add origin` conecta seu repositório local a um servidor remoto como GitHub ou GitLab, permitindo colaboração e backup.",
+    "descricao": "O comando `git remote add origin` conecta seu repositório local a um servidor remoto.",
     "objetivos": [
       "Entender o conceito de repositórios remotos",
       "Aprender a conectar a GitHub/GitLab",
@@ -112,67 +256,1347 @@
     ]
   },
   {
-    "id": 6,
-    "categoria": "Sincronização",
-    "comando": "git push",
-    "regex": "^git push( -u origin [\\w\\.-]+)?$",
-    "ajuda": "Envia seus commits locais para o repositório remoto.",
+    "id": 17,
+    "categoria": "Remoto",
+    "comando": "git remote -v",
+    "regex": "^git remote -v$",
+    "ajuda": "Lista todos os repositórios remotos configurados.",
+    "exemplo": "git remote -v",
+    "nivel": 2,
+    "titulo": "Listando Repositórios Remotos",
+    "descricao": "O comando `git remote -v` mostra todos os repositórios remotos configurados e suas URLs.",
+    "objetivos": [
+      "Verificar repositórios remotos configurados",
+      "Identificar URLs de origem e destino",
+      "Gerenciar conexões remotas"
+    ]
+  },
+  {
+    "id": 18,
+    "categoria": "Remoto",
+    "comando": "git remote rename origin upstream",
+    "regex": "^git remote rename \\w+ \\w+$",
+    "ajuda": "Renomeia um repositório remoto.",
+    "exemplo": "git remote rename origin upstream",
+    "nivel": 2,
+    "titulo": "Renomeando Repositório Remoto",
+    "descricao": "O comando `git remote rename` altera o nome de um repositório remoto.",
+    "objetivos": [
+      "Aprender a renomear remotos",
+      "Organizar múltiplos remotos",
+      "Melhorar a clareza da configuração"
+    ]
+  },
+  {
+    "id": 19,
+    "categoria": "Remoto",
+    "comando": "git remote remove upstream",
+    "regex": "^git remote remove \\w+$",
+    "ajuda": "Remove um repositório remoto.",
+    "exemplo": "git remote remove upstream",
+    "nivel": 2,
+    "titulo": "Removendo Repositório Remoto",
+    "descricao": "O comando `git remote remove` exclui um repositório remoto da configuração.",
+    "objetivos": [
+      "Aprender a remover remotos",
+      "Limpar configurações não usadas",
+      "Gerenciar conexões remotas"
+    ]
+  },
+  {
+    "id": 20,
+    "categoria": "Push",
+    "comando": "git push -u origin main",
+    "regex": "^git push -u \\w+ \\w+$",
+    "ajuda": "Envia commits e configura o branch upstream.",
     "exemplo": "git push -u origin main",
     "nivel": 3,
-    "titulo": "Enviando Commits para o Remoto",
-    "descricao": "O comando `git push` envia seus commits locais para o repositório remoto, atualizando o servidor com suas mudanças.",
+    "titulo": "Enviando Commits com Upstream",
+    "descricao": "O comando `git push -u` envia commits e configura o branch upstream para pushes futuros.",
     "objetivos": [
       "Aprender a enviar mudanças para o remoto",
+      "Configurar branch upstream",
+      "Simplificar pushes futuros"
+    ]
+  },
+  {
+    "id": 21,
+    "categoria": "Push",
+    "comando": "git push",
+    "regex": "^git push$",
+    "ajuda": "Envia commits para o branch configurado.",
+    "exemplo": "git push",
+    "nivel": 3,
+    "titulo": "Enviando Commits para o Remoto",
+    "descricao": "O comando `git push` envia seus commits locais para o repositório remoto.",
+    "objetivos": [
+      "Aprender a enviar mudanças",
       "Entender o fluxo de sincronização",
       "Compartilhar trabalho com a equipe"
     ]
   },
   {
-    "id": 9,
-    "categoria": "Sincronização",
+    "id": 22,
+    "categoria": "Push",
+    "comando": "git push origin --force",
+    "regex": "^git push \\w+ --force$",
+    "ajuda": "Força o push sobrescrevendo histórico remoto.",
+    "exemplo": "git push origin --force",
+    "nivel": 5,
+    "titulo": "Forçando Push (Cuidado!)",
+    "descricao": "O comando `git push --force` sobrescreve o histórico remoto. Use com extremo cuidado.",
+    "objetivos": [
+      "Entender os riscos do force push",
+      "Saber quando é necessário",
+      "Evitar perda de dados no remoto"
+    ]
+  },
+  {
+    "id": 23,
+    "categoria": "Clone",
+    "comando": "git clone https://github.com/usuario/projeto.git",
+    "regex": "^git clone https?:\\/\\/.+$",
+    "ajuda": "Clona um repositório remoto para o local.",
+    "exemplo": "git clone https://github.com/usuario/projeto.git",
+    "nivel": 2,
+    "titulo": "Clonando um Repositório",
+    "descricao": "O comando `git clone` cria uma cópia completa de um repositório remoto no seu computador.",
+    "objetivos": [
+      "Aprender a clonar repositórios",
+      "Obter projetos existentes",
+      "Iniciar trabalho em projetos remotos"
+    ]
+  },
+  {
+    "id": 24,
+    "categoria": "Clone",
+    "comando": "git clone --depth 1 https://github.com/usuario/projeto.git",
+    "regex": "^git clone --depth \\d+ https?:\\/\\/.+$",
+    "ajuda": "Clona apenas o último commit (shallow clone).",
+    "exemplo": "git clone --depth 1 https://github.com/usuario/projeto.git",
+    "nivel": 3,
+    "titulo": "Clonando com Histórico Raso",
+    "descricao": "O comando `git clone --depth` clona apenas os últimos commits, economizando espaço e tempo.",
+    "objetivos": [
+      "Aprender clones rasos",
+      "Economizar espaço em disco",
+      "Acelerar clones de repositórios grandes"
+    ]
+  },
+  {
+    "id": 25,
+    "categoria": "Pull",
     "comando": "git pull",
-    "regex": "^git pull( [\\w\\.-]+ [\\w\\.-]+)?$",
-    "ajuda": "Atualiza seu repositório local com as mudanças do remoto.",
-    "exemplo": "git pull origin main",
+    "regex": "^git pull$",
+    "ajuda": "Atualiza o repositório local com mudanças do remoto.",
+    "exemplo": "git pull",
     "nivel": 3,
     "titulo": "Atualizando do Repositório Remoto",
-    "descricao": "O comando `git pull` atualiza seu repositório local com as mudanças mais recentes do repositório remoto, mantendo seu trabalho sincronizado.",
+    "descricao": "O comando `git pull` atualiza seu repositório local com as mudanças do remoto.",
     "objetivos": [
       "Aprender a atualizar do remoto",
-      "Entender o fluxo de pull vs push",
+      "Entender o fluxo pull vs push",
       "Manter o trabalho atualizado"
     ]
   },
   {
-    "id": 10,
-    "categoria": "Branches",
-    "comando": "git checkout",
-    "regex": "^git checkout( -b [\\w\\.-]+|[\\w\\.-]+)$",
-    "ajuda": "Alterna entre branches ou cria um novo branch.",
-    "exemplo": "git checkout main",
+    "id": 26,
+    "categoria": "Pull",
+    "comando": "git pull origin main",
+    "regex": "^git pull \\w+ \\w+$",
+    "ajuda": "Atualiza de um branch específico do remoto.",
+    "exemplo": "git pull origin main",
     "nivel": 3,
-    "titulo": "Navegando entre Branches",
-    "descricao": "O comando `git checkout` permite alternar entre branches existentes ou criar novos branches, essencial para trabalhar em múltiplas features simultaneamente.",
+    "titulo": "Atualizando Branch Específico",
+    "descricao": "O comando `git pull` com parâmetros atualiza de um branch específico do remoto.",
     "objetivos": [
-      "Aprender a alternar entre branches",
-      "Criar novos branches para features",
-      "Gerenciar múltiplas linhas de trabalho"
+      "Aprender a atualizar branches específicos",
+      "Controlar qual branch atualizar",
+      "Gerenciar múltiplas branches"
     ]
   },
   {
-    "id": 11,
-    "categoria": "Merge",
-    "comando": "git merge",
-    "regex": "^git merge [\\w\\.-]+$",
-    "ajuda": "Combina as mudanças de um branch no branch atual.",
-    "exemplo": "git merge feature",
+    "id": 27,
+    "categoria": "Fetch",
+    "comando": "git fetch",
+    "regex": "^git fetch$",
+    "ajuda": "Baixa mudanças do remoto sem mesclar.",
+    "exemplo": "git fetch",
     "nivel": 3,
-    "titulo": "Combinando Branches com Merge",
-    "descricao": "O comando `git merge` combina as mudanças de um branch no branch atual, integrando diferentes linhas de trabalho em uma única história.",
+    "titulo": "Buscando Mudanças do Remoto",
+    "descricao": "O comando `git fetch` baixa mudanças do remoto sem aplicá-las ao seu trabalho local.",
     "objetivos": [
-      "Entender o conceito de merge",
+      "Entender a diferença entre fetch e pull",
+      "Revisar mudanças antes de aplicar",
+      "Manter controle sobre merges"
+    ]
+  },
+  {
+    "id": 28,
+    "categoria": "Fetch",
+    "comando": "git fetch --all",
+    "regex": "^git fetch --all$",
+    "ajuda": "Baixa mudanças de todos os remotos.",
+    "exemplo": "git fetch --all",
+    "nivel": 3,
+    "titulo": "Buscando de Todos os Remotos",
+    "descricao": "O comando `git fetch --all` baixa mudanças de todos os repositórios remotos configurados.",
+    "objetivos": [
+      "Aprender a buscar de múltiplos remotos",
+      "Sincronizar com várias origens",
+      "Gerenciar forks e contribuições"
+    ]
+  },
+  {
+    "id": 29,
+    "categoria": "Remoto",
+    "comando": "git remote show origin",
+    "regex": "^git remote show \\w+$",
+    "ajuda": "Mostra informações detalhadas de um remoto.",
+    "exemplo": "git remote show origin",
+    "nivel": 3,
+    "titulo": "Mostrando Informações do Remoto",
+    "descricao": "O comando `git remote show` exibe informações detalhadas sobre um repositório remoto.",
+    "objetivos": [
+      "Inspecionar configurações de remotos",
+      "Ver branches disponíveis",
+      "Diagnosticar problemas de conexão"
+    ]
+  },
+  {
+    "id": 30,
+    "categoria": "Remoto",
+    "comando": "git ls-remote",
+    "regex": "^git ls-remote$",
+    "ajuda": "Lista referências no repositório remoto.",
+    "exemplo": "git ls-remote",
+    "nivel": 3,
+    "titulo": "Listando Referências Remotas",
+    "descricao": "O comando `git ls-remote` lista todas as referências (branches, tags) no repositório remoto.",
+    "objetivos": [
+      "Ver branches remotos disponíveis",
+      "Inspecionar tags remotas",
+      "Diagnosticar problemas de referência"
+    ]
+  },
+  {
+    "id": 31,
+    "categoria": "Branch",
+    "comando": "git branch",
+    "regex": "^git branch$",
+    "ajuda": "Lista todas as branches locais.",
+    "exemplo": "git branch",
+    "nivel": 3,
+    "titulo": "Listando Branches Locais",
+    "descricao": "O comando `git branch` lista todas as branches existentes no repositório local.",
+    "objetivos": [
+      "Aprender a listar branches",
+      "Identificar branch atual",
+      "Navegar entre branches"
+    ]
+  },
+  {
+    "id": 32,
+    "categoria": "Branch",
+    "comando": "git branch -a",
+    "regex": "^git branch -a$",
+    "ajuda": "Lista todas as branches (locais e remotas).",
+    "exemplo": "git branch -a",
+    "nivel": 3,
+    "titulo": "Listando Todas as Branches",
+    "descricao": "O comando `git branch -a` mostra branches locais e remotas.",
+    "objetivos": [
+      "Ver todas as branches disponíveis",
+      "Identificar branches remotas",
+      "Entender a estrutura de branches"
+    ]
+  },
+  {
+    "id": 33,
+    "categoria": "Branch",
+    "comando": "git branch feature-login",
+    "regex": "^git branch \\w+$",
+    "ajuda": "Cria uma nova branch.",
+    "exemplo": "git branch feature-login",
+    "nivel": 3,
+    "titulo": "Criando Nova Branch",
+    "descricao": "O comando `git branch` cria uma nova branch a partir da branch atual.",
+    "objetivos": [
+      "Aprender a criar branches",
+      "Isolar desenvolvimento de features",
+      "Organizar trabalho em paralelo"
+    ]
+  },
+  {
+    "id": 34,
+    "categoria": "Checkout",
+    "comando": "git checkout feature-login",
+    "regex": "^git checkout \\w+$",
+    "ajuda": "Alterna para uma branch existente.",
+    "exemplo": "git checkout feature-login",
+    "nivel": 3,
+    "titulo": "Alternando para Branch Existente",
+    "descricao": "O comando `git checkout` alterna para uma branch existente.",
+    "objetivos": [
+      "Aprender a alternar branches",
+      "Navegar entre linhas de trabalho",
+      "Gerenciar contexto de desenvolvimento"
+    ]
+  },
+  {
+    "id": 35,
+    "categoria": "Checkout",
+    "comando": "git checkout -b feature-checkout",
+    "regex": "^git checkout -b \\w+$",
+    "ajuda": "Cria e alterna para uma nova branch.",
+    "exemplo": "git checkout -b feature-checkout",
+    "nivel": 3,
+    "titulo": "Criando e Alternando para Nova Branch",
+    "descricao": "O comando `git checkout -b` cria uma nova branch e alterna para ela imediatamente.",
+    "objetivos": [
+      "Aprender a criar e alternar em um comando",
+      "Agilizar criação de branches",
+      "Iniciar trabalho em nova feature"
+    ]
+  },
+  {
+    "id": 36,
+    "categoria": "Checkout",
+    "comando": "git checkout main",
+    "regex": "^git checkout main$",
+    "ajuda": "Alterna para a branch principal.",
+    "exemplo": "git checkout main",
+    "nivel": 3,
+    "titulo": "Alternando para Branch Principal",
+    "descricao": "O comando `git checkout main` alterna para a branch principal do projeto.",
+    "objetivos": [
+      "Retornar à branch principal",
+      "Sincronizar com linha principal",
+      "Preparar para merges"
+    ]
+  },
+  {
+    "id": 37,
+    "categoria": "Switch",
+    "comando": "git switch main",
+    "regex": "^git switch \\w+$",
+    "ajuda": "Alterna para uma branch (comando moderno).",
+    "exemplo": "git switch main",
+    "nivel": 3,
+    "titulo": "Alternando Branches (Switch)",
+    "descricao": "O comando `git switch` é a forma moderna de alternar entre branches.",
+    "objetivos": [
+      "Aprender o comando switch moderno",
+      "Entender diferenças para checkout",
+      "Adotar boas práticas atuais"
+    ]
+  },
+  {
+    "id": 38,
+    "categoria": "Switch",
+    "comando": "git switch -c feature-switch",
+    "regex": "^git switch -c \\w+$",
+    "ajuda": "Cria e alterna para uma nova branch.",
+    "exemplo": "git switch -c feature-switch",
+    "nivel": 3,
+    "titulo": "Criando e Alternando (Switch)",
+    "descricao": "O comando `git switch -c` cria e alterna para uma nova branch.",
+    "objetivos": [
+      "Usar comando moderno para criar branches",
+      "Combinar criação e alternância",
+      "Melhorar legibilidade do código"
+    ]
+  },
+  {
+    "id": 39,
+    "categoria": "Merge",
+    "comando": "git merge feature-login",
+    "regex": "^git merge \\w+$",
+    "ajuda": "Combina uma branch na branch atual.",
+    "exemplo": "git merge feature-login",
+    "nivel": 3,
+    "titulo": "Mesclando Branches",
+    "descricao": "O comando `git merge` combina as mudanças de uma branch na branch atual.",
+    "objetivos": [
       "Aprender a combinar branches",
-      "Resolver conflitos básicos de merge"
+      "Integrar features desenvolvidas",
+      "Resolver conflitos básicos"
+    ]
+  },
+  {
+    "id": 40,
+    "categoria": "Merge",
+    "comando": "git merge --no-ff feature-login",
+    "regex": "^git merge --no-ff \\w+$",
+    "ajuda": "Merge mantendo histórico da branch.",
+    "exemplo": "git merge --no-ff feature-login",
+    "nivel": 4,
+    "titulo": "Merge com Histórico Preservado",
+    "descricao": "O comando `git merge --no-ff` cria um commit de merge mesmo quando fast-forward é possível.",
+    "objetivos": [
+      "Preservar histórico de branches",
+      "Manter rastro de features",
+      "Melhorar rastreabilidade"
+    ]
+  },
+  {
+    "id": 41,
+    "categoria": "Merge",
+    "comando": "git merge --abort",
+    "regex": "^git merge --abort$",
+    "ajuda": "Cancela um merge em conflito.",
+    "exemplo": "git merge --abort",
+    "nivel": 4,
+    "titulo": "Cancelando Merge em Conflito",
+    "descricao": "O comando `git merge --abort` cancela um merge que está em conflito.",
+    "objetivos": [
+      "Aprender a cancelar merges",
+      "Recuperar de conflitos",
+      "Voltar ao estado anterior"
+    ]
+  },
+  {
+    "id": 42,
+    "categoria": "Branch",
+    "comando": "git branch -d feature-login",
+    "regex": "^git branch -d \\w+$",
+    "ajuda": "Deleta uma branch já mesclada.",
+    "exemplo": "git branch -d feature-login",
+    "nivel": 3,
+    "titulo": "Deletando Branch Mesclada",
+    "descricao": "O comando `git branch -d` deleta uma branch que já foi mesclada.",
+    "objetivos": [
+      "Aprender a limpar branches",
+      "Manter repositório organizado",
+      "Remover branches concluídas"
+    ]
+  },
+  {
+    "id": 43,
+    "categoria": "Branch",
+    "comando": "git branch -D feature-login",
+    "regex": "^git branch -D \\w+$",
+    "ajuda": "Força a deleção de uma branch.",
+    "exemplo": "git branch -D feature-login",
+    "nivel": 4,
+    "titulo": "Forçando Deleção de Branch",
+    "descricao": "O comando `git branch -D` força a deleção mesmo que não tenha sido mesclada.",
+    "objetivos": [
+      "Deletar branches não mescladas",
+      "Entender os riscos",
+      "Limpar branches experimentais"
+    ]
+  },
+  {
+    "id": 44,
+    "categoria": "Branch",
+    "comando": "git branch -m antiga nova",
+    "regex": "^git branch -m \\w+ \\w+$",
+    "ajuda": "Renomeia uma branch.",
+    "exemplo": "git branch -m antiga nova",
+    "nivel": 3,
+    "titulo": "Renomeando Branch",
+    "descricao": "O comando `git branch -m` renomeia uma branch existente.",
+    "objetivos": [
+      "Aprender a renomear branches",
+      "Corrigir nomes de branches",
+      "Melhorar organização"
+    ]
+  },
+  {
+    "id": 45,
+    "categoria": "Push",
+    "comando": "git push origin --delete feature-login",
+    "regex": "^git push \\w+ --delete \\w+$",
+    "ajuda": "Deleta uma branch no remoto.",
+    "exemplo": "git push origin --delete feature-login",
+    "nivel": 4,
+    "titulo": "Deletando Branch no Remoto",
+    "descricao": "O comando `git push --delete` remove uma branch do repositório remoto.",
+    "objetivos": [
+      "Aprender a deletar branches remotas",
+      "Sincronizar deleção local e remota",
+      "Manter remotos organizados"
+    ]
+  },
+  {
+    "id": 46,
+    "categoria": "Branch",
+    "comando": "git branch --merged",
+    "regex": "^git branch --merged$",
+    "ajuda": "Lista branches que já foram mescladas.",
+    "exemplo": "git branch --merged",
+    "nivel": 4,
+    "titulo": "Listando Branches Mescladas",
+    "descricao": "O comando `git branch --merged` mostra branches que podem ser seguramente deletadas.",
+    "objetivos": [
+      "Identificar branches seguras para deletar",
+      "Limpar branches concluídas",
+      "Manter repositório organizado"
+    ]
+  },
+  {
+    "id": 47,
+    "categoria": "Branch",
+    "comando": "git branch --no-merged",
+    "regex": "^git branch --no-merged$",
+    "ajuda": "Lista branches não mescladas.",
+    "exemplo": "git branch --no-merged",
+    "nivel": 4,
+    "titulo": "Listando Branches Não Mescladas",
+    "descricao": "O comando `git branch --no-merged` mostra branches que ainda não foram integradas.",
+    "objetivos": [
+      "Identificar branches em andamento",
+      "Ver trabalho pendente",
+      "Planejar merges futuros"
+    ]
+  },
+  {
+    "id": 48,
+    "categoria": "Checkout",
+    "comando": "git checkout -- arquivo.txt",
+    "regex": "^git checkout -- .+$",
+    "ajuda": "Descarta mudanças não commitadas em um arquivo.",
+    "exemplo": "git checkout -- arquivo.txt",
+    "nivel": 4,
+    "titulo": "Descartando Mudanças em Arquivo",
+    "descricao": "O comando `git checkout --` descarta mudanças não commitadas em um arquivo.",
+    "objetivos": [
+      "Aprender a descartar mudanças",
+      "Reverter arquivos modificados",
+      "Recuperar versão anterior"
+    ]
+  },
+  {
+    "id": 49,
+    "categoria": "Restore",
+    "comando": "git restore arquivo.txt",
+    "regex": "^git restore .+$",
+    "ajuda": "Restaura arquivo ao último commit (comando moderno).",
+    "exemplo": "git restore arquivo.txt",
+    "nivel": 4,
+    "titulo": "Restaurando Arquivo (Restore)",
+    "descricao": "O comando `git restore` é a forma moderna de descartar mudanças em arquivos.",
+    "objetivos": [
+      "Usar comando restore moderno",
+      "Entender diferenças para checkout",
+      "Adotar boas práticas atuais"
+    ]
+  },
+  {
+    "id": 50,
+    "categoria": "Restore",
+    "comando": "git restore --staged arquivo.txt",
+    "regex": "^git restore --staged .+$",
+    "ajuda": "Remove arquivo do staging area.",
+    "exemplo": "git restore --staged arquivo.txt",
+    "nivel": 4,
+    "titulo": "Desfazendo Add de Arquivo",
+    "descricao": "O comando `git restore --staged` remove um arquivo do staging area.",
+    "objetivos": [
+      "Aprender a desfazer git add",
+      "Remover arquivos do stage",
+      "Controlar o que será commitado"
+    ]
+  },
+  {
+    "id": 51,
+    "categoria": "Remover",
+    "comando": "git rm arquivo.txt",
+    "regex": "^git rm .+$",
+    "ajuda": "Remove arquivo e rastreia a remoção.",
+    "exemplo": "git rm arquivo.txt",
+    "nivel": 4,
+    "titulo": "Removendo Arquivo",
+    "descricao": "O comando `git rm` remove um arquivo e rastreia essa remoção no Git.",
+    "objetivos": [
+      "Aprender a remover arquivos corretamente",
+      "Rastrear deleções no Git",
+      "Evitar arquivos órfãos"
+    ]
+  },
+  {
+    "id": 52,
+    "categoria": "Remover",
+    "comando": "git rm -r pasta/",
+    "regex": "^git rm -r .+$",
+    "ajuda": "Remove pasta recursivamente.",
+    "exemplo": "git rm -r pasta/",
+    "nivel": 4,
+    "titulo": "Removendo Pasta",
+    "descricao": "O comando `git rm -r` remove uma pasta e todo seu conteúdo recursivamente.",
+    "objetivos": [
+      "Aprender a remover pastas",
+      "Limpar diretórios inteiros",
+      "Gerenciar estrutura do projeto"
+    ]
+  },
+  {
+    "id": 53,
+    "categoria": "Remover",
+    "comando": "git rm --cached arquivo.txt",
+    "regex": "^git rm --cached .+$",
+    "ajuda": "Remove do rastreamento mas mantém arquivo local.",
+    "exemplo": "git rm --cached arquivo.txt",
+    "nivel": 4,
+    "titulo": "Removendo do Rastreamento",
+    "descricao": "O comando `git rm --cached` remove o arquivo do Git mas mantém a cópia local.",
+    "objetivos": [
+      "Aprender a ignorar arquivos",
+      "Remover do versionamento",
+      "Manter arquivo local"
+    ]
+  },
+  {
+    "id": 54,
+    "categoria": "Mover",
+    "comando": "git mv antigo.txt novo.txt",
+    "regex": "^git mv \\w+ \\w+$",
+    "ajuda": "Renomeia/move arquivo rastreando a mudança.",
+    "exemplo": "git mv antigo.txt novo.txt",
+    "nivel": 4,
+    "titulo": "Movendo/Renomeando Arquivo",
+    "descricao": "O comando `git mv` move ou renomeia arquivos rastreando a mudança no Git.",
+    "objetivos": [
+      "Aprender a renomear arquivos",
+      "Rastrear movimentos de arquivos",
+      "Manter histórico intacto"
+    ]
+  },
+  {
+    "id": 55,
+    "categoria": "Clean",
+    "comando": "git clean -f",
+    "regex": "^git clean -f$",
+    "ajuda": "Remove arquivos não rastreados.",
+    "exemplo": "git clean -f",
+    "nivel": 5,
+    "titulo": "Limpando Arquivos Não Rastreados",
+    "descricao": "O comando `git clean -f` remove arquivos que não são rastreados pelo Git.",
+    "objetivos": [
+      "Aprender a limpar diretório",
+      "Remover arquivos temporários",
+      "Cuidado: ação irreversível"
+    ]
+  },
+  {
+    "id": 56,
+    "categoria": "Clean",
+    "comando": "git clean -fd",
+    "regex": "^git clean -fd$",
+    "ajuda": "Remove arquivos e pastas não rastreados.",
+    "exemplo": "git clean -fd",
+    "nivel": 5,
+    "titulo": "Limpando Arquivos e Pastas",
+    "descricao": "O comando `git clean -fd` remove arquivos e pastas não rastreados.",
+    "objetivos": [
+      "Limpar diretório completamente",
+      "Remover pastas temporárias",
+      "Cuidado: ação irreversível"
+    ]
+  },
+  {
+    "id": 57,
+    "categoria": "Reset",
+    "comando": "git reset HEAD arquivo.txt",
+    "regex": "^git reset HEAD .+$",
+    "ajuda": "Remove arquivo do staging area.",
+    "exemplo": "git reset HEAD arquivo.txt",
+    "nivel": 4,
+    "titulo": "Desfazendo Add de Arquivo",
+    "descricao": "O comando `git reset HEAD` remove um arquivo do staging area.",
+    "objetivos": [
+      "Aprender a desfazer git add",
+      "Remover arquivos do stage",
+      "Controlar o que será commitado"
+    ]
+  },
+  {
+    "id": 58,
+    "categoria": "Reset",
+    "comando": "git reset --soft HEAD~1",
+    "regex": "^git reset --soft HEAD~\\d+$",
+    "ajuda": "Desfaz commit mantendo mudanças no stage.",
+    "exemplo": "git reset --soft HEAD~1",
+    "nivel": 5,
+    "titulo": "Desfazendo Commit (Soft)",
+    "descricao": "O comando `git reset --soft` desfaz commits mas mantém as mudanças no stage.",
+    "objetivos": [
+      "Aprender a desfazer commits",
+      "Manter mudanças preparadas",
+      "Revisar commits antes de push"
+    ]
+  },
+  {
+    "id": 59,
+    "categoria": "Reset",
+    "comando": "git reset --mixed HEAD~1",
+    "regex": "^git reset --mixed HEAD~\\d+$",
+    "ajuda": "Desfaz commit e remove do stage (padrão).",
+    "exemplo": "git reset --mixed HEAD~1",
+    "nivel": 5,
+    "titulo": "Desfazendo Commit (Mixed)",
+    "descricao": "O comando `git reset --mixed` desfaz commits e remove mudanças do stage.",
+    "objetivos": [
+      "Entender o reset padrão",
+      "Desfazer commits parcialmente",
+      "Manter mudanças no diretório"
+    ]
+  },
+  {
+    "id": 60,
+    "categoria": "Reset",
+    "comando": "git reset --hard HEAD~1",
+    "regex": "^git reset --hard HEAD~\\d+$",
+    "ajuda": "Desfaz commit e descarta mudanças (perigoso!).",
+    "exemplo": "git reset --hard HEAD~1",
+    "nivel": 5,
+    "titulo": "Desfazendo Commit (Hard)",
+    "descricao": "O comando `git reset --hard` desfaz commits e descarta todas as mudanças.",
+    "objetivos": [
+      "Entender o reset perigoso",
+      "Saber quando usar com cuidado",
+      "Cuidado: perda de dados"
+    ]
+  },
+  {
+    "id": 61,
+    "categoria": "Reset",
+    "comando": "git reset --hard origin/main",
+    "regex": "^git reset --hard \\w+/\\w+$",
+    "ajuda": "Sincroniza local com remoto descartando mudanças.",
+    "exemplo": "git reset --hard origin/main",
+    "nivel": 5,
+    "titulo": "Sincronizando com Remoto (Hard)",
+    "descricao": "O comando `git reset --hard` sincroniza o local com o remoto descartando mudanças locais.",
+    "objetivos": [
+      "Forçar sincronização com remoto",
+      "Descartar trabalho local",
+      "Cuidado: perda de dados"
+    ]
+  },
+  {
+    "id": 62,
+    "categoria": "Revert",
+    "comando": "git revert HEAD",
+    "regex": "^git revert HEAD$",
+    "ajuda": "Cria novo commit revertendo o último.",
+    "exemplo": "git revert HEAD",
+    "nivel": 5,
+    "titulo": "Revertendo Último Commit",
+    "descricao": "O comando `git revert` cria um novo commit que desfaz as mudanças do commit anterior.",
+    "objetivos": [
+      "Aprender a reverter commits",
+      "Manter histórico intacto",
+      "Evitar reescrita de histórico"
+    ]
+  },
+  {
+    "id": 63,
+    "categoria": "Revert",
+    "comando": "git revert <hash-do-commit>",
+    "regex": "^git revert [a-f0-9]+$",
+    "ajuda": "Reverte um commit específico pelo hash.",
+    "exemplo": "git revert abc1234",
+    "nivel": 5,
+    "titulo": "Revertendo Commit Específico",
+    "descricao": "O comando `git revert` com hash reverte um commit específico.",
+    "objetivos": [
+      "Reverter commits específicos",
+      "Usar hash para identificar commits",
+      "Manter histórico seguro"
+    ]
+  },
+  {
+    "id": 64,
+    "categoria": "Reflog",
+    "comando": "git reflog",
+    "regex": "^git reflog$",
+    "ajuda": "Mostra histórico de ações no repositório.",
+    "exemplo": "git reflog",
+    "nivel": 5,
+    "titulo": "Visualizando Reflog",
+    "descricao": "O comando `git reflog` mostra todas as ações realizadas no repositório.",
+    "objetivos": [
+      "Aprender a usar reflog",
+      "Recuperar commits perdidos",
+      "Diagnosticar problemas"
+    ]
+  },
+  {
+    "id": 65,
+    "categoria": "Fsck",
+    "comando": "git fsck",
+    "regex": "^git fsck$",
+    "ajuda": "Verifica integridade do repositório.",
+    "exemplo": "git fsck",
+    "nivel": 5,
+    "titulo": "Verificando Integridade",
+    "descricao": "O comando `git fsck` verifica a integridade do repositório Git.",
+    "objetivos": [
+      "Verificar saúde do repositório",
+      "Diagnosticar corrupção",
+      "Manter repositório seguro"
+    ]
+  },
+  {
+    "id": 66,
+    "categoria": "Stash",
+    "comando": "git stash",
+    "regex": "^git stash$",
+    "ajuda": "Salva mudanças temporariamente.",
+    "exemplo": "git stash",
+    "nivel": 4,
+    "titulo": "Salvando Mudanças Temporariamente",
+    "descricao": "O comando `git stash` salva mudanças não commitadas temporariamente.",
+    "objetivos": [
+      "Aprender a usar stash",
+      "Salvar trabalho temporário",
+      "Limpar diretório de trabalho"
+    ]
+  },
+  {
+    "id": 67,
+    "categoria": "Stash",
+    "comando": "git stash save \"Trabalho temporario\"",
+    "regex": "^git stash save \".+\"$",
+    "ajuda": "Salva stash com mensagem descritiva.",
+    "exemplo": "git stash save \"Trabalho temporario\"",
+    "nivel": 4,
+    "titulo": "Salvando Stash com Mensagem",
+    "descricao": "O comando `git stash save` cria um stash com uma mensagem descritiva.",
+    "objetivos": [
+      "Adicionar descrição ao stash",
+      "Organizar múltiplos stashes",
+      "Melhorar rastreabilidade"
+    ]
+  },
+  {
+    "id": 68,
+    "categoria": "Stash",
+    "comando": "git stash list",
+    "regex": "^git stash list$",
+    "ajuda": "Lista todos os stashes salvos.",
+    "exemplo": "git stash list",
+    "nivel": 4,
+    "titulo": "Listando Stashes",
+    "descricao": "O comando `git stash list` mostra todos os stashes salvos.",
+    "objetivos": [
+      "Ver stashes disponíveis",
+      "Identificar stash correto",
+      "Gerenciar stashes"
+    ]
+  },
+  {
+    "id": 69,
+    "categoria": "Stash",
+    "comando": "git stash show -p",
+    "regex": "^git stash show -p$",
+    "ajuda": "Mostra detalhes do stash atual.",
+    "exemplo": "git stash show -p",
+    "nivel": 4,
+    "titulo": "Visualizando Stash",
+    "descricao": "O comando `git stash show -p` mostra as mudanças em um stash.",
+    "objetivos": [
+      "Inspecionar conteúdo do stash",
+      "Ver mudanças antes de aplicar",
+      "Escolher stash correto"
+    ]
+  },
+  {
+    "id": 70,
+    "categoria": "Stash",
+    "comando": "git stash apply",
+    "regex": "^git stash apply$",
+    "ajuda": "Aplica stash sem removê-lo.",
+    "exemplo": "git stash apply",
+    "nivel": 4,
+    "titulo": "Aplicando Stash",
+    "descricao": "O comando `git stash apply` aplica um stash sem removê-lo da lista.",
+    "objetivos": [
+      "Aplicar stash mantendo cópia",
+      "Reaplicar stash múltiplas vezes",
+      "Gerenciar stashes"
+    ]
+  },
+  {
+    "id": 71,
+    "categoria": "Stash",
+    "comando": "git stash pop",
+    "regex": "^git stash pop$",
+    "ajuda": "Aplica e remove o stash.",
+    "exemplo": "git stash pop",
+    "nivel": 4,
+    "titulo": "Aplicando e Removendo Stash",
+    "descricao": "O comando `git stash pop` aplica um stash e o remove da lista.",
+    "objetivos": [
+      "Aplicar e consumir stash",
+      "Limpar lista de stashes",
+      "Finalizar trabalho temporário"
+    ]
+  },
+  {
+    "id": 72,
+    "categoria": "Stash",
+    "comando": "git stash apply stash@{0}",
+    "regex": "^git stash apply stash@\\{\\d+\\}$",
+    "ajuda": "Aplica um stash específico.",
+    "exemplo": "git stash apply stash@{0}",
+    "nivel": 4,
+    "titulo": "Aplicando Stash Específico",
+    "descricao": "O comando `git stash apply` com referência aplica um stash específico.",
+    "objetivos": [
+      "Aplicar stash específico",
+      "Gerenciar múltiplos stashes",
+      "Escolher stash correto"
+    ]
+  },
+  {
+    "id": 73,
+    "categoria": "Stash",
+    "comando": "git stash drop stash@{0}",
+    "regex": "^git stash drop stash@\\{\\d+\\}$",
+    "ajuda": "Remove um stash específico.",
+    "exemplo": "git stash drop stash@{0}",
+    "nivel": 4,
+    "titulo": "Removendo Stash Específico",
+    "descricao": "O comando `git stash drop` remove um stash específico da lista.",
+    "objetivos": [
+      "Limpar stashes não usados",
+      "Gerenciar lista de stashes",
+      "Manter organização"
+    ]
+  },
+  {
+    "id": 74,
+    "categoria": "Stash",
+    "comando": "git stash clear",
+    "regex": "^git stash clear$",
+    "ajuda": "Remove todos os stashes.",
+    "exemplo": "git stash clear",
+    "nivel": 5,
+    "titulo": "Limpando Todos os Stashes",
+    "descricao": "O comando `git stash clear` remove todos os stashes salvos.",
+    "objetivos": [
+      "Limpar todos os stashes",
+      "Reiniciar lista de stashes",
+      "Cuidado: ação irreversível"
+    ]
+  },
+  {
+    "id": 75,
+    "categoria": "Stash",
+    "comando": "git stash branch nova-branch-stash",
+    "regex": "^git stash branch \\w+$",
+    "ajuda": "Cria branch a partir de stash.",
+    "exemplo": "git stash branch nova-branch-stash",
+    "nivel": 4,
+    "titulo": "Criando Branch de Stash",
+    "descricao": "O comando `git stash branch` cria uma nova branch a partir de um stash.",
+    "objetivos": [
+      "Converter stash em branch",
+      "Continuar trabalho em branch",
+      "Organizar trabalho temporário"
+    ]
+  },
+  {
+    "id": 76,
+    "categoria": "Cherry-pick",
+    "comando": "git cherry-pick <hash-do-commit>",
+    "regex": "^git cherry-pick [a-f0-9]+$",
+    "ajuda": "Aplica commit específico na branch atual.",
+    "exemplo": "git cherry-pick abc1234",
+    "nivel": 5,
+    "titulo": "Aplicando Commit Específico",
+    "descricao": "O comando `git cherry-pick` aplica um commit específico na branch atual.",
+    "objetivos": [
+      "Aprender a aplicar commits específicos",
+      "Trazer commits de outras branches",
+      "Selecionar mudanças cirúrgicas"
+    ]
+  },
+  {
+    "id": 77,
+    "categoria": "Cherry-pick",
+    "comando": "git cherry-pick --abort",
+    "regex": "^git cherry-pick --abort$",
+    "ajuda": "Cancela cherry-pick em conflito.",
+    "exemplo": "git cherry-pick --abort",
+    "nivel": 5,
+    "titulo": "Cancelando Cherry-pick",
+    "descricao": "O comando `git cherry-pick --abort` cancela um cherry-pick em conflito.",
+    "objetivos": [
+      "Cancelar cherry-pick problemático",
+      "Recuperar de conflitos",
+      "Voltar ao estado anterior"
+    ]
+  },
+  {
+    "id": 78,
+    "categoria": "Log",
+    "comando": "git log --author=\"Mauricio Spark\"",
+    "regex": "^git log --author=.+$",
+    "ajuda": "Filtra commits por autor.",
+    "exemplo": "git log --author=\"Mauricio Spark\"",
+    "nivel": 3,
+    "titulo": "Filtrando por Autor",
+    "descricao": "O comando `git log --author` filtra commits por nome do autor.",
+    "objetivos": [
+      "Aprender a filtrar commits",
+      "Encontrar trabalho de autor específico",
+      "Analisar contribuições"
+    ]
+  },
+  {
+    "id": 79,
+    "categoria": "Log",
+    "comando": "git log --grep=\"bugfix\"",
+    "regex": "^git log --grep=.+$",
+    "ajuda": "Filtra commits por palavra na mensagem.",
+    "exemplo": "git log --grep=\"bugfix\"",
+    "nivel": 3,
+    "titulo": "Filtrando por Palavra-chave",
+    "descricao": "O comando `git log --grep` filtra commits por palavra na mensagem de commit.",
+    "objetivos": [
+      "Buscar commits por tema",
+      "Encontrar correções específicas",
+      "Analisar histórico por assunto"
+    ]
+  },
+  {
+    "id": 80,
+    "categoria": "Blame",
+    "comando": "git blame arquivo.txt",
+    "regex": "^git blame .+$",
+    "ajuda": "Mostra quem modificou cada linha.",
+    "exemplo": "git blame arquivo.txt",
+    "nivel": 4,
+    "titulo": "Rastreando Autoria de Linhas",
+    "descricao": "O comando `git blame` mostra quem modificou cada linha de um arquivo.",
+    "objetivos": [
+      "Aprender a rastrear autoria",
+      "Identificar responsáveis por mudanças",
+      "Investigar histórico de código"
+    ]
+  },
+  {
+    "id": 81,
+    "categoria": "Rebase",
+    "comando": "git rebase main",
+    "regex": "^git rebase \\w+$",
+    "ajuda": "Rebaseia a branch atual em outra.",
+    "exemplo": "git rebase main",
+    "nivel": 5,
+    "titulo": "Rebaseando Branch",
+    "descricao": "O comando `git rebase` move commits da branch atual para o topo de outra branch.",
+    "objetivos": [
+      "Aprender conceito de rebase",
+      "Manter histórico linear",
+      "Entender riscos do rebase"
+    ]
+  },
+  {
+    "id": 82,
+    "categoria": "Rebase",
+    "comando": "git rebase --continue",
+    "regex": "^git rebase --continue$",
+    "ajuda": "Continua rebase após resolver conflitos.",
+    "exemplo": "git rebase --continue",
+    "nivel": 5,
+    "titulo": "Continuando Rebase",
+    "descricao": "O comando `git rebase --continue` continua o rebase após resolver conflitos.",
+    "objetivos": [
+      "Resolver conflitos de rebase",
+      "Continuar processo interrompido",
+      "Finalizar rebase com sucesso"
+    ]
+  },
+  {
+    "id": 83,
+    "categoria": "Rebase",
+    "comando": "git rebase --skip",
+    "regex": "^git rebase --skip$",
+    "ajuda": "Pula commit atual durante rebase.",
+    "exemplo": "git rebase --skip",
+    "nivel": 5,
+    "titulo": "Pulando Commit no Rebase",
+    "descricao": "O comando `git rebase --skip` pula o commit atual durante o rebase.",
+    "objetivos": [
+      "Pular commits problemáticos",
+      "Continuar rebase sem aplicar commit",
+      "Gerenciar conflitos complexos"
+    ]
+  },
+  {
+    "id": 84,
+    "categoria": "Rebase",
+    "comando": "git rebase --abort",
+    "regex": "^git rebase --abort$",
+    "ajuda": "Cancela rebase em andamento.",
+    "exemplo": "git rebase --abort",
+    "nivel": 5,
+    "titulo": "Cancelando Rebase",
+    "descricao": "O comando `git rebase --abort` cancela um rebase em andamento.",
+    "objetivos": [
+      "Cancelar rebase problemático",
+      "Voltar ao estado anterior",
+      "Recuperar de conflitos"
+    ]
+  },
+  {
+    "id": 85,
+    "categoria": "Rebase",
+    "comando": "git rebase -i HEAD~3",
+    "regex": "^git rebase -i HEAD~\\d+$",
+    "ajuda": "Rebase interativo dos últimos N commits.",
+    "exemplo": "git rebase -i HEAD~3",
+    "nivel": 5,
+    "titulo": "Rebase Interativo",
+    "descricao": "O comando `git rebase -i` permite editar, squash ou reordenar commits interativamente.",
+    "objetivos": [
+      "Aprender rebase interativo",
+      "Editar histórico de commits",
+      "Espremer (squash) commits"
+    ]
+  },
+  {
+    "id": 86,
+    "categoria": "Log",
+    "comando": "git log --before=\"2026-05-01\"",
+    "regex": "^git log --before=.+$",
+    "ajuda": "Filtra commits antes de uma data.",
+    "exemplo": "git log --before=\"2026-05-01\"",
+    "nivel": 3,
+    "titulo": "Filtrando por Data (Antes)",
+    "descricao": "O comando `git log --before` filtra commits anteriores a uma data específica.",
+    "objetivos": [
+      "Filtrar histórico por data",
+      "Encontrar commits antigos",
+      "Analisar evolução temporal"
+    ]
+  },
+  {
+    "id": 87,
+    "categoria": "Log",
+    "comando": "git log --after=\"2026-01-01\"",
+    "regex": "^git log --after=.+$",
+    "ajuda": "Filtra commits após uma data.",
+    "exemplo": "git log --after=\"2026-01-01\"",
+    "nivel": 3,
+    "titulo": "Filtrando por Data (Depois)",
+    "descricao": "O comando `git log --after` filtra commits posteriores a uma data específica.",
+    "objetivos": [
+      "Filtrar histórico por data",
+      "Encontrar commits recentes",
+      "Analisar evolução temporal"
+    ]
+  },
+  {
+    "id": 88,
+    "categoria": "Diff",
+    "comando": "git diff branch1..branch2",
+    "regex": "^git diff \\w+\\.\\.\\w+$",
+    "ajuda": "Mostra diferenças entre branches.",
+    "exemplo": "git diff branch1..branch2",
+    "nivel": 4,
+    "titulo": "Comparando Branches",
+    "descricao": "O comando `git diff` entre branches mostra as diferenças entre elas.",
+    "objetivos": [
+      "Comparar branches diferentes",
+      "Ver mudanças antes de merge",
+      "Entender divergências"
+    ]
+  },
+  {
+    "id": 89,
+    "categoria": "Diff",
+    "comando": "git diff --name-only main feature",
+    "regex": "^git diff --name-only \\w+ \\w+$",
+    "ajuda": "Lista apenas nomes de arquivos diferentes.",
+    "exemplo": "git diff --name-only main feature",
+    "nivel": 4,
+    "titulo": "Listando Arquivos Diferentes",
+    "descricao": "O comando `git diff --name-only` mostra apenas os nomes dos arquivos diferentes.",
+    "objetivos": [
+      "Ver quais arquivos mudaram",
+      "Focar em arquivos específicos",
+      "Melhorar legibilidade"
+    ]
+  },
+  {
+    "id": 90,
+    "categoria": "Log",
+    "comando": "git shortlog -sn",
+    "regex": "^git shortlog -sn$",
+    "ajuda": "Resumo de commits por autor.",
+    "exemplo": "git shortlog -sn",
+    "nivel": 3,
+    "titulo": "Resumo por Autor",
+    "descricao": "O comando `git shortlog -sn` mostra um resumo de commits por autor.",
+    "objetivos": [
+      "Ver contribuição por autor",
+      "Analisar equipe",
+      "Identificar principais contribuidores"
+    ]
+  },
+  {
+    "id": 91,
+    "categoria": "Tag",
+    "comando": "git tag",
+    "regex": "^git tag$",
+    "ajuda": "Lista todas as tags.",
+    "exemplo": "git tag",
+    "nivel": 4,
+    "titulo": "Listando Tags",
+    "descricao": "O comando `git tag` lista todas as tags do repositório.",
+    "objetivos": [
+      "Ver versões do projeto",
+      "Identificar releases",
+      "Navegar por tags"
+    ]
+  },
+  {
+    "id": 92,
+    "categoria": "Tag",
+    "comando": "git tag v1.0.0",
+    "regex": "^git tag v[\\d.]+$",
+    "ajuda": "Cria uma tag leve.",
+    "exemplo": "git tag v1.0.0",
+    "nivel": 4,
+    "titulo": "Criando Tag Leve",
+    "descricao": "O comando `git tag` cria uma tag leve para marcar um commit.",
+    "objetivos": [
+      "Aprender a criar tags",
+      "Marcar versões",
+      "Organizar releases"
+    ]
+  },
+  {
+    "id": 93,
+    "categoria": "Tag",
+    "comando": "git tag -a v1.1.0 -m \"Versao de producao v1.1.0\"",
+    "regex": "^git tag -a v[\\d.]+ -m \".+\"$",
+    "ajuda": "Cria uma tag anotada com mensagem.",
+    "exemplo": "git tag -a v1.1.0 -m \"Versao de producao v1.1.0\"",
+    "nivel": 4,
+    "titulo": "Criando Tag Anotada",
+    "descricao": "O comando `git tag -a` cria uma tag anotada com mensagem e metadados.",
+    "objetivos": [
+      "Criar tags com informações",
+      "Adicionar metadados a versões",
+      "Melhorar rastreabilidade de releases"
+    ]
+  },
+  {
+    "id": 94,
+    "categoria": "Push",
+    "comando": "git push origin v1.0.0",
+    "regex": "^git push \\w+ v[\\d.]+$",
+    "ajuda": "Envia uma tag específica para o remoto.",
+    "exemplo": "git push origin v1.0.0",
+    "nivel": 4,
+    "titulo": "Enviando Tag para Remoto",
+    "descricao": "O comando `git push` envia uma tag específica para o repositório remoto.",
+    "objetivos": [
+      "Enviar tags para remoto",
+      "Compartilhar versões",
+      "Publicar releases"
+    ]
+  },
+  {
+    "id": 95,
+    "categoria": "Push",
+    "comando": "git push origin --tags",
+    "regex": "^git push \\w+ --tags$",
+    "ajuda": "Envia todas as tags para o remoto.",
+    "exemplo": "git push origin --tags",
+    "nivel": 4,
+    "titulo": "Enviando Todas as Tags",
+    "descricao": "O comando `git push --tags` envia todas as tags para o repositório remoto.",
+    "objetivos": [
+      "Enviar todas as tags",
+      "Sincronizar versões",
+      "Publicar releases completos"
+    ]
+  },
+  {
+    "id": 96,
+    "categoria": "Tag",
+    "comando": "git tag -d v1.0.0",
+    "regex": "^git tag -d v[\\d.]+$",
+    "ajuda": "Deleta uma tag local.",
+    "exemplo": "git tag -d v1.0.0",
+    "nivel": 4,
+    "titulo": "Deletando Tag Local",
+    "descricao": "O comando `git tag -d` remove uma tag do repositório local.",
+    "objetivos": [
+      "Remover tags incorretas",
+      "Limpar tags locais",
+      "Gerenciar versões"
+    ]
+  },
+  {
+    "id": 97,
+    "categoria": "Push",
+    "comando": "git push origin --delete tag v1.0.0",
+    "regex": "^git push \\w+ --delete tag v[\\d.]+$",
+    "ajuda": "Deleta uma tag no remoto.",
+    "exemplo": "git push origin --delete tag v1.0.0",
+    "nivel": 4,
+    "titulo": "Deletando Tag no Remoto",
+    "descricao": "O comando `git push --delete tag` remove uma tag do repositório remoto.",
+    "objetivos": [
+      "Remover tags remotas",
+      "Sincronizar deleção",
+      "Gerenciar versões remotas"
+    ]
+  },
+  {
+    "id": 98,
+    "categoria": "Submodule",
+    "comando": "git submodule add https://github.com/usuario/lib.git",
+    "regex": "^git submodule add https?:\\/\\/.+$",
+    "ajuda": "Adiciona um submódulo ao projeto.",
+    "exemplo": "git submodule add https://github.com/usuario/lib.git",
+    "nivel": 5,
+    "titulo": "Adicionando Submódulo",
+    "descricao": "O comando `git submodule add` adiciona um submódulo ao projeto.",
+    "objetivos": [
+      "Aprender sobre submódulos",
+      "Incluir dependências externas",
+      "Gerenciar projetos complexos"
+    ]
+  },
+  {
+    "id": 99,
+    "categoria": "Submodule",
+    "comando": "git submodule update --init --recursive",
+    "regex": "^git submodule update --init --recursive$",
+    "ajuda": "Inicializa e atualiza todos os submódulos.",
+    "exemplo": "git submodule update --init --recursive",
+    "nivel": 5,
+    "titulo": "Atualizando Submódulos",
+    "descricao": "O comando `git submodule update` inicializa e atualiza todos os submódulos.",
+    "objetivos": [
+      "Inicializar submódulos",
+      "Atualizar dependências",
+      "Clonar projetos completos"
+    ]
+  },
+  {
+    "id": 100,
+    "categoria": "Config",
+    "comando": "git config --global alias.co checkout",
+    "regex": "^git config --global alias\\.\\w+ .+$",
+    "ajuda": "Cria um alias para um comando.",
+    "exemplo": "git config --global alias.co checkout",
+    "nivel": 2,
+    "titulo": "Criando Alias",
+    "descricao": "O comando `git config --global alias` cria atalhos para comandos Git.",
+    "objetivos": [
+      "Aprender a criar aliases",
+      "Personalizar comandos",
+      "Agilizar fluxo de trabalho"
     ]
   }
 ]

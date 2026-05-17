@@ -1,0 +1,702 @@
+[
+  {
+    "comando": "git init",
+    "nivel": 1,
+    "regex": "^git init$",
+    "descricao": "Inicia um novo repositório Git no diretório atual.",
+    "exemploCorreto": "git init"
+  },
+  {
+    "comando": "git status",
+    "nivel": 2,
+    "regex": "^git status$",
+    "descricao": "Lista todos os arquivos novos ou modificados que ainda não foram commitados.",
+    "exemploCorreto": "git status"
+  },
+  {
+    "comando": "git add .",
+    "nivel": 3,
+    "regex": "^git add \\.$",
+    "descricao": "Adiciona todos os arquivos modificados ao palco (stage).",
+    "exemploCorreto": "git add ."
+  },
+  {
+    "comando": "git add README.md",
+    "nivel": 4,
+    "regex": "^git add .+$",
+    "descricao": "Adiciona um arquivo específico ao palco (stage).",
+    "exemploCorreto": "git add README.md"
+  },
+  {
+    "comando": "git add -A",
+    "nivel": 5,
+    "regex": "^git add -A$",
+    "descricao": "Adiciona todos os arquivos (incluindo deletados) ao stage.",
+    "exemploCorreto": "git add -A"
+  },
+  {
+    "comando": "git commit -m \"Initial commit\"",
+    "nivel": 6,
+    "regex": "^git commit -m \".+\"$",
+    "descricao": "Grava as alterações no histórico com uma mensagem.",
+    "exemploCorreto": "git commit -m \"Initial commit\""
+  },
+  {
+    "comando": "git commit --amend -m \"Mensagem corrigida\"",
+    "nivel": 7,
+    "regex": "^git commit --amend -m \".+\"$",
+    "descricao": "Corrige a mensagem do último commit.",
+    "exemploCorreto": "git commit --amend -m \"Mensagem corrigida\""
+  },
+  {
+    "comando": "git commit -am \"Salva mudancas de arquivos rastreados\"",
+    "nivel": 8,
+    "regex": "^git commit -am \".+\"$",
+    "descricao": "Adiciona e commita arquivos já rastreados de uma vez.",
+    "exemploCorreto": "git commit -am \"Salva mudancas de arquivos rastreados\""
+  },
+  {
+    "comando": "git log",
+    "nivel": 9,
+    "regex": "^git log$",
+    "descricao": "Exibe o histórico completo de commits.",
+    "exemploCorreto": "git log"
+  },
+  {
+    "comando": "git log --oneline",
+    "nivel": 10,
+    "regex": "^git log --oneline$",
+    "descricao": "Exibe o histórico em uma linha por commit.",
+    "exemploCorreto": "git log --oneline"
+  },
+  {
+    "comando": "git log --graph --oneline --all",
+    "nivel": 11,
+    "regex": "^git log --graph --oneline --all$",
+    "descricao": "Exibe o histórico com gráfico de branches.",
+    "exemploCorreto": "git log --graph --oneline --all"
+  },
+  {
+    "comando": "git log -n 5",
+    "nivel": 12,
+    "regex": "^git log -n \\d+$",
+    "descricao": "Exibe apenas os últimos N commits.",
+    "exemploCorreto": "git log -n 5"
+  },
+  {
+    "comando": "git diff",
+    "nivel": 13,
+    "regex": "^git diff$",
+    "descricao": "Mostra as diferenças não commitadas.",
+    "exemploCorreto": "git diff"
+  },
+  {
+    "comando": "git diff --staged",
+    "nivel": 14,
+    "regex": "^git diff --staged$",
+    "descricao": "Mostra as diferenças no staging area.",
+    "exemploCorreto": "git diff --staged"
+  },
+  {
+    "comando": "git show",
+    "nivel": 15,
+    "regex": "^git show$",
+    "descricao": "Mostra detalhes do último commit.",
+    "exemploCorreto": "git show"
+  },
+  {
+    "comando": "git remote add origin https://github.com/usuario/projeto.git",
+    "nivel": 16,
+    "regex": "^git remote add origin https?:\\/\\/.+$",
+    "descricao": "Conecta o repositório local a um remoto.",
+    "exemploCorreto": "git remote add origin https://github.com/usuario/projeto.git"
+  },
+  {
+    "comando": "git remote -v",
+    "nivel": 17,
+    "regex": "^git remote -v$",
+    "descricao": "Lista todos os repositórios remotos configurados.",
+    "exemploCorreto": "git remote -v"
+  },
+  {
+    "comando": "git remote rename origin upstream",
+    "nivel": 18,
+    "regex": "^git remote rename \\w+ \\w+$",
+    "descricao": "Renomeia um repositório remoto.",
+    "exemploCorreto": "git remote rename origin upstream"
+  },
+  {
+    "comando": "git remote remove upstream",
+    "nivel": 19,
+    "regex": "^git remote remove \\w+$",
+    "descricao": "Remove um repositório remoto.",
+    "exemploCorreto": "git remote remove upstream"
+  },
+  {
+    "comando": "git push -u origin main",
+    "nivel": 20,
+    "regex": "^git push -u \\w+ \\w+$",
+    "descricao": "Envia commits e configura o branch upstream.",
+    "exemploCorreto": "git push -u origin main"
+  },
+  {
+    "comando": "git push",
+    "nivel": 21,
+    "regex": "^git push$",
+    "descricao": "Envia commits para o branch configurado.",
+    "exemploCorreto": "git push"
+  },
+  {
+    "comando": "git push origin --force",
+    "nivel": 22,
+    "regex": "^git push \\w+ --force$",
+    "descricao": "Força o push sobrescrevendo histórico remoto.",
+    "exemploCorreto": "git push origin --force"
+  },
+  {
+    "comando": "git clone https://github.com/usuario/projeto.git",
+    "nivel": 23,
+    "regex": "^git clone https?:\\/\\/.+$",
+    "descricao": "Clona um repositório remoto para o local.",
+    "exemploCorreto": "git clone https://github.com/usuario/projeto.git"
+  },
+  {
+    "comando": "git clone --depth 1 https://github.com/usuario/projeto.git",
+    "nivel": 24,
+    "regex": "^git clone --depth \\d+ https?:\\/\\/.+$",
+    "descricao": "Clona apenas o último commit (shallow clone).",
+    "exemploCorreto": "git clone --depth 1 https://github.com/usuario/projeto.git"
+  },
+  {
+    "comando": "git pull",
+    "nivel": 25,
+    "regex": "^git pull$",
+    "descricao": "Atualiza o repositório local com mudanças do remoto.",
+    "exemploCorreto": "git pull"
+  },
+  {
+    "comando": "git pull origin main",
+    "nivel": 26,
+    "regex": "^git pull \\w+ \\w+$",
+    "descricao": "Atualiza de um branch específico do remoto.",
+    "exemploCorreto": "git pull origin main"
+  },
+  {
+    "comando": "git fetch",
+    "nivel": 27,
+    "regex": "^git fetch$",
+    "descricao": "Baixa mudanças do remoto sem mesclar.",
+    "exemploCorreto": "git fetch"
+  },
+  {
+    "comando": "git fetch --all",
+    "nivel": 28,
+    "regex": "^git fetch --all$",
+    "descricao": "Baixa mudanças de todos os remotos.",
+    "exemploCorreto": "git fetch --all"
+  },
+  {
+    "comando": "git remote show origin",
+    "nivel": 29,
+    "regex": "^git remote show \\w+$",
+    "descricao": "Mostra informações detalhadas de um remoto.",
+    "exemploCorreto": "git remote show origin"
+  },
+  {
+    "comando": "git ls-remote",
+    "nivel": 30,
+    "regex": "^git ls-remote$",
+    "descricao": "Lista referências no repositório remoto.",
+    "exemploCorreto": "git ls-remote"
+  },
+  {
+    "comando": "git branch",
+    "nivel": 31,
+    "regex": "^git branch$",
+    "descricao": "Lista todas as branches locais.",
+    "exemploCorreto": "git branch"
+  },
+  {
+    "comando": "git branch -a",
+    "nivel": 32,
+    "regex": "^git branch -a$",
+    "descricao": "Lista todas as branches (locais e remotas).",
+    "exemploCorreto": "git branch -a"
+  },
+  {
+    "comando": "git branch feature-login",
+    "nivel": 33,
+    "regex": "^git branch \\w+$",
+    "descricao": "Cria uma nova branch.",
+    "exemploCorreto": "git branch feature-login"
+  },
+  {
+    "comando": "git checkout feature-login",
+    "nivel": 34,
+    "regex": "^git checkout \\w+$",
+    "descricao": "Alterna para uma branch existente.",
+    "exemploCorreto": "git checkout feature-login"
+  },
+  {
+    "comando": "git checkout -b feature-checkout",
+    "nivel": 35,
+    "regex": "^git checkout -b \\w+$",
+    "descricao": "Cria e alterna para uma nova branch.",
+    "exemploCorreto": "git checkout -b feature-checkout"
+  },
+  {
+    "comando": "git checkout main",
+    "nivel": 36,
+    "regex": "^git checkout main$",
+    "descricao": "Alterna para a branch principal.",
+    "exemploCorreto": "git checkout main"
+  },
+  {
+    "comando": "git switch main",
+    "nivel": 37,
+    "regex": "^git switch \\w+$",
+    "descricao": "Alterna para uma branch (comando moderno).",
+    "exemploCorreto": "git switch main"
+  },
+  {
+    "comando": "git switch -c feature-switch",
+    "nivel": 38,
+    "regex": "^git switch -c \\w+$",
+    "descricao": "Cria e alterna para uma nova branch.",
+    "exemploCorreto": "git switch -c feature-switch"
+  },
+  {
+    "comando": "git merge feature-login",
+    "nivel": 39,
+    "regex": "^git merge \\w+$",
+    "descricao": "Combina uma branch na branch atual.",
+    "exemploCorreto": "git merge feature-login"
+  },
+  {
+    "comando": "git merge --no-ff feature-login",
+    "nivel": 40,
+    "regex": "^git merge --no-ff \\w+$",
+    "descricao": "Merge mantendo histórico da branch.",
+    "exemploCorreto": "git merge --no-ff feature-login"
+  },
+  {
+    "comando": "git merge --abort",
+    "nivel": 41,
+    "regex": "^git merge --abort$",
+    "descricao": "Cancela um merge em conflito.",
+    "exemploCorreto": "git merge --abort"
+  },
+  {
+    "comando": "git branch -d feature-login",
+    "nivel": 42,
+    "regex": "^git branch -d \\w+$",
+    "descricao": "Deleta uma branch já mesclada.",
+    "exemploCorreto": "git branch -d feature-login"
+  },
+  {
+    "comando": "git branch -D feature-login",
+    "nivel": 43,
+    "regex": "^git branch -D \\w+$",
+    "descricao": "Força a deleção de uma branch.",
+    "exemploCorreto": "git branch -D feature-login"
+  },
+  {
+    "comando": "git branch -m antiga nova",
+    "nivel": 44,
+    "regex": "^git branch -m \\w+ \\w+$",
+    "descricao": "Renomeia uma branch.",
+    "exemploCorreto": "git branch -m antiga nova"
+  },
+  {
+    "comando": "git push origin --delete feature-login",
+    "nivel": 45,
+    "regex": "^git push \\w+ --delete \\w+$",
+    "descricao": "Deleta uma branch no remoto.",
+    "exemploCorreto": "git push origin --delete feature-login"
+  },
+  {
+    "comando": "git branch --merged",
+    "nivel": 46,
+    "regex": "^git branch --merged$",
+    "descricao": "Lista branches que já foram mescladas.",
+    "exemploCorreto": "git branch --merged"
+  },
+  {
+    "comando": "git branch --no-merged",
+    "nivel": 47,
+    "regex": "^git branch --no-merged$",
+    "descricao": "Lista branches não mescladas.",
+    "exemploCorreto": "git branch --no-merged"
+  },
+  {
+    "comando": "git checkout -- arquivo.txt",
+    "nivel": 48,
+    "regex": "^git checkout -- .+$",
+    "descricao": "Descarta mudanças não commitadas em um arquivo.",
+    "exemploCorreto": "git checkout -- arquivo.txt"
+  },
+  {
+    "comando": "git restore arquivo.txt",
+    "nivel": 49,
+    "regex": "^git restore .+$",
+    "descricao": "Restaura arquivo ao último commit (comando moderno).",
+    "exemploCorreto": "git restore arquivo.txt"
+  },
+  {
+    "comando": "git restore --staged arquivo.txt",
+    "nivel": 50,
+    "regex": "^git restore --staged .+$",
+    "descricao": "Remove arquivo do staging area.",
+    "exemploCorreto": "git restore --staged arquivo.txt"
+  },
+  {
+    "comando": "git rm arquivo.txt",
+    "nivel": 51,
+    "regex": "^git rm .+$",
+    "descricao": "Remove arquivo e rastreia a remoção.",
+    "exemploCorreto": "git rm arquivo.txt"
+  },
+  {
+    "comando": "git rm -r pasta/",
+    "nivel": 52,
+    "regex": "^git rm -r .+$",
+    "descricao": "Remove pasta recursivamente.",
+    "exemploCorreto": "git rm -r pasta/"
+  },
+  {
+    "comando": "git rm --cached arquivo.txt",
+    "nivel": 53,
+    "regex": "^git rm --cached .+$",
+    "descricao": "Remove do rastreamento mas mantém arquivo local.",
+    "exemploCorreto": "git rm --cached arquivo.txt"
+  },
+  {
+    "comando": "git mv antigo.txt novo.txt",
+    "nivel": 54,
+    "regex": "^git mv \\w+ \\w+$",
+    "descricao": "Renomeia/move arquivo rastreando a mudança.",
+    "exemploCorreto": "git mv antigo.txt novo.txt"
+  },
+  {
+    "comando": "git clean -f",
+    "nivel": 55,
+    "regex": "^git clean -f$",
+    "descricao": "Remove arquivos não rastreados.",
+    "exemploCorreto": "git clean -f"
+  },
+  {
+    "comando": "git clean -fd",
+    "nivel": 56,
+    "regex": "^git clean -fd$",
+    "descricao": "Remove arquivos e pastas não rastreados.",
+    "exemploCorreto": "git clean -fd"
+  },
+  {
+    "comando": "git reset HEAD arquivo.txt",
+    "nivel": 57,
+    "regex": "^git reset HEAD .+$",
+    "descricao": "Remove arquivo do staging area.",
+    "exemploCorreto": "git reset HEAD arquivo.txt"
+  },
+  {
+    "comando": "git reset --soft HEAD~1",
+    "nivel": 58,
+    "regex": "^git reset --soft HEAD~\\d+$",
+    "descricao": "Desfaz commit mantendo mudanças no stage.",
+    "exemploCorreto": "git reset --soft HEAD~1"
+  },
+  {
+    "comando": "git reset --mixed HEAD~1",
+    "nivel": 59,
+    "regex": "^git reset --mixed HEAD~\\d+$",
+    "descricao": "Desfaz commit e remove do stage (padrão).",
+    "exemploCorreto": "git reset --mixed HEAD~1"
+  },
+  {
+    "comando": "git reset --hard HEAD~1",
+    "nivel": 60,
+    "regex": "^git reset --hard HEAD~\\d+$",
+    "descricao": "Desfaz commit e descarta mudanças (perigoso!).",
+    "exemploCorreto": "git reset --hard HEAD~1"
+  },
+  {
+    "comando": "git reset --hard origin/main",
+    "nivel": 61,
+    "regex": "^git reset --hard \\w+/\\w+$",
+    "descricao": "Sincroniza local com remoto descartando mudanças.",
+    "exemploCorreto": "git reset --hard origin/main"
+  },
+  {
+    "comando": "git revert HEAD",
+    "nivel": 62,
+    "regex": "^git revert HEAD$",
+    "descricao": "Cria novo commit revertendo o último.",
+    "exemploCorreto": "git revert HEAD"
+  },
+  {
+    "comando": "git revert <hash-do-commit>",
+    "nivel": 63,
+    "regex": "^git revert [a-f0-9]+$",
+    "descricao": "Reverte um commit específico pelo hash.",
+    "exemploCorreto": "git revert abc1234"
+  },
+  {
+    "comando": "git reflog",
+    "nivel": 64,
+    "regex": "^git reflog$",
+    "descricao": "Mostra histórico de ações no repositório.",
+    "exemploCorreto": "git reflog"
+  },
+  {
+    "comando": "git fsck",
+    "nivel": 65,
+    "regex": "^git fsck$",
+    "descricao": "Verifica integridade do repositório.",
+    "exemploCorreto": "git fsck"
+  },
+  {
+    "comando": "git stash",
+    "nivel": 66,
+    "regex": "^git stash$",
+    "descricao": "Salva mudanças temporariamente.",
+    "exemploCorreto": "git stash"
+  },
+  {
+    "comando": "git stash save \"Trabalho temporario\"",
+    "nivel": 67,
+    "regex": "^git stash save \".+\"$",
+    "descricao": "Salva stash com mensagem descritiva.",
+    "exemploCorreto": "git stash save \"Trabalho temporario\""
+  },
+  {
+    "comando": "git stash list",
+    "nivel": 68,
+    "regex": "^git stash list$",
+    "descricao": "Lista todos os stashes salvos.",
+    "exemploCorreto": "git stash list"
+  },
+  {
+    "comando": "git stash show -p",
+    "nivel": 69,
+    "regex": "^git stash show -p$",
+    "descricao": "Mostra detalhes do stash atual.",
+    "exemploCorreto": "git stash show -p"
+  },
+  {
+    "comando": "git stash apply",
+    "nivel": 70,
+    "regex": "^git stash apply$",
+    "descricao": "Aplica stash sem removê-lo.",
+    "exemploCorreto": "git stash apply"
+  },
+  {
+    "comando": "git stash pop",
+    "nivel": 71,
+    "regex": "^git stash pop$",
+    "descricao": "Aplica e remove o stash.",
+    "exemploCorreto": "git stash pop"
+  },
+  {
+    "comando": "git stash apply stash@{0}",
+    "nivel": 72,
+    "regex": "^git stash apply stash@\\{\\d+\\}$",
+    "descricao": "Aplica um stash específico.",
+    "exemploCorreto": "git stash apply stash@{0}"
+  },
+  {
+    "comando": "git stash drop stash@{0}",
+    "nivel": 73,
+    "regex": "^git stash drop stash@\\{\\d+\\}$",
+    "descricao": "Remove um stash específico.",
+    "exemploCorreto": "git stash drop stash@{0}"
+  },
+  {
+    "comando": "git stash clear",
+    "nivel": 74,
+    "regex": "^git stash clear$",
+    "descricao": "Remove todos os stashes.",
+    "exemploCorreto": "git stash clear"
+  },
+  {
+    "comando": "git stash branch nova-branch-stash",
+    "nivel": 75,
+    "regex": "^git stash branch \\w+$",
+    "descricao": "Cria branch a partir de stash.",
+    "exemploCorreto": "git stash branch nova-branch-stash"
+  },
+  {
+    "comando": "git cherry-pick <hash-do-commit>",
+    "nivel": 76,
+    "regex": "^git cherry-pick [a-f0-9]+$",
+    "descricao": "Aplica commit específico na branch atual.",
+    "exemploCorreto": "git cherry-pick abc1234"
+  },
+  {
+    "comando": "git cherry-pick --abort",
+    "nivel": 77,
+    "regex": "^git cherry-pick --abort$",
+    "descricao": "Cancela cherry-pick em conflito.",
+    "exemploCorreto": "git cherry-pick --abort"
+  },
+  {
+    "comando": "git log --author=\"Mauricio Spark\"",
+    "nivel": 78,
+    "regex": "^git log --author=.+$",
+    "descricao": "Filtra commits por autor.",
+    "exemploCorreto": "git log --author=\"Mauricio Spark\""
+  },
+  {
+    "comando": "git log --grep=\"bugfix\"",
+    "nivel": 79,
+    "regex": "^git log --grep=.+$",
+    "descricao": "Filtra commits por palavra na mensagem.",
+    "exemploCorreto": "git log --grep=\"bugfix\""
+  },
+  {
+    "comando": "git blame arquivo.txt",
+    "nivel": 80,
+    "regex": "^git blame .+$",
+    "descricao": "Mostra quem modificou cada linha.",
+    "exemploCorreto": "git blame arquivo.txt"
+  },
+  {
+    "comando": "git rebase main",
+    "nivel": 81,
+    "regex": "^git rebase \\w+$",
+    "descricao": "Rebaseia a branch atual em outra.",
+    "exemploCorreto": "git rebase main"
+  },
+  {
+    "comando": "git rebase --continue",
+    "nivel": 82,
+    "regex": "^git rebase --continue$",
+    "descricao": "Continua rebase após resolver conflitos.",
+    "exemploCorreto": "git rebase --continue"
+  },
+  {
+    "comando": "git rebase --skip",
+    "nivel": 83,
+    "regex": "^git rebase --skip$",
+    "descricao": "Pula commit atual durante rebase.",
+    "exemploCorreto": "git rebase --skip"
+  },
+  {
+    "comando": "git rebase --abort",
+    "nivel": 84,
+    "regex": "^git rebase --abort$",
+    "descricao": "Cancela rebase em andamento.",
+    "exemploCorreto": "git rebase --abort"
+  },
+  {
+    "comando": "git rebase -i HEAD~3",
+    "nivel": 85,
+    "regex": "^git rebase -i HEAD~\\d+$",
+    "descricao": "Rebase interativo dos últimos N commits.",
+    "exemploCorreto": "git rebase -i HEAD~3"
+  },
+  {
+    "comando": "git log --before=\"2026-05-01\"",
+    "nivel": 86,
+    "regex": "^git log --before=.+$",
+    "descricao": "Filtra commits antes de uma data.",
+    "exemploCorreto": "git log --before=\"2026-05-01\""
+  },
+  {
+    "comando": "git log --after=\"2026-01-01\"",
+    "nivel": 87,
+    "regex": "^git log --after=.+$",
+    "descricao": "Filtra commits após uma data.",
+    "exemploCorreto": "git log --after=\"2026-01-01\""
+  },
+  {
+    "comando": "git diff branch1..branch2",
+    "nivel": 88,
+    "regex": "^git diff \\w+\\.\\.\\w+$",
+    "descricao": "Mostra diferenças entre branches.",
+    "exemploCorreto": "git diff branch1..branch2"
+  },
+  {
+    "comando": "git diff --name-only main feature",
+    "nivel": 89,
+    "regex": "^git diff --name-only \\w+ \\w+$",
+    "descricao": "Lista apenas nomes de arquivos diferentes.",
+    "exemploCorreto": "git diff --name-only main feature"
+  },
+  {
+    "comando": "git shortlog -sn",
+    "nivel": 90,
+    "regex": "^git shortlog -sn$",
+    "descricao": "Resumo de commits por autor.",
+    "exemploCorreto": "git shortlog -sn"
+  },
+  {
+    "comando": "git tag",
+    "nivel": 91,
+    "regex": "^git tag$",
+    "descricao": "Lista todas as tags.",
+    "exemploCorreto": "git tag"
+  },
+  {
+    "comando": "git tag v1.0.0",
+    "nivel": 92,
+    "regex": "^git tag v[\\d.]+$",
+    "descricao": "Cria uma tag leve.",
+    "exemploCorreto": "git tag v1.0.0"
+  },
+  {
+    "comando": "git tag -a v1.1.0 -m \"Versao de producao v1.1.0\"",
+    "nivel": 93,
+    "regex": "^git tag -a v[\\d.]+ -m \".+\"$",
+    "descricao": "Cria uma tag anotada com mensagem.",
+    "exemploCorreto": "git tag -a v1.1.0 -m \"Versao de producao v1.1.0\""
+  },
+  {
+    "comando": "git push origin v1.0.0",
+    "nivel": 94,
+    "regex": "^git push \\w+ v[\\d.]+$",
+    "descricao": "Envia uma tag específica para o remoto.",
+    "exemploCorreto": "git push origin v1.0.0"
+  },
+  {
+    "comando": "git push origin --tags",
+    "nivel": 95,
+    "regex": "^git push \\w+ --tags$",
+    "descricao": "Envia todas as tags para o remoto.",
+    "exemploCorreto": "git push origin --tags"
+  },
+  {
+    "comando": "git tag -d v1.0.0",
+    "nivel": 96,
+    "regex": "^git tag -d v[\\d.]+$",
+    "descricao": "Deleta uma tag local.",
+    "exemploCorreto": "git tag -d v1.0.0"
+  },
+  {
+    "comando": "git push origin --delete tag v1.0.0",
+    "nivel": 97,
+    "regex": "^git push \\w+ --delete tag v[\\d.]+$",
+    "descricao": "Deleta uma tag no remoto.",
+    "exemploCorreto": "git push origin --delete tag v1.0.0"
+  },
+  {
+    "comando": "git submodule add https://github.com/usuario/lib.git",
+    "nivel": 98,
+    "regex": "^git submodule add https?:\\/\\/.+$",
+    "descricao": "Adiciona um submódulo ao projeto.",
+    "exemploCorreto": "git submodule add https://github.com/usuario/lib.git"
+  },
+  {
+    "comando": "git submodule update --init --recursive",
+    "nivel": 99,
+    "regex": "^git submodule update --init --recursive$",
+    "descricao": "Inicializa e atualiza todos os submódulos.",
+    "exemploCorreto": "git submodule update --init --recursive"
+  },
+  {
+    "comando": "git config --global alias.co checkout",
+    "nivel": 100,
+    "regex": "^git config --global alias\\.\\w+ .+$",
+    "descricao": "Cria um alias para um comando.",
+    "exemploCorreto": "git config --global alias.co checkout"
+  }
+]

@@ -276,7 +276,7 @@ body {
     padding: 2rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    overflow: hidden;
 }
 
 .subtitle {
@@ -409,6 +409,12 @@ body {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    width: 616px;
+    height: 500px;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
 }
 
 .terminal-header {
@@ -446,17 +452,18 @@ body {
 
 /* Terminal Body */
 .terminal-body {
-    padding: 1.5rem;
-    height: 100%;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 /* Output Area */
 .output-area {
-    flex: 1;
-    margin-bottom: 1rem;
+    flex: 1 1 auto;
     overflow-y: auto;
+    margin-bottom: 0.75rem;
+    min-height: 0;
 }
 
 .welcome-message {
@@ -477,8 +484,8 @@ body {
 
 /* Command Result */
 .command-result {
-    margin-bottom: 1rem;
-    padding: 1rem;
+    margin-bottom: 0.75rem;
+    padding: 0.75rem;
     border-radius: 6px;
     border-left: 4px solid;
     animation: fadeIn 0.3s ease-in;
@@ -544,7 +551,7 @@ body {
 
 .success-message {
     margin-top: 0.5rem;
-    padding: 0.5rem;
+    padding: 0.4rem 0.5rem;
     background-color: rgba(78, 201, 176, 0.1);
     border-radius: 4px;
     border-left: 3px solid var(--accent-green);
@@ -558,8 +565,8 @@ body {
 
 /* Correction Card */
 .correction-card {
-    margin-top: 0.75rem;
-    padding: 1rem;
+    margin-top: 0.5rem;
+    padding: 0.75rem;
     background-color: var(--bg-secondary);
     border: 1px solid var(--border-color);
     border-radius: 6px;
@@ -651,8 +658,15 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding-top: 1rem;
+    padding-top: 0.75rem;
     border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
+    margin-bottom: 0.5rem;
+}
+
+/* Terminal Footer (Input + Hint) */
+.terminal-footer {
+    margin-top: auto;
     flex-shrink: 0;
 }
 
@@ -682,8 +696,8 @@ body {
 
 /* Hint Display */
 .hint-display {
-    margin-top: 0.75rem;
-    padding: 0.75rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
     background-color: rgba(86, 156, 214, 0.1);
     border: 1px solid var(--accent-blue);
     border-left: 3px solid var(--accent-blue);
@@ -693,6 +707,7 @@ body {
     opacity: 0;
     transform: translateY(-10px);
     transition: all 0.3s ease;
+    flex-shrink: 0;
 }
 
 .hint-display.show {
