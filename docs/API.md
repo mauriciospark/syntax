@@ -8,7 +8,7 @@
 
 ## Visão Geral
 
-O Syntax é uma aplicação client-side que não possui uma API REST tradicional. No entanto, expõe várias funções JavaScript que podem ser utilizadas para integrações e extensões.
+O Syntax é uma aplicação client-side que não possui uma API REST tradicional. No entanto, expõe várias funções JavaScript que podem ser utilizadas para integrações e extensões. A arquitetura modular baseada em JSON permite carregar dinamicamente até 100 níveis de aprendizado do arquivo `json/commands.json`.
 
 ## Estrutura de Dados
 
@@ -60,7 +60,7 @@ O Syntax é uma aplicação client-side que não possui uma API REST tradicional
 
 ### loadCommands()
 
-**Descrição**: Carrega os comandos Git do arquivo JSON.
+**Descrição**: Carrega os comandos Git do arquivo JSON de forma dinâmica.
 
 **Sintaxe**:
 ```javascript
@@ -74,7 +74,14 @@ async function loadCommands()
 await loadCommands();
 ```
 
-**Uso Interno**: Chamado automaticamente ao carregar a página.
+**Uso Interno**: Chamado automaticamente ao carregar a página. Carrega todos os comandos de `json/commands.json` e os armazena na variável global `gitCommands`.
+
+**Comportamento**:
+- Faz uma requisição fetch para `json/commands.json`
+- Parseia o JSON e armazena em `gitCommands`
+- Carrega o progresso salvo do localStorage
+- Atualiza a interface de progresso
+- Atualiza as instruções do exercício atual
 
 ---
 
@@ -370,14 +377,14 @@ function getCommandsForLevel(level: number): CommandObject[]
 ```
 
 **Parâmetros**:
-- `level` (number): Nível desejado (1-3)
+- `level` (number): Nível desejado (1-100)
 
 **Retorno**: Array de CommandObject
 
 **Exemplo**:
 ```javascript
 const level1Commands = getCommandsForLevel(1);
-console.log(level1Commands.length); // 4
+console.log(level1Commands.length); // Número de comandos no nível 1
 ```
 
 ---
@@ -392,14 +399,14 @@ function getCommandsUpToLevel(level: number): CommandObject[]
 ```
 
 **Parâmetros**:
-- `level` (number): Nível máximo
+- `level` (number): Nível máximo (1-100)
 
 **Retorno**: Array de CommandObject
 
 **Exemplo**:
 ```javascript
 const commands = getCommandsUpToLevel(2);
-console.log(commands.length); // 8 (nível 1 + nível 2)
+console.log(commands.length); // Total de comandos nos níveis 1 e 2
 ```
 
 ---
@@ -414,7 +421,7 @@ function isLevelComplete(level: number): boolean
 ```
 
 **Parâmetros**:
-- `level` (number): Nível a verificar
+- `level` (number): Nível a verificar (1-100)
 
 **Retorno**: boolean
 
@@ -439,7 +446,7 @@ Array contendo todos os comandos Git carregados do JSON.
 ```javascript
 let nivelAtual = 1;
 ```
-Nível atual do usuário (1-3).
+Nível atual do usuário (1-100).
 
 ### comandosCorretos
 ```javascript
@@ -449,9 +456,9 @@ Set contendo IDs dos comandos completados.
 
 ### maxLevel
 ```javascript
-let maxLevel = 3;
+let maxLevel = 100;
 ```
-Número máximo de níveis disponíveis.
+Número máximo de níveis disponíveis (configurado para suportar até 100 níveis).
 
 ### currentExerciseIndex
 ```javascript
@@ -520,6 +527,57 @@ toggleInstructionsBtn.addEventListener('click', toggleInstructions);
 hintButton.addEventListener('click', showHint);
 ```
 Exibe dica progressiva.
+
+## Arquitetura de Carregamento Dinâmico
+
+### Estrutura do Arquivo JSON
+
+O arquivo `json/commands.json` contém todos os comandos Git organizados por níveis. Cada comando é um objeto JSON com a seguinte estrutura:
+
+```json
+{
+  "id": 1,
+  "categoria": "Início",
+  "comando": "git init",
+  "regex": "^git init$",
+  "ajuda": "Inicia um novo repositório Git no diretório atual.",
+  "exemplo": "git init",
+  "nivel": 1,
+  "titulo": "Iniciando um Repositório Git",
+  "descricao": "Descrição detalhada em Markdown",
+  "objetivos": ["Objetivo 1", "Objetivo 2"]
+}
+```
+
+### Campos do Comando
+
+- **id**: Identificador único do comando (número inteiro)
+- **categoria**: Categoria do comando (string)
+- **comando**: O comando Git a ser validado (string)
+- **regex**: Expressão regular para validação (string)
+- **ajuda**: Texto de ajuda curto (string)
+- **exemplo**: Exemplo de uso do comando (string)
+- **nivel**: Nível de dificuldade (1-100)
+- **titulo**: Título do exercício (string)
+- **descricao**: Descrição detalhada em Markdown (string)
+- **objetivos**: Array de objetivos de aprendizado (array de strings)
+
+### Carregamento Dinâmico
+
+A função `loadCommands()` é responsável por carregar todos os comandos do JSON:
+
+1. Faz uma requisição fetch para `json/commands.json`
+2. Parseia o JSON e armazena em `gitCommands`
+3. Os comandos ficam disponíveis para validação e exibição
+4. O sistema suporta até 100 níveis distintos
+
+### Benefícios da Arquitetura JSON
+
+- **Extensibilidade**: Adicionar novos comandos sem modificar código JavaScript
+- **Manutenção**: Atualizar descrições e expressões regulares diretamente no JSON
+- **Escalabilidade**: Suporte para até 100 níveis de aprendizado
+- **Personalização**: Fácil adaptação para diferentes idiomas ou curriculares
+- **Versionamento**: Mudanças em comandos podem ser rastreadas via Git
 
 ## Integração Externa
 

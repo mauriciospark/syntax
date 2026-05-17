@@ -10,6 +10,8 @@
 
 Obrigado por seu interesse em contribuir com o Syntax! Este guia fornece informações sobre como você pode participar do desenvolvimento do projeto.
 
+O Syntax utiliza uma arquitetura modular baseada em JSON onde todos os comandos Git e níveis de aprendizado são definidos no arquivo `json/commands.json`. Esta abordagem permite carregar dinamicamente até 100 níveis de aprendizado, tornando a contribuição extremamente acessível.
+
 ## Como Contribuir
 
 ### Reportando Bugs
@@ -99,12 +101,12 @@ syntax/
 
 #### Adicionando Novos Comandos Git
 
-Para adicionar um novo comando Git:
+Para adicionar um novo comando Git, você não precisa modificar código JavaScript - basta editar o arquivo `json/commands.json`:
 
 1. **Edite `json/commands.json`**
    ```json
    {
-     "id": 12,
+     "id": 101,
      "categoria": "Nova Categoria",
      "comando": "git novo-comando",
      "regex": "^git novo-comando$",
@@ -120,14 +122,51 @@ Para adicionar um novo comando Git:
    }
    ```
 
-2. **Teste o comando**
+2. **Campos do Comando**
+   - **id**: Identificador único (use o próximo número disponível)
+   - **categoria**: Categoria do comando (ex: "Branch", "Commit", "Remote")
+   - **comando**: O comando Git exato
+   - **regex**: Expressão regular para validação (deve corresponder ao comando)
+   - **ajuda**: Texto de ajuda curto (exibido nas dicas)
+   - **exemplo**: Exemplo de uso do comando
+   - **nivel**: Nível de dificuldade (1-100)
+   - **titulo**: Título do exercício
+   - **descricao**: Descrição detalhada em Markdown
+   - **objetivos**: Array de objetivos de aprendizado
+
+3. **Teste o comando**
    - Abra a aplicação
+   - O comando será carregado automaticamente do JSON
    - Verifique se o comando é validado corretamente
    - Teste variações do comando
 
-3. **Atualize a documentação**
+4. **Atualize a documentação**
    - Adicione o comando ao FEATURES.md se necessário
    - Atualize o README.md se for um comando importante
+
+#### Adicionando Novos Níveis
+
+O sistema suporta até 100 níveis de aprendizado. Para adicionar um novo nível:
+
+1. **Adicione comandos com o novo nível**
+   ```json
+   {
+     "id": 101,
+     "nivel": 6,
+     "comando": "git novo-comando-avancado",
+     ...
+   }
+   ```
+
+2. **A aplicação detectará automaticamente o novo nível**
+   - Não é necessário modificar código JavaScript
+   - O sistema carrega comandos dinamicamente do JSON
+   - O progresso do usuário é salvo por nível
+
+3. **Organize os níveis em fases**
+   - Fase 1: Fundamentos Locais (níveis 1-20)
+   - Fase 2: Colaboração e Remotos (níveis 21-50)
+   - Fase 3: Operações Avançadas (níveis 51-100)
 
 #### Modificando a Lógica
 
@@ -135,18 +174,42 @@ Ao modificar `js/script.js`:
 
 1. **Mantenha compatibilidade**
    - Não quebre funcionalidades existentes
-   - Teste todos os níveis
+   - Teste todos os níveis (até 100)
    - Verifique persistência de progresso
+   - Certifique-se de que o carregamento dinâmico do JSON funciona
 
 2. **Adicione testes manuais**
    - Teste cada função modificada
    - Verifique edge cases
    - Teste em diferentes navegadores
+   - Teste com diferentes níveis de progresso
 
 3. **Documente mudanças**
    - Adicione comentários ao código
    - Atualize a documentação API.md se necessário
    - Descreva mudanças no commit message
+
+#### Melhores Práticas para Expressões Regulares
+
+Ao adicionar ou modificar expressões regulares no JSON:
+
+1. **Seja específico mas flexível**
+   ```json
+   "regex": "^git add .+$"  // Aceita qualquer arquivo após git add
+   ```
+
+2. **Use âncoras quando apropriado**
+   ```json
+   "regex": "^git init$"  // Exige comando exato
+   ```
+
+3. **Teste variações do comando**
+   - Com espaços extras
+   - Com diferentes parâmetros
+   - Com caracteres especiais
+
+4. **Documente limitações**
+   - Se a regex não aceita certas variações, documente no campo `ajuda`
 
 #### Modificando Estilos
 
@@ -272,11 +335,12 @@ Sim! Contribuições não-técnicas são muito valorizadas:
 4. Verifique responsividade
 
 ### Posso adicionar comandos Git de outros níveis?
-Sim! Sinta-se livre para adicionar comandos para qualquer nível. Apenas certifique-se de:
-- Usar o nível apropriado (1-3)
-- Seguir o formato existente
-- Testar a validação
-- Atualizar a documentação
+Sim! Sinta-se livre para adicionar comandos para qualquer nível. O sistema suporta até 100 níveis. Apenas certifique-se de:
+- Usar o nível apropriado (1-100)
+- Seguir o formato JSON existente
+- Testar a validação da expressão regular
+- Atualizar a documentação se necessário
+- Organizar comandos em fases lógicas de aprendizado
 
 ### Posso modificar o design?
 Sim! Melhorias no design são bem-vindas. Por favor:

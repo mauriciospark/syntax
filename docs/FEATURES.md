@@ -8,7 +8,7 @@
 
 ## Visão Geral das Funcionalidades
 
-O Syntax oferece um conjunto completo de funcionalidades projetadas para facilitar o aprendizado de comandos Git de forma interativa e gamificada.
+O Syntax oferece um conjunto completo de funcionalidades projetadas para facilitar o aprendizado de comandos Git de forma interativa e gamificada. A arquitetura modular baseada em JSON permite carregar dinamicamente até 100 níveis de aprendizado, proporcionando um sistema escalável e extensível.
 
 ## 1. Validação de Sintaxe em Tempo Real
 
@@ -25,36 +25,53 @@ Valida comandos Git digitados pelo usuário usando expressões regulares avança
 - Prevenção de erros comuns
 - Desenvolvimento de memória muscular para comandos Git
 
-## 2. Sistema de Níveis Progressivo
+## 2. Sistema de 100 Níveis Dinâmicos
 
 ### Descrição
-Sistema de 3 níveis de dificuldade que desbloqueia comandos progressivamente conforme o usuário avança.
+Sistema escalável que suporta até 100 níveis de dificuldade carregados dinamicamente do arquivo `json/commands.json`. Os níveis são organizados em fases de aprendizado progressivo que vão desde fundamentos locais até operações avançadas.
 
-### Estrutura dos Níveis
+### Arquitetura Modular
+- **Carregamento Dinâmico**: Comandos e níveis são carregados do JSON em tempo de execução
+- **Configuração Centralizada**: Todos os comandos, expressões regulares e descrições estão em `json/commands.json`
+- **Extensibilidade**: Adicionar novos níveis ou comandos sem modificar o código JavaScript
+- **Escalabilidade**: Sistema projetado para suportar até 100 níveis distintos
 
-#### Nível 1 (Iniciante)
-- **Comandos**: `git init`, `git add`, `git commit`, `git status`
+### Estrutura das Fases de Aprendizado
+
+#### Fase 1: Fundamentos Locais (Níveis 1-20)
+- **Comandos básicos**: `git init`, `git add`, `git commit`, `git status`
+- **Gerenciamento de arquivos**: `git rm`, `git mv`, `git restore`
+- **Histórico local**: `git log`, `git diff`, `git show`
 - **Feedback**: Extremamente detalhado e didático
 - **Explicações**: Completas com exemplos e contexto
 - **Público-alvo**: Usuários sem experiência prévia com Git
 
-#### Nível 2 (Intermediário)
-- **Comandos**: `git branch`, `git checkout`, `git remote`, `git log`
+#### Fase 2: Colaboração e Remotos (Níveis 21-50)
+- **Comandos de branches**: `git branch`, `git checkout`, `git switch`
+- **Repositórios remotos**: `git remote`, `git clone`, `git fetch`
+- **Sincronização**: `git push`, `git pull`
+- **Tags e versionamento**: `git tag`
+- **Stash**: Gerenciamento de trabalho temporário
 - **Feedback**: Técnico mas acessível
 - **Explicações**: Mais concisas e diretas
 - **Público-alvo**: Usuários com conhecimento básico de Git
 
-#### Nível 3 (Avançado)
-- **Comandos**: `git push`, `git pull`, `git merge`, `git diff`
+#### Fase 3: Operações Avançadas (Níveis 51-100)
+- **Rebase avançado**: `git rebase -i`, `git rebase --continue`
+- **Reset e reversão**: `git reset --hard`, `git revert`
+- **Cherry-pick**: Seleção cirúrgica de commits
+- **Submódulos**: Gerenciamento de projetos complexos
+- **Reflog e recuperação**: `git reflog`, `git fsck`
 - **Feedback**: Técnico e discreto
-- **Explicações**: Diretas e sucintas
+- **Explicações**: Diretas e profissionais
 - **Público-alvo**: Usuários experientes buscando refinamento
 
 ### Mecanismo de Progressão
-- Cada nível possui 4 comandos para dominar
+- Cada nível possui múltiplos comandos para dominar
 - O usuário deve completar todos os comandos de um nível para avançar
 - Progresso salvo automaticamente no localStorage
 - Animação de "Level Up" ao completar um nível
+- Sistema adaptativo que carrega comandos conforme o nível atual
 
 ## 3. Feedback Inteligente e Contextual
 
@@ -216,7 +233,41 @@ Animações sutis para melhorar a experiência do usuário e fornecer feedback v
 - Experiência mais agradável
 - Indicações de estado visíveis
 
-## 10. Marca e Identidade Visual
+## 10. Arquitetura Baseada em JSON
+
+### Descrição
+Sistema modular onde todos os comandos, níveis e configurações são definidos no arquivo `json/commands.json`, permitindo fácil extensão e manutenção.
+
+### Como Funciona
+- **Carregamento Dinâmico**: A aplicação carrega comandos do JSON em tempo de execução
+- **Estrutura de Comando**: Cada comando possui id, categoria, regex, ajuda, exemplo, nível, título, descrição e objetivos
+- **Validação via Regex**: Expressões regulares são definidas no JSON para cada comando
+- **Organização por Níveis**: Comandos são agrupados por nível de dificuldade (1-100)
+
+### Benefícios
+- **Extensibilidade**: Adicionar novos comandos sem modificar código JavaScript
+- **Manutenção**: Atualizar descrições e expressões regulares diretamente no JSON
+- **Escalabilidade**: Suporte para até 100 níveis de aprendizado
+- **Personalização**: Fácil adaptação para diferentes idiomas ou curriculares
+- **Versionamento**: Mudanças em comandos podem ser rastreadas via Git
+
+### Estrutura do Comando JSON
+```json
+{
+  "id": 1,
+  "categoria": "Início",
+  "comando": "git init",
+  "regex": "^git init$",
+  "ajuda": "Inicia um novo repositório Git no diretório atual.",
+  "exemplo": "git init",
+  "nivel": 1,
+  "titulo": "Iniciando um Repositório Git",
+  "descricao": "Descrição detalhada em Markdown",
+  "objetivos": ["Objetivo 1", "Objetivo 2"]
+}
+```
+
+## 11. Marca e Identidade Visual
 
 ### Descrição
 Identidade visual consistente com a marca SparkMaurício.
