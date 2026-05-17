@@ -241,7 +241,7 @@ function hideHint() {
 // Load commands from JSON file
 async function loadCommands() {
     try {
-        const response = await fetch('../json/commands.json');
+        const response = await fetch('../json/comandos.json?v=${new Date().getTime()}');
         gitCommands = await response.json();
         loadProgress();
         updateProgressUI();

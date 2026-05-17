@@ -8,7 +8,7 @@
 
 ## Visão Geral
 
-O Syntax é uma aplicação client-side que não possui uma API REST tradicional. No entanto, expõe várias funções JavaScript que podem ser utilizadas para integrações e extensões. A arquitetura modular baseada em JSON permite carregar dinamicamente até 100 níveis de aprendizado do arquivo `json/commands.json`.
+O Syntax é uma aplicação client-side que não possui uma API REST tradicional. No entanto, expõe várias funções JavaScript que podem ser utilizadas para integrações e extensões. A arquitetura modular baseada em JSON permite carregar dinamicamente até 100 níveis de aprendizado do arquivo `json/comandos.json`.
 
 ## Estrutura de Dados
 
@@ -74,10 +74,10 @@ async function loadCommands()
 await loadCommands();
 ```
 
-**Uso Interno**: Chamado automaticamente ao carregar a página. Carrega todos os comandos de `json/commands.json` e os armazena na variável global `gitCommands`.
+**Uso Interno**: Chamado automaticamente ao carregar a página. Carrega todos os comandos de `json/comandos.json` e os armazena na variável global `gitCommands`.
 
 **Comportamento**:
-- Faz uma requisição fetch para `json/commands.json`
+- Faz uma requisição fetch para `json/comandos.json?v=${new Date().getTime()}` (com cache-busting)
 - Parseia o JSON e armazena em `gitCommands`
 - Carrega o progresso salvo do localStorage
 - Atualiza a interface de progresso
@@ -532,7 +532,7 @@ Exibe dica progressiva.
 
 ### Estrutura do Arquivo JSON
 
-O arquivo `json/commands.json` contém todos os comandos Git organizados por níveis. Cada comando é um objeto JSON com a seguinte estrutura:
+O arquivo `json/comandos.json` contém todos os comandos Git organizados por níveis. Cada comando é um objeto JSON com a seguinte estrutura:
 
 ```json
 {
@@ -566,7 +566,7 @@ O arquivo `json/commands.json` contém todos os comandos Git organizados por ní
 
 A função `loadCommands()` é responsável por carregar todos os comandos do JSON:
 
-1. Faz uma requisição fetch para `json/commands.json`
+1. Faz uma requisição fetch para `json/comandos.json?v=${new Date().getTime()}` (com cache-busting)
 2. Parseia o JSON e armazena em `gitCommands`
 3. Os comandos ficam disponíveis para validação e exibição
 4. O sistema suporta até 100 níveis distintos
@@ -604,7 +604,7 @@ console.log(getCommandsForLevel(1));
 
 ### Modificando Comandos
 
-Para adicionar novos comandos, edite `json/commands.json`:
+Para adicionar novos comandos, edite `json/comandos.json`:
 
 ```json
 {

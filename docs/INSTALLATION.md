@@ -98,7 +98,7 @@ O Syntax não requer variáveis de ambiente, mas você pode personalizar algumas
 
 ### Configuração de Comandos (Arquitetura Modular)
 
-O Syntax utiliza uma arquitetura modular baseada em JSON onde todos os comandos Git são definidos no arquivo `json/commands.json`. Esta abordagem permite:
+O Syntax utiliza uma arquitetura modular baseada em JSON onde todos os comandos Git são definidos no arquivo `json/comandos.json`. Esta abordagem permite:
 
 - **Carregamento Dinâmico**: Comandos são carregados em tempo de execução via Fetch API
 - **Suporte para 100 Níveis**: Sistema escalável que suporta até 100 níveis de aprendizado
@@ -107,7 +107,7 @@ O Syntax utiliza uma arquitetura modular baseada em JSON onde todos os comandos 
 
 #### Estrutura do Arquivo JSON
 
-Para adicionar ou modificar comandos Git, edite o arquivo `json/commands.json`:
+Para adicionar ou modificar comandos Git, edite o arquivo `json/comandos.json`:
 
 ```json
 {
@@ -169,7 +169,7 @@ Você pode personalizar o Syntax para diferentes necessidades:
 ### Problema: Comandos não são validados
 
 **Soluções:**
-1. Verifique se o arquivo `json/commands.json` está acessível
+1. Verifique se o arquivo `json/comandos.json` está acessível
 2. Verifique se há erros no console do navegador
 3. Certifique-se de que as expressões regulares estão corretas
 
