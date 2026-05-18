@@ -35,6 +35,10 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="manifest" href="/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
@@ -52,6 +56,7 @@
                 <span class="brand-subtitle">by Linhagem SPARK</span>
             </div>
             <div class="header-right">
+                <div id="jewelCollection" class="jewel-collection" aria-label="Coleção de joias" title="Joias ao completar cada nível"></div>
                 <div class="header-level-indicator">
                     <span class="header-level-label">Nível</span>
                     <span id="headerLevelIndicator" class="header-level-value">1</span>
@@ -61,17 +66,17 @@
 
         <!-- Main Content -->
         <main class="app-main">
-            <!-- Left Side: Instructions -->
+            <!-- Left Side: Level Trail -->
             <aside id="instrucoes" class="instructions-panel">
-                <button id="toggleInstructions" class="toggle-btn" title="Ocultar/Mostrar Instruções">
+                <button id="toggleInstructions" class="toggle-btn" title="Ocultar/Mostrar Trilha">
                     <span class="toggle-icon">◀</span>
                 </button>
                 <header class="instructions-header">
-                    <p class="subtitle">Git Command Validator</p>
+                    <p class="subtitle">Trilha de Níveis</p>
                     <div class="progress-section">
                         <div class="level-info">
                             <span id="levelIndicator" class="level-indicator">Nível 1</span>
-                            <span id="progressText" class="progress-text">0/4 comandos</span>
+                            <span id="progressText" class="progress-text">Questão 1/100</span>
                         </div>
                         <div class="progress-bar-container">
                             <div id="progressBar" class="progress-bar"></div>
@@ -79,8 +84,12 @@
                     </div>
                 </header>
 
+                <div id="levelTrail" class="level-trail">
+                    <!-- Level trail will be rendered here via JavaScript -->
+                </div>
+
                 <div id="instrucoes-content" class="instructions-content">
-                    <!-- Instructions will be rendered here via JavaScript -->
+                    <!-- Current question will be rendered here via JavaScript -->
                 </div>
             </aside>
 
