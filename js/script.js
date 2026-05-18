@@ -11,6 +11,119 @@
   ============================================================================
 */
 
+// Git Commands Database - loaded from JSON file
+let gitCommands = [];
+
+/*
+ * Regra fixa de níveis (10 questões por nível):
+ *   Nível 1  → Questões  1–10
+ *   Nível 2  → Questões 11–20
+ *   Nível 3  → Questões 21–30
+ *   Nível 4  → Questões 31–40
+ *   Nível 5  → Questões 41–50
+ *   Nível 6  → Questões 51–60
+ *   Nível 7  → Questões 61–70
+ *   Nível 8  → Questões 71–80
+ *   Nível 9  → Questões 81–90
+ *   Nível 10 → Questões 91–100
+ */
+const QUESTIONS_PER_LEVEL = 10;
+const TOTAL_QUESTIONS = 100;
+const maxLevel = TOTAL_QUESTIONS / QUESTIONS_PER_LEVEL;
+
+function nivelFromQuestao(questao) {
+    const q = Number(questao);
+    if (!q || q < 1 || q > TOTAL_QUESTIONS) return 1;
+    return Math.ceil(q / QUESTIONS_PER_LEVEL);
+}
+
+function questaoFromNivelAndIndex(nivel, indexInLevel) {
+    return (nivel - 1) * QUESTIONS_PER_LEVEL + indexInLevel + 1;
+}
+
+function indexInLevelFromQuestao(questao) {
+    return (Number(questao) - 1) % QUESTIONS_PER_LEVEL;
+}
+
+function questaoRangeForLevel(nivel) {
+    const start = questaoFromNivelAndIndex(nivel, 0);
+    return { start, end: start + QUESTIONS_PER_LEVEL - 1 };
+}
+
+function questaoBelongsToLevel(questao, nivel) {
+    const { start, end } = questaoRangeForLevel(nivel);
+    const q = Number(questao);
+    return q >= start && q <= end;
+}
+
+function getActiveLevel() {
+    return expandedLevel ?? nivelAtual;
+}
+
+// Load commands from JSON files (comandos.json + commands.json)
+async function loadCommandsFromJSON() {
+    try {
+        const [comandosRes, commandsRes] = await Promise.all([
+            fetch('json/comandos.json'),
+            fetch('json/commands.json')
+        ]);
+        const comandos = await comandosRes.json();
+        const commands = await commandsRes.json();
+        const extraByQuestao = new Map(
+            commands.map((c) => [Number(c.questao ?? c.id), c])
+        );
+
+        gitCommands = comandos
+            .map((cmd, index) => {
+                const questao = Number(cmd.questao) || index + 1;
+                const nivel = nivelFromQuestao(questao);
+                const extra = extraByQuestao.get(questao) || {};
+                const titulo = extra.titulo || cmd.comando;
+                const descricaoBase = extra.descricao || cmd.descricao;
+                const objetivos = Array.isArray(extra.objetivos) ? extra.objetivos : [];
+
+                if (cmd.nivel != null && cmd.nivel !== nivel) {
+                    console.warn(
+                        `Questão ${questao}: nivel ${cmd.nivel} no JSON ignorado; usando Nível ${nivel}`
+                    );
+                }
+
+                return {
+                    id: `git-cmd-${questao}`,
+                    questao,
+                    nivel,
+                    comando: cmd.comando,
+                    regex: cmd.regex,
+                    titulo,
+                    descricao: descricaoBase,
+                    objetivos,
+                    ajuda: extra.ajuda || cmd.descricao,
+                    exemplo: extra.exemplo || cmd.exemploCorreto,
+                    categoria: extra.categoria || 'Git',
+                    exemploCorreto: cmd.exemploCorreto
+                };
+            })
+            .sort((a, b) => a.questao - b.questao);
+
+        if (gitCommands.length !== TOTAL_QUESTIONS) {
+            console.warn(`Esperado ${TOTAL_QUESTIONS} questões; carregado ${gitCommands.length}`);
+        }
+
+        for (let nivel = 1; nivel <= maxLevel; nivel++) {
+            const levelCmds = getCommandsForLevel(nivel);
+            if (levelCmds.length !== QUESTIONS_PER_LEVEL) {
+                const { start, end } = questaoRangeForLevel(nivel);
+                console.warn(`Nível ${nivel} (Q.${start}–${end}): ${levelCmds.length} questões`);
+            }
+        }
+
+        console.log(`Loaded ${gitCommands.length} commands from JSON`);
+    } catch (error) {
+        console.error('Error loading commands from JSON:', error);
+        gitCommands = [];
+    }
+}
+
 // DOM Elements
 const commandInput = document.getElementById('commandInput');
 const outputArea = document.getElementById('outputArea');
@@ -18,11 +131,35 @@ const progressBar = document.getElementById('progressBar');
 const progressText = document.getElementById('progressText');
 const levelIndicator = document.getElementById('levelIndicator');
 const headerLevelIndicator = document.getElementById('headerLevelIndicator');
-const instructionsPanel = document.getElementById('instrucoes');
-const instructionsPanelContainer = document.getElementById('instructionsPanel');
+const instructionsPanel = document.getElementById('instrucoes-content');
+const instructionsPanelContainer = document.getElementById('instrucoes');
+const levelTrail = document.getElementById('levelTrail');
 const toggleInstructionsBtn = document.getElementById('toggleInstructions');
 const hintButton = document.getElementById('hintButton');
 const hintDisplay = document.getElementById('hintDisplay');
+const jewelCollection = document.getElementById('jewelCollection');
+
+// Joias — uma por nível (10 questões cada)
+const JEWELS = [
+    { level: 1, name: 'Rubi', color: '#c0392b', highlight: '#ff6b6b', glow: 'rgba(192, 57, 43, 0.55)' },
+    { level: 2, name: 'Âmbar', color: '#d35400', highlight: '#ffb347', glow: 'rgba(211, 84, 0, 0.55)' },
+    { level: 3, name: 'Topázio', color: '#f39c12', highlight: '#ffe066', glow: 'rgba(243, 156, 18, 0.55)' },
+    { level: 4, name: 'Esmeralda', color: '#27ae60', highlight: '#7bed9f', glow: 'rgba(39, 174, 96, 0.55)' },
+    { level: 5, name: 'Turquesa', color: '#16a085', highlight: '#55efc4', glow: 'rgba(22, 160, 133, 0.55)' },
+    { level: 6, name: 'Safira', color: '#2980b9', highlight: '#74b9ff', glow: 'rgba(41, 128, 185, 0.55)' },
+    { level: 7, name: 'Ametista', color: '#8e44ad', highlight: '#d6a2e8', glow: 'rgba(142, 68, 173, 0.55)' },
+    { level: 8, name: 'Opala', color: '#6c5ce7', highlight: '#a29bfe', glow: 'rgba(108, 92, 231, 0.55)' },
+    { level: 9, name: 'Pérola', color: '#b2bec3', highlight: '#ffffff', glow: 'rgba(178, 190, 195, 0.45)' },
+    { level: 10, name: 'Diamante', color: '#dfe6e9', highlight: '#ffffff', glow: 'rgba(223, 230, 233, 0.65)' }
+];
+
+function getJewelConfig(level) {
+    return JEWELS[level - 1] || JEWELS[0];
+}
+
+function hasJewel(level) {
+    return earnedJewels.has(level);
+}
 
 // Initialize marked.js options
 marked.setOptions({
@@ -30,16 +167,16 @@ marked.setOptions({
     gfm: true
 });
 
-// Global variable to store commands loaded from JSON
-let gitCommands = [];
-
 // Level system state
 let nivelAtual = 1;
+let maxUnlockedLevel = 1; // Track the highest unlocked level separately
 let comandosCorretos = new Set(); // Track correct command IDs
-let maxLevel = 3;
-let currentExerciseIndex = 0; // Track current exercise within level
+let currentExerciseIndex = 0; // índice 0–9 dentro do nível atual
 let isInstructionsCollapsed = false;
 let hintClickCount = 0; // Track hint clicks for progressive hints
+let expandedLevel = 1; // Track which level is currently expanded
+let completedLevels = new Set();
+let earnedJewels = new Set();
 
 // Load progress from localStorage
 function loadProgress() {
@@ -47,7 +184,53 @@ function loadProgress() {
     if (savedProgress) {
         const progress = JSON.parse(savedProgress);
         nivelAtual = progress.nivelAtual || 1;
+        maxUnlockedLevel = progress.maxUnlockedLevel || 1;
         comandosCorretos = new Set(progress.comandosCorretos || []);
+        expandedLevel = progress.expandedLevel || nivelAtual;
+        completedLevels = new Set(progress.completedLevels || []);
+        earnedJewels = new Set(progress.earnedJewels || progress.completedLevels || []);
+    } else {
+        // Initialize with default values
+        nivelAtual = 1;
+        maxUnlockedLevel = 1;
+        expandedLevel = 1;
+        currentExerciseIndex = 0;
+        earnedJewels = new Set();
+    }
+
+    completedLevels.forEach((lvl) => earnedJewels.add(lvl));
+    
+    // Ensure nivelAtual is valid
+    if (!nivelAtual || nivelAtual < 1 || nivelAtual > maxLevel) {
+        nivelAtual = 1;
+    }
+    
+    // Ensure maxUnlockedLevel is valid and at least nivelAtual
+    if (!maxUnlockedLevel || maxUnlockedLevel < 1 || maxUnlockedLevel > maxLevel) {
+        maxUnlockedLevel = nivelAtual;
+    }
+    if (maxUnlockedLevel < nivelAtual) {
+        maxUnlockedLevel = nivelAtual;
+    }
+    
+    // Ensure expandedLevel is always set to a valid level
+    if (!expandedLevel || expandedLevel < 1 || expandedLevel > maxLevel) {
+        expandedLevel = nivelAtual;
+    }
+    
+    // Reset currentExerciseIndex if it's invalid
+    const levelCommands = getCommandsForLevel(expandedLevel);
+    if (currentExerciseIndex < 0 || currentExerciseIndex >= levelCommands.length) {
+        currentExerciseIndex = 0;
+    }
+    
+    // Reset to Level 1 if localStorage has corrupted data (e.g., nivelAtual = 5 with no progress)
+    if (nivelAtual > 1 && comandosCorretos.size === 0) {
+        nivelAtual = 1;
+        maxUnlockedLevel = 1;
+        expandedLevel = 1;
+        currentExerciseIndex = 0;
+        saveProgress();
     }
 }
 
@@ -55,69 +238,220 @@ function loadProgress() {
 function saveProgress() {
     const progress = {
         nivelAtual,
-        comandosCorretos: Array.from(comandosCorretos)
+        maxUnlockedLevel,
+        comandosCorretos: Array.from(comandosCorretos),
+        expandedLevel,
+        completedLevels: Array.from(completedLevels),
+        earnedJewels: Array.from(earnedJewels)
     };
     localStorage.setItem('syntaxProgress', JSON.stringify(progress));
 }
 
-// Get commands for current level
-function getCommandsForLevel(level) {
-    return gitCommands.filter(cmd => cmd.nivel === level);
+function renderJewelGem(level, size = 'md') {
+    const jewel = getJewelConfig(level);
+    const earned = hasJewel(level);
+    return `
+        <span
+            class="jewel-gem jewel-gem--${size} ${earned ? 'jewel-gem--earned' : 'jewel-gem--locked'}"
+            style="--jewel-color: ${jewel.color}; --jewel-highlight: ${jewel.highlight}; --jewel-glow: ${jewel.glow};"
+            title="${earned ? `${jewel.name} — Nível ${level}` : `Nível ${level} — ainda não conquistada`}"
+            aria-hidden="${earned ? 'false' : 'true'}"
+        >
+            <span class="jewel-gem__shine"></span>
+            <span class="jewel-gem__core"></span>
+        </span>
+    `;
 }
 
-// Get commands up to current level (including lower levels)
+function renderJewelCollection() {
+    if (!jewelCollection) return;
+
+    let html = '<div class="jewel-collection-inner">';
+    for (let i = 1; i <= maxLevel; i++) {
+        const jewel = getJewelConfig(i);
+        const earned = hasJewel(i);
+        html += `
+            <div class="jewel-slot ${earned ? 'jewel-slot--earned' : ''}" data-level="${i}" title="${earned ? jewel.name : `Nível ${i}`}">
+                ${renderJewelGem(i, 'xs')}
+            </div>
+        `;
+    }
+    html += '</div>';
+    jewelCollection.innerHTML = html;
+}
+
+function awardJewel(level) {
+    if (level < 1 || level > maxLevel || earnedJewels.has(level)) return false;
+    earnedJewels.add(level);
+    completedLevels.add(level);
+    return true;
+}
+
+function showJewelUnlockAnimation(levelCompleted) {
+    const jewel = getJewelConfig(levelCompleted);
+    const { start, end } = questaoRangeForLevel(levelCompleted);
+    const advancing = levelCompleted < maxLevel;
+    const nextLevel = levelCompleted + 1;
+
+    const animation = document.createElement('div');
+    animation.className = 'jewel-unlock-animation';
+    animation.innerHTML = `
+        <div class="jewel-unlock-content">
+            <div class="jewel-unlock-sparkles" aria-hidden="true"></div>
+            <div class="jewel-unlock-gem-wrap">
+                ${renderJewelGem(levelCompleted, 'xl')}
+            </div>
+            <p class="jewel-unlock-label">Joia conquistada!</p>
+            <h2 class="jewel-unlock-name">${jewel.name}</h2>
+            <p class="jewel-unlock-detail">Nível ${levelCompleted} · Questões ${start} a ${end}</p>
+            <p class="jewel-unlock-subtitle">${
+                advancing
+                    ? `Nível ${nextLevel} desbloqueado!`
+                    : 'Coleção completa — todas as 10 joias são suas!'
+            }</p>
+        </div>
+    `;
+    document.body.appendChild(animation);
+
+    requestAnimationFrame(() => {
+        animation.classList.add('show');
+    });
+
+    setTimeout(() => {
+        animation.classList.remove('show');
+        setTimeout(() => animation.remove(), 500);
+    }, 3500);
+}
+
+// Questões do nível pelo intervalo fixo (ex.: Nível 2 → Q.11–20)
+function getCommandsForLevel(level) {
+    const { start, end } = questaoRangeForLevel(level);
+    return gitCommands.filter((cmd) => cmd.questao >= start && cmd.questao <= end);
+}
+
+// Questões de todos os níveis até o informado (inclusive)
 function getCommandsUpToLevel(level) {
-    return gitCommands.filter(cmd => cmd.nivel <= level);
+    const { end } = questaoRangeForLevel(level);
+    return gitCommands.filter((cmd) => cmd.questao <= end);
 }
 
 // Check if all commands of current level are completed
 function isLevelComplete(level) {
     const levelCommands = getCommandsForLevel(level);
-    return levelCommands.every(cmd => comandosCorretos.has(cmd.id));
+    return levelCommands.every(cmd => comandosCorretos.has(cmd.comando));
 }
 
-// Level up logic
-function levelUp() {
-    if (nivelAtual < maxLevel) {
-        nivelAtual++;
-        saveProgress();
-        showLevelUpAnimation();
-        updateProgressUI();
-        updateInstructions();
-        // Reset hint on level up
-        hintClickCount = 0;
-        hideHint();
+// Render level trail
+function renderLevelTrail() {
+    if (!levelTrail) return;
+    
+    let html = '<div class="level-trail-container">';
+    
+    for (let i = 1; i <= maxLevel; i++) {
+        const isCompleted = completedLevels.has(i);
+        const isUnlocked = i <= maxUnlockedLevel;
+        const isExpanded = expandedLevel === i;
+        const levelCommands = getCommandsForLevel(i);
+        const completedCount = levelCommands.filter(cmd => comandosCorretos.has(cmd.comando)).length;
+        const { start: qStart, end: qEnd } = questaoRangeForLevel(i);
+        
+        html += `
+            <div class="level-item ${isCompleted ? 'completed' : ''} ${isUnlocked ? 'unlocked' : 'locked'} ${isExpanded ? 'expanded' : ''}" data-level="${i}">
+                <div class="level-header" onclick="toggleLevel(${i})">
+                    <div class="level-number ${hasJewel(i) ? 'level-number--jewel' : ''}">
+                        ${hasJewel(i) ? renderJewelGem(i, 'sm') : i}
+                    </div>
+                    <div class="level-info">
+                        <span class="level-title">Nível ${i}</span>
+                        <span class="level-range">Q. ${qStart}–${qEnd}</span>
+                        <span class="level-progress">${completedCount}/10</span>
+                    </div>
+                    <div class="level-chevron">
+                        ${isExpanded ? '▼' : '▶'}
+                    </div>
+                </div>
+                ${isExpanded ? `
+                    <div class="level-questions">
+                        ${levelCommands.map((cmd, index) => {
+                            const isQuestionCompleted = comandosCorretos.has(cmd.comando);
+                            const isCurrentQuestion = i === expandedLevel && index === currentExerciseIndex;
+                            return `
+                                <div class="question-item ${isQuestionCompleted ? 'completed' : ''} ${isCurrentQuestion ? 'current' : ''}" data-question="${index}">
+                                    <span class="question-number">${cmd.questao}</span>
+                                    <span class="question-command">${cmd.comando}</span>
+                                    ${isQuestionCompleted ? '<span class="question-status">✓</span>' : ''}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                ` : ''}
+            </div>
+        `;
     }
+    
+    html += '</div>';
+    levelTrail.innerHTML = html;
 }
 
-// Show level up animation
-function showLevelUpAnimation() {
-    const animation = document.createElement('div');
-    animation.className = 'level-up-animation';
-    animation.innerHTML = `
-        <div class="level-up-content">
-            <div class="level-up-icon">🎉</div>
-            <h2>LEVEL UP!</h2>
-            <p>Você alcançou o Nível ${nivelAtual}</p>
-            <p class="level-up-subtitle">Novos comandos desbloqueados!</p>
-        </div>
-    `;
-    document.body.appendChild(animation);
+// Toggle level expansion
+function toggleLevel(level) {
+    // Only allow expanding unlocked levels
+    if (level > maxUnlockedLevel) return;
     
-    setTimeout(() => {
-        animation.classList.add('show');
-    }, 100);
+    // If clicking on a different level, switch to it
+    if (expandedLevel !== level) {
+        expandedLevel = level;
+        // Reset exercise index when switching levels
+        const levelCommands = getCommandsForLevel(level);
+        for (let i = 0; i < levelCommands.length; i++) {
+            if (!comandosCorretos.has(levelCommands[i].comando)) {
+                currentExerciseIndex = i;
+                break;
+            }
+        }
+        // If all completed, set to last one
+        if (currentExerciseIndex === 0 && comandosCorretos.has(levelCommands[0].comando)) {
+            currentExerciseIndex = levelCommands.length - 1;
+        }
+    } else {
+        expandedLevel = null;
+    }
     
-    setTimeout(() => {
-        animation.classList.remove('show');
-        setTimeout(() => animation.remove(), 500);
-    }, 3000);
+    saveProgress();
+    renderLevelTrail();
+    updateInstructions();
+    updateProgressUI();
+}
+
+// Ao completar as 10 questões do nível: joia + avanço (se houver próximo nível)
+function levelUp() {
+    const levelFinished = nivelAtual;
+    if (!isLevelComplete(levelFinished)) return;
+
+    const newJewel = awardJewel(levelFinished);
+    if (newJewel) {
+        showJewelUnlockAnimation(levelFinished);
+    }
+
+    if (levelFinished < maxLevel) {
+        nivelAtual = levelFinished + 1;
+        maxUnlockedLevel = nivelAtual;
+        expandedLevel = nivelAtual;
+        currentExerciseIndex = 0;
+    }
+
+    saveProgress();
+    updateProgressUI();
+    renderLevelTrail();
+    updateInstructions();
+    hintClickCount = 0;
+    hideHint();
 }
 
 // Update progress UI
 function updateProgressUI() {
-    const levelCommands = getCommandsForLevel(nivelAtual);
-    const completedInLevel = levelCommands.filter(cmd => comandosCorretos.has(cmd.id)).length;
+    const levelCommands = getCommandsForLevel(getActiveLevel());
+    const completedInLevel = levelCommands.filter(cmd => comandosCorretos.has(cmd.comando)).length;
     const totalInLevel = levelCommands.length;
     const progress = totalInLevel > 0 ? (completedInLevel / totalInLevel) * 100 : 0;
     
@@ -126,24 +460,32 @@ function updateProgressUI() {
     }
     
     if (progressText) {
-        progressText.textContent = `${completedInLevel}/${totalInLevel} comandos`;
+        const currentLevel = getActiveLevel();
+        const levelCommands = getCommandsForLevel(currentLevel);
+        const exercise = levelCommands[currentExerciseIndex];
+        const globalQuestion = exercise?.questao ?? questaoFromNivelAndIndex(currentLevel, currentExerciseIndex);
+        progressText.textContent = `Questão ${globalQuestion}/${TOTAL_QUESTIONS}`;
     }
     
     if (levelIndicator) {
-        levelIndicator.textContent = `Nível ${nivelAtual}`;
+        levelIndicator.textContent = `Nível ${getActiveLevel()}`;
     }
     
     if (headerLevelIndicator) {
         headerLevelIndicator.textContent = nivelAtual;
     }
+    
+    renderLevelTrail();
+    renderJewelCollection();
 }
 
 // Get current exercise based on level and progress
 function getCurrentExercise() {
-    const levelCommands = getCommandsForLevel(nivelAtual);
+    const currentLevel = getActiveLevel();
+    const levelCommands = getCommandsForLevel(currentLevel);
     // Find the first uncompleted command in the current level
     for (let i = 0; i < levelCommands.length; i++) {
-        if (!comandosCorretos.has(levelCommands[i].id)) {
+        if (!comandosCorretos.has(levelCommands[i].comando)) {
             currentExerciseIndex = i;
             return levelCommands[i];
         }
@@ -163,15 +505,20 @@ function updateInstructions() {
         return;
     }
     
+    const currentLevel = getActiveLevel();
+    const globalQuestion = exercise.questao;
+    const { start: qStart, end: qEnd } = questaoRangeForLevel(currentLevel);
+    const objetivosBlock = exercise.objetivos?.length
+        ? `\n\n## Objetivos\n\n${exercise.objetivos.map((o) => `- ${o}`).join('\n')}`
+        : '';
+
     const markdownContent = `# ${exercise.titulo}
 
-${exercise.descricao}
+**Questão ${globalQuestion}** de ${TOTAL_QUESTIONS} · **Nível ${currentLevel}** (questões ${qStart}–${qEnd})
 
-## Objetivos
+${exercise.descricao}${objetivosBlock}
 
-${exercise.objetivos.map(obj => `- ${obj}`).join('\n')}
-
-## Comando Alvo
+## Comando alvo
 
 \`\`${exercise.comando}\`\``;
     
@@ -180,8 +527,9 @@ ${exercise.objetivos.map(obj => `- ${obj}`).join('\n')}
 
 // Move to next exercise
 function moveToNextExercise() {
-    const levelCommands = getCommandsForLevel(nivelAtual);
-    const completedInLevel = levelCommands.filter(cmd => comandosCorretos.has(cmd.id)).length;
+    const currentLevel = getActiveLevel();
+    const levelCommands = getCommandsForLevel(currentLevel);
+    const completedInLevel = levelCommands.filter(cmd => comandosCorretos.has(cmd.comando)).length;
     
     if (completedInLevel < levelCommands.length) {
         updateInstructions();
@@ -203,6 +551,11 @@ function toggleInstructions() {
         instructionsPanelContainer.classList.remove('collapsed');
         toggleInstructionsBtn.classList.remove('rotated');
         toggleInstructionsBtn.querySelector('.toggle-icon').textContent = '◀';
+    }
+    
+    // Focus input when expanding
+    if (!isInstructionsCollapsed) {
+        setTimeout(() => commandInput.focus(), 300);
     }
 }
 
@@ -238,19 +591,6 @@ function hideHint() {
     }, 300);
 }
 
-// Load commands from JSON file
-async function loadCommands() {
-    try {
-        const response = await fetch('../json/comandos.json?v=${new Date().getTime()}');
-        gitCommands = await response.json();
-        loadProgress();
-        updateProgressUI();
-        updateInstructions();
-    } catch (error) {
-        console.error('Erro ao carregar comandos:', error);
-        gitCommands = [];
-    }
-}
 
 // Levenshtein Distance Algorithm for fuzzy search
 function levenshteinDistance(str1, str2) {
@@ -282,11 +622,11 @@ function levenshteinDistance(str1, str2) {
     return dp[m][n];
 }
 
-// Find similar commands using fuzzy search (only for current level)
+// Find similar commands using fuzzy search (nível ativo)
 function findSimilarCommands(command, threshold = 3) {
     const trimmedCommand = command.trim().toLowerCase();
     const similar = [];
-    const availableCommands = getCommandsUpToLevel(nivelAtual);
+    const availableCommands = getCommandsForLevel(getActiveLevel());
 
     for (const gitCommand of availableCommands) {
         const commandName = gitCommand.comando.toLowerCase();
@@ -306,7 +646,7 @@ function findSimilarCommands(command, threshold = 3) {
     return similar;
 }
 
-// Validate command against Git commands database with fuzzy search
+// Validate command: acerto só na questão atual; dicas no nível ativo
 function validateCommand(command) {
     const trimmedCommand = command.trim();
     
@@ -319,23 +659,46 @@ function validateCommand(command) {
         };
     }
 
-    // Only validate commands up to current level
-    const availableCommands = getCommandsUpToLevel(nivelAtual);
+    const currentExercise = getCurrentExercise();
+    if (!currentExercise) {
+        return {
+            isValid: false,
+            command: trimmedCommand,
+            match: null,
+            similarity: null
+        };
+    }
 
-    // First, try exact regex match
-    for (const gitCommand of availableCommands) {
+    const activeLevel = getActiveLevel();
+    const levelCommands = getCommandsForLevel(activeLevel);
+    const unlockedCommands = getCommandsUpToLevel(nivelAtual);
+
+    const currentRegex = new RegExp(currentExercise.regex);
+    if (currentRegex.test(trimmedCommand)) {
+        return {
+            isValid: true,
+            command: trimmedCommand,
+            match: currentExercise,
+            similarity: null
+        };
+    }
+
+    // Comando certo, mas de outra questão (mesmo nível ou nível desbloqueado)
+    for (const gitCommand of unlockedCommands) {
+        if (gitCommand.questao === currentExercise.questao) continue;
         const regex = new RegExp(gitCommand.regex);
         if (regex.test(trimmedCommand)) {
             return {
-                isValid: true,
+                isValid: false,
                 command: trimmedCommand,
                 match: gitCommand,
-                similarity: null
+                similarity: null,
+                reason: 'wrong_question',
+                expectedQuestao: currentExercise.questao
             };
         }
     }
 
-    // If no exact match, try fuzzy search for suggestions
     const similarCommands = findSimilarCommands(trimmedCommand);
     
     if (similarCommands.length > 0) {
@@ -344,15 +707,14 @@ function validateCommand(command) {
             command: trimmedCommand,
             match: similarCommands[0].command,
             similarity: similarCommands[0].distance,
-            allSimilar: similarCommands.slice(0, 3) // Return top 3 suggestions
+            allSimilar: similarCommands.slice(0, 3)
         };
     }
 
-    // Check for partial match (same base command)
     const commandParts = trimmedCommand.split(' ');
     const baseCommand = commandParts[0] + ' ' + (commandParts[1] || '');
     
-    for (const gitCommand of availableCommands) {
+    for (const gitCommand of levelCommands) {
         const gitCommandParts = gitCommand.comando.split(' ');
         if (gitCommandParts[0] === commandParts[0] || 
             (gitCommandParts[0] + ' ' + gitCommandParts[1]) === baseCommand) {
@@ -397,11 +759,23 @@ function createCorrectResult(command, match) {
 }
 
 // Render error with Markdown formatting and progressive hints
-function renderizarErro(comandoDigitado, comandoSugerido, similarity = null, allSimilar = null) {
+function renderizarErro(comandoDigitado, comandoSugerido, similarity = null, allSimilar = null, reason = null, expectedQuestao = null) {
     let whyWrong, suggestion, explanation;
+    const hintLevel = getActiveLevel();
+
+    if (reason === 'wrong_question' && expectedQuestao != null) {
+        const current = getCurrentExercise();
+        whyWrong = `✓ Sintaxe correta, mas esta é a **Questão ${comandoSugerido?.questao ?? '?'}**. Você está na **Questão ${expectedQuestao}**.`;
+        suggestion = current
+            ? `Comando esperado agora: \`${escapeHtml(current.exemploCorreto || current.comando)}\``
+            : 'Volte à questão atual na trilha.';
+        explanation = current?.ajuda || '';
+        const markdownContent = `## Por que não avançou\n\n${whyWrong}\n\n## Sugestão\n\n${suggestion}\n\n## Explicação\n\n${explanation}`;
+        return marked.parse(markdownContent);
+    }
     
     // Progressive hints based on level
-    if (nivelAtual === 1) {
+    if (hintLevel === 1) {
         // Level 1: Extremely detailed and didactic
         whyWrong = similarity !== null 
             ? `🔍 **Erro de digitação detectado!**\n\nVocê digitou \`${escapeHtml(comandoDigitado)}\`, mas o comando correto é muito parecido. A distância de edição é de ${similarity} caractere${similarity > 1 ? 's' : ''}. Isso significa que você está muito perto da resposta correta!`
@@ -409,12 +783,12 @@ function renderizarErro(comandoDigitado, comandoSugerido, similarity = null, all
         
         suggestion = comandoSugerido 
             ? `💡 **Sugestão detalhada:**\n\nO comando correto é: \`${escapeHtml(comandoSugerido.exemplo)}\`\n\nObserve atentamente a sintaxe e tente novamente.`
-            : `🤔 **Comando não reconhecido.**\n\nEste comando ainda não está disponível no nível atual. Continue praticando os comandos do Nível ${nivelAtual} para desbloquear mais!`;
+            : `🤔 **Comando não reconhecido.**\n\nEste comando ainda não está disponível no nível atual. Continue praticando os comandos do Nível ${hintLevel} para desbloquear mais!`;
         
         explanation = comandoSugerido 
             ? `📚 **Explicação completa:**\n\n${comandoSugerido.ajuda}\n\n**Dica:** Lembre-se que comandos Git seguem um padrão. O primeiro comando é sempre \`git\`, seguido da ação específica.`
-            : `📚 **Comandos disponíveis no Nível ${nivelAtual}:**\n\n${getCommandsForLevel(nivelAtual).map(c => `- \`${c.comando}\``).join('\n')}\n\nPratique estes comandos primeiro para avançar!`;
-    } else if (nivelAtual === 2) {
+            : `📚 **Comandos disponíveis no Nível ${hintLevel}:**\n\n${getCommandsForLevel(hintLevel).map(c => `- \`${c.comando}\``).join('\n')}\n\nPratique estes comandos primeiro para avançar!`;
+    } else if (hintLevel === 2) {
         // Level 2: More technical but still helpful
         whyWrong = similarity !== null 
             ? `Erro de digitação. Distância de edição: ${similarity} caractere${similarity > 1 ? 's' : ''}.`
@@ -426,7 +800,7 @@ function renderizarErro(comandoDigitado, comandoSugerido, similarity = null, all
         
         explanation = comandoSugerido 
             ? comandoSugerido.ajuda
-            : `Comandos do Nível ${nivelAtual}: ${getCommandsForLevel(nivelAtual).map(c => c.comando).join(', ')}`;
+            : `Comandos do Nível ${hintLevel}: ${getCommandsForLevel(hintLevel).map(c => c.comando).join(', ')}`;
     } else {
         // Level 3: Technical and discrete
         whyWrong = similarity !== null 
@@ -461,11 +835,11 @@ ${allSimilar && allSimilar.length > 1 ? '### Outras sugestões:\n' + allSimilar.
 }
 
 // Create result element for incorrect command
-function createIncorrectResult(command, match, similarity = null, allSimilar = null) {
+function createIncorrectResult(command, match, similarity = null, allSimilar = null, reason = null, expectedQuestao = null) {
     const resultDiv = document.createElement('div');
     resultDiv.className = 'command-result incorrect';
     
-    const correctionHTML = renderizarErro(command, match, similarity, allSimilar);
+    const correctionHTML = renderizarErro(command, match, similarity, allSimilar, reason, expectedQuestao);
     
     resultDiv.innerHTML = `
         <div class="result-header incorrect">
@@ -514,8 +888,8 @@ async function handleCommand() {
         commandInput.classList.remove('error');
         
         // Track correct answer
-        if (validation.match && !comandosCorretos.has(validation.match.id)) {
-            comandosCorretos.add(validation.match.id);
+        if (validation.match && !comandosCorretos.has(validation.match.comando)) {
+            comandosCorretos.add(validation.match.comando);
             saveProgress();
             updateProgressUI();
             moveToNextExercise();
@@ -530,7 +904,9 @@ async function handleCommand() {
             validation.command, 
             validation.match, 
             validation.similarity,
-            validation.allSimilar
+            validation.allSimilar,
+            validation.reason,
+            validation.expectedQuestao
         );
         commandInput.classList.add('error');
         commandInput.classList.remove('success');
@@ -560,7 +936,12 @@ commandInput.addEventListener('keydown', (e) => {
 
 // Focus input on page load
 window.addEventListener('load', async () => {
-    await loadCommands();
+    await loadCommandsFromJSON();
+    loadProgress();
+    updateProgressUI();
+    renderLevelTrail();
+    renderJewelCollection();
+    updateInstructions();
     commandInput.focus();
 });
 
