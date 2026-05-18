@@ -8,7 +8,7 @@
 
 ## Visão Geral
 
-O Syntax é uma aplicação client-side que não possui uma API REST tradicional. No entanto, expõe várias funções JavaScript que podem ser utilizadas para integrações e extensões. A arquitetura modular baseada em JSON permite carregar dinamicamente até 100 níveis de aprendizado do arquivo `json/comandos.json`.
+O Syntax é uma aplicação client-side que não possui uma API REST tradicional. No entanto, expõe várias funções JavaScript que podem ser utilizadas para integrações e extensões. A arquitetura modular baseada em JSON permite carregar dinamicamente até 10 níveis de aprendizado do arquivo `json/comandos.json`.
 
 ## Estrutura de Dados
 
@@ -377,7 +377,7 @@ function getCommandsForLevel(level: number): CommandObject[]
 ```
 
 **Parâmetros**:
-- `level` (number): Nível desejado (1-100)
+- `level` (number): Nível desejado (1-10)
 
 **Retorno**: Array de CommandObject
 
@@ -399,7 +399,7 @@ function getCommandsUpToLevel(level: number): CommandObject[]
 ```
 
 **Parâmetros**:
-- `level` (number): Nível máximo (1-100)
+- `level` (number): Nível máximo (1-10)
 
 **Retorno**: Array de CommandObject
 
@@ -421,7 +421,7 @@ function isLevelComplete(level: number): boolean
 ```
 
 **Parâmetros**:
-- `level` (number): Nível a verificar (1-100)
+- `level` (number): Nível a verificar (1-10)
 
 **Retorno**: boolean
 
@@ -456,7 +456,7 @@ Set contendo IDs dos comandos completados.
 
 ### maxLevel
 ```javascript
-let maxLevel = 100;
+let maxLevel = 10;
 ```
 Número máximo de níveis disponíveis (configurado para suportar até 100 níveis).
 
@@ -557,7 +557,7 @@ O arquivo `json/comandos.json` contém todos os comandos Git organizados por ní
 - **regex**: Expressão regular para validação (string)
 - **ajuda**: Texto de ajuda curto (string)
 - **exemplo**: Exemplo de uso do comando (string)
-- **nivel**: Nível de dificuldade (1-100)
+- **nivel**: Nível de dificuldade (1-10)
 - **titulo**: Título do exercício (string)
 - **descricao**: Descrição detalhada em Markdown (string)
 - **objetivos**: Array de objetivos de aprendizado (array de strings)
@@ -569,13 +569,13 @@ A função `loadCommands()` é responsável por carregar todos os comandos do JS
 1. Faz uma requisição fetch para `json/comandos.json?v=${new Date().getTime()}` (com cache-busting)
 2. Parseia o JSON e armazena em `gitCommands`
 3. Os comandos ficam disponíveis para validação e exibição
-4. O sistema suporta até 100 níveis distintos
+4. O sistema suporta até 10 níveis distintos
 
 ### Benefícios da Arquitetura JSON
 
 - **Extensibilidade**: Adicionar novos comandos sem modificar código JavaScript
 - **Manutenção**: Atualizar descrições e expressões regulares diretamente no JSON
-- **Escalabilidade**: Suporte para até 100 níveis de aprendizado
+- **Escalabilidade**: Suporte para até 10 níveis de aprendizado
 - **Personalização**: Fácil adaptação para diferentes idiomas ou curriculares
 - **Versionamento**: Mudanças em comandos podem ser rastreadas via Git
 

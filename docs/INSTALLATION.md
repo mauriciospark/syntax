@@ -101,7 +101,7 @@ O Syntax não requer variáveis de ambiente, mas você pode personalizar algumas
 O Syntax utiliza uma arquitetura modular baseada em JSON onde todos os comandos Git são definidos no arquivo `json/comandos.json`. Esta abordagem permite:
 
 - **Carregamento Dinâmico**: Comandos são carregados em tempo de execução via Fetch API
-- **Suporte para 100 Níveis**: Sistema escalável que suporta até 100 níveis de aprendizado
+- **Suporte para 10 Níveis**: Sistema escalável que suporta até 10 níveis de aprendizado
 - **Extensibilidade**: Adicionar novos comandos sem modificar código JavaScript
 - **Manutenção Facilitada**: Atualizar descrições e expressões regulares diretamente no JSON
 
@@ -135,14 +135,14 @@ Para adicionar ou modificar comandos Git, edite o arquivo `json/comandos.json`:
 - **regex**: Expressão regular para validação (string)
 - **ajuda**: Texto de ajuda curto (string)
 - **exemplo**: Exemplo de uso do comando (string)
-- **nivel**: Nível de dificuldade (1-100)
+- **nivel**: Nível de dificuldade (1-10)
 - **titulo**: Título do exercício (string)
 - **descricao**: Descrição detalhada em Markdown (string)
 - **objetivos**: Array de objetivos de aprendizado (array de strings)
 
 #### Configuração de Níveis
 
-O sistema suporta até 100 níveis de aprendizado. Para adicionar um novo nível:
+O sistema suporta até 10 níveis de aprendizado. Para adicionar um novo nível:
 
 1. Adicione comandos com o campo `nivel` definido para o novo nível desejado
 2. A aplicação automaticamente detectará e carregará os comandos do novo nível
@@ -154,7 +154,7 @@ Você pode personalizar o Syntax para diferentes necessidades:
 
 - **Idiomas**: Traduza os campos `ajuda`, `titulo`, `descricao` e `objetivos`
 - **Curriculares**: Organize comandos por diferentes sequências de aprendizado
-- **Níveis**: Crie até 100 níveis distintos com progressão personalizada
+- **Níveis**: Crie até 10 níveis distintos com progressão personalizada
 
 ## Solução de Problemas
 
