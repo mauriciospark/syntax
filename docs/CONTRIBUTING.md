@@ -1,6 +1,6 @@
 # Guia de Contribuição para o Syntax
 
-**Versão:** 0.1.0  
+**Versão:** 0.2.0  
 **Proprietário:** Mauricio Spark  
 **Marca:** SparkMaurício  
 **Linhagem:** SPARK  
@@ -98,6 +98,33 @@ syntax/
 - Mantenha indentação consistente
 - Adicione atributos `alt` para imagens
 - Use atributos ARIA para acessibilidade
+
+#### Adicionando Novas Pedras Preciosas
+
+Para adicionar uma nova pedra preciosa ao sistema de animação:
+
+1. **Adicione a imagem da pedra**
+   - Coloque a imagem na pasta `preciosas/`
+   - Use formato `.png`
+   - Nomeie o arquivo de forma consistente (ex: `nome-da-pedra.png`)
+
+2. **Edite `json/pedas.json`**
+   ```javascript
+   const pedrasSintax = [
+     { id: 1, arquivo: "nome-da-pedra", nome: "Nome da Pedra" },
+     { id: 2, arquivo: "nova-pedra", nome: "Nova Pedra" }
+   ];
+   ```
+
+3. **Campos da Pedra**
+   - **id**: Identificador único (use o próximo número disponível)
+   - **arquivo**: Nome do arquivo sem extensão
+   - **nome**: Nome da pedra para exibição
+
+4. **Teste a animação**
+   - Abra a aplicação
+   - Responda corretamente a um comando
+   - A nova pedra será incluída na rotação aleatória
 
 #### Adicionando Novos Comandos Git
 

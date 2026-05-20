@@ -1,6 +1,6 @@
 # Funcionalidades do Syntax
 
-**Versão:** 0.1.0  
+**Versão:** 0.2.0  
 **Proprietário:** Mauricio Spark  
 **Marca:** SparkMaurício  
 **Linhagem:** SPARK  
@@ -267,7 +267,47 @@ Sistema modular onde todos os comandos, níveis e configurações são definidos
 }
 ```
 
-## 11. Marca e Identidade Visual
+## 11. Animação de Pedras Preciosas
+
+### Descrição
+Sistema gamificado que exibe uma pedra preciosa aleatória por 5 segundos sempre que o usuário responde corretamente a um comando Git. As pedras são carregadas dinamicamente do arquivo `json/pedas.json` e suas imagens estão armazenadas na pasta `preciosas/`.
+
+### Como Funciona
+- **Seleção Aleatória**: Uma pedra é selecionada aleatoriamente do array de pedras disponíveis
+- **Animação de Exibição**: A pedra aparece com efeito de fade-in e animação de pop
+- **Efeitos Visuais**: Brilho (sparkle) e flutuação (floating) durante os 5 segundos de exibição
+- **Nome da Pedra**: O nome da pedra é exibido abaixo da imagem
+- **Remoção Automática**: A animação é removida do DOM após 5 segundos com fade-out
+
+### Estrutura de Dados
+
+As pedras são definidas no arquivo `json/pedas.json` com o seguinte formato:
+
+```javascript
+const pedrasSintax = [
+    { id: 1, arquivo: "nome-da-pedra", nome: "Nome da Pedra" },
+    { id: 2, arquivo: "outra-pedra", nome: "Outra Pedra" }
+];
+```
+
+### Carregamento Dinâmico
+- A função `loadPreciousStones()` carrega as pedras do JSON ao iniciar a página
+- Se o arquivo JSON não estiver disponível, usa uma lista hardcoded como fallback
+- As imagens são carregadas da pasta `preciosas/` com extensão `.png`
+
+### Benefícios
+- **Gamificação**: Torna o aprendizado mais divertido e engajador
+- **Recompensa Visual**: Feedback visual positivo para respostas corretas
+- **Variedade**: Diferentes pedras aparecem a cada resposta correta
+- **Extensibilidade**: Fácil adicionar novas pedras ao sistema
+
+### Personalização
+Para adicionar novas pedras:
+1. Adicione a imagem da pedra na pasta `preciosas/`
+2. Adicione a entrada correspondente em `json/pedas.json`
+3. A pedra será automaticamente incluída na rotação
+
+## 12. Marca e Identidade Visual
 
 ### Descrição
 Identidade visual consistente com a marca SparkMaurício.

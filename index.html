@@ -3,11 +3,10 @@
   PROPRIETÁRIO: Mauricio Spark
   MARCA: SparkMaurício
   PROJETO: Syntax
-  VERSÃO: 0.1.0
+  VERSÃO: 0.2.0
   LINHAGEM: SPARK
   ============================================================================
-  Documento de Planejamento de Escopo
-  COPYRIGHT: © 2026  / Mauricio Spark.
+  COPYRIGHT: © 2026 / Mauricio Spark.
   ============================================================================
 -->
 <!DOCTYPE html>
@@ -16,115 +15,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>syntax</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="Aprenda comandos Git de forma interativa com Syntax — por Linhagem SPARK">
+    <meta name="theme-color" content="#121212">
+    <title>Syntax</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png">
+    <link rel="manifest" href="favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#121212">
+    <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
 </head>
 
 <body>
-    <div id="app-container">
-        <!-- Fixed Header -->
-        <header class="app-header">
-            <div class="header-left">
-                <img src="favicon/logo.png" alt="Linhagem SPARK Logo" class="logo">
-                <h1 class="brand-name">Syntax</h1>
-                <span class="brand-subtitle">by Linhagem SPARK</span>
+    <div id="app" class="app">
+        <header class="app-header" role="banner">
+            <div class="app-header__brand">
+                <img src="favicon/logo.png" alt="" class="app-header__logo" width="40" height="40">
+                <div class="app-header__titles">
+                    <h1 class="app-header__name">Syntax</h1>
+                    <p class="app-header__tagline">by Linhagem SPARK</p>
+                </div>
             </div>
-            <div class="header-right">
-                <div id="jewelCollection" class="jewel-collection" aria-label="Coleção de joias" title="Joias ao completar cada nível"></div>
-                <div class="header-level-indicator">
-                    <span class="header-level-label">Nível</span>
-                    <span id="headerLevelIndicator" class="header-level-value">1</span>
+
+            <div class="app-header__stats">
+                <section class="jewel-bar" aria-labelledby="jewelBarLabel">
+                    <h2 id="jewelBarLabel" class="jewel-bar__label">Coleção</h2>
+                    <span id="jewelCount" class="jewel-bar__count" aria-live="polite">0/10</span>
+                    <div id="jewelCollection" class="jewel-bar__gems" aria-label="Joias conquistadas por nível"></div>
+                </section>
+
+                <div class="app-header__level" aria-label="Nível atual">
+                    <span class="app-header__level-label">Nível</span>
+                    <span id="headerLevelIndicator" class="app-header__level-value">1</span>
                 </div>
             </div>
         </header>
 
-        <!-- Main Content -->
-        <main class="app-main">
-            <!-- Left Side: Level Trail -->
-            <aside id="instrucoes" class="instructions-panel">
-                <button id="toggleInstructions" class="toggle-btn" title="Ocultar/Mostrar Trilha">
-                    <span class="toggle-icon">◀</span>
+        <div class="app-body">
+            <aside id="instrucoes" class="panel panel--trail" aria-label="Trilha e instruções">
+                <button id="toggleInstructions" class="panel__collapse-btn" type="button"
+                    aria-label="Ocultar ou mostrar trilha" aria-expanded="true" title="Ocultar/Mostrar trilha">
+                    <span class="panel__collapse-icon" aria-hidden="true">◀</span>
                 </button>
-                <header class="instructions-header">
-                    <p class="subtitle">Trilha de Níveis</p>
-                    <div class="progress-section">
-                        <div class="level-info">
-                            <span id="levelIndicator" class="level-indicator">Nível 1</span>
-                            <span id="progressText" class="progress-text">Questão 1/100</span>
+
+                <header class="panel__header">
+                    <p class="panel__eyebrow">Trilha de Níveis</p>
+
+                    <div id="currentJewelBadge" class="current-jewel">
+                        <div id="currentJewelGem" class="current-jewel__gem" aria-hidden="true"></div>
+                        <div class="current-jewel__meta">
+                            <span class="current-jewel__label">Joia do nível</span>
+                            <span id="currentJewelName" class="current-jewel__name">—</span>
                         </div>
-                        <div class="progress-bar-container">
-                            <div id="progressBar" class="progress-bar"></div>
+                    </div>
+
+                    <div class="progress-card" role="group" aria-label="Progresso da questão atual">
+                        <div class="progress-card__row">
+                            <span id="levelIndicator" class="progress-card__level">Nível 1</span>
+                            <span id="progressText" class="progress-card__quest">Questão 1/100</span>
+                        </div>
+                        <div class="progress-card__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                            aria-valuenow="0" aria-labelledby="progressText">
+                            <div id="progressBar" class="progress-card__fill"></div>
                         </div>
                     </div>
                 </header>
 
-                <div id="levelTrail" class="level-trail">
-                    <!-- Level trail will be rendered here via JavaScript -->
-                </div>
-
-                <div id="instrucoes-content" class="instructions-content">
-                    <!-- Current question will be rendered here via JavaScript -->
-                </div>
+                <nav id="levelTrail" class="level-trail" aria-label="Trilha de níveis"></nav>
             </aside>
 
-            <!-- Right Side: Terminal -->
-            <section id="terminal" class="terminal-panel">
+            <section id="terminal" class="panel panel--terminal" aria-label="Terminal Git">
                 <div class="terminal">
-                    <div class="terminal-header">
-                        <span class="terminal-dot red"></span>
-                        <span class="terminal-dot yellow"></span>
-                        <span class="terminal-dot green"></span>
-                        <span class="terminal-title">spark@syntax:~</span>
+                    <div class="terminal__chrome">
+                        <span class="terminal__dot terminal__dot--red" aria-hidden="true"></span>
+                        <span class="terminal__dot terminal__dot--yellow" aria-hidden="true"></span>
+                        <span class="terminal__dot terminal__dot--green" aria-hidden="true"></span>
+                        <span class="terminal__title">spark@syntax:~</span>
                     </div>
 
-                    <div class="terminal-body">
-                        <div class="output-area" id="outputArea">
-                            <div class="welcome-message">
-                                <p>Digite o comando Git no terminal para validar a sintaxe.</p>
-                            </div>
+                    <div class="terminal__body">
+                        <div class="terminal__output" id="outputArea" aria-live="polite" aria-atomic="false">
+                            <p class="terminal__welcome">Digite o comando Git no terminal para validar a sintaxe.</p>
                         </div>
 
-                        <div class="terminal-footer">
-                            <div class="input-line">
-                                <span class="prompt">spark@syntax:~$</span>
-                                <input type="text" id="commandInput" class="command-input"
-                                    placeholder="Digite um comando Git..." autocomplete="off" autofocus>
-                                <button id="hintButton" class="hint-btn" title="Pedir uma dica">Dica</button>
+                        <footer class="terminal__footer">
+                            <div class="terminal__input-row">
+                                <label for="commandInput" class="visually-hidden">Comando Git</label>
+                                <span class="terminal__prompt" aria-hidden="true">spark@syntax:~$</span>
+                                <input type="text" id="commandInput" class="terminal__input"
+                                    placeholder="Digite um comando Git…" autocomplete="off" spellcheck="false"
+                                    aria-label="Comando Git">
+                                <button id="hintButton" class="terminal__hint-btn" type="button">Dica</button>
                             </div>
-                            <div id="hintDisplay" class="hint-display"></div>
-                        </div>
+                            <div id="hintDisplay" class="terminal__hint" role="status" aria-live="polite"></div>
+                        </footer>
                     </div>
                 </div>
             </section>
-        </main>
+        </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="js/script.js"></script>
 </body>
 

@@ -1,0 +1,59 @@
+{
+  "usuarios": {
+    "usuario_exemplo": {
+      "id": "usuario_exemplo",
+      "nome": "Usuário Exemplo",
+      "dataCriacao": "2026-05-19",
+      "nivelAtual": 1,
+      "xp": 0,
+      "comandosCompletados": [],
+      "nivelDesbloqueado": 1,
+      "estatisticas": {
+        "totalComandos": 0,
+        "acertos": 0,
+        "erros": 0,
+        "tempoTotal": 0
+      },
+      "conquistas": [],
+      "ultimoAcesso": null
+    }
+  },
+  "configuracoes": {
+    "totalNiveis": 10,
+    "xpPorComando": 10,
+    "xpBonusNivel": 50,
+    "todosNiveisAcessiveis": true
+  },
+  "conquistasDisponiveis": [
+    {
+      "id": "primeiro_comando",
+      "nome": "Primeiros Passos",
+      "descricao": "Complete seu primeiro comando",
+      "xp": 20
+    },
+    {
+      "id": "nivel_1_completo",
+      "nome": "Iniciante Git",
+      "descricao": "Complete todos os comandos do nível 1",
+      "xp": 100
+    },
+    {
+      "id": "nivel_5_completo",
+      "nome": "Git Intermediário",
+      "descricao": "Complete todos os comandos do nível 5",
+      "xp": 500
+    },
+    {
+      "id": "nivel_10_completo",
+      "nome": "Mestre Git",
+      "descricao": "Complete todos os comandos do nível 10",
+      "xp": 1000
+    },
+    {
+      "id": "streak_10",
+      "nome": "Sequência de 10",
+      "descricao": "Acerte 10 comandos consecutivos",
+      "xp": 150
+    }
+  ]
+}

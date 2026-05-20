@@ -1,6 +1,6 @@
 # Instalação do Syntax
 
-**Versão:** 0.1.0  
+**Versão:** 0.2.0  
 **Proprietário:** Mauricio Spark  
 **Marca:** SparkMaurício  
 **Linhagem:** SPARK  
@@ -104,6 +104,18 @@ O Syntax utiliza uma arquitetura modular baseada em JSON onde todos os comandos 
 - **Suporte para 10 Níveis**: Sistema escalável que suporta até 10 níveis de aprendizado
 - **Extensibilidade**: Adicionar novos comandos sem modificar código JavaScript
 - **Manutenção Facilitada**: Atualizar descrições e expressões regulares diretamente no JSON
+
+### Configuração de Pedras Preciosas
+
+O Syntax também suporta uma animação de pedras preciosas que aparece quando o usuário responde corretamente. As pedras são configuradas no arquivo `json/pedas.json`:
+
+```javascript
+const pedrasSintax = [
+    { id: 1, arquivo: "nome-da-pedra", nome: "Nome da Pedra" }
+];
+```
+
+As imagens das pedras devem ser colocadas na pasta `preciosas/` com extensão `.png`.
 
 #### Estrutura do Arquivo JSON
 

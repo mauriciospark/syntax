@@ -3,13 +3,17 @@
   PROPRIETÁRIO: Mauricio Spark
   MARCA: SparkMaurício
   PROJETO: Syntax
-  VERSÃO: 0.1.0
+  VERSÃO: 0.2.0
   LINHAGEM: SPARK
   ============================================================================
   Documento de Planejamento de Escopo
   COPYRIGHT: © 2026  / Mauricio Spark.
   ============================================================================
 */
+
+// ============================================================================
+// SECTION: Configuration & Constants
+// ============================================================================
 
 // Git Commands Database - loaded from JSON file
 let gitCommands = [];
@@ -30,6 +34,10 @@ let gitCommands = [];
 const QUESTIONS_PER_LEVEL = 10;
 const TOTAL_QUESTIONS = 100;
 const maxLevel = TOTAL_QUESTIONS / QUESTIONS_PER_LEVEL;
+
+// ============================================================================
+// SECTION: Level Management Functions
+// ============================================================================
 
 function nivelFromQuestao(questao) {
     const q = Number(questao);
@@ -59,6 +67,10 @@ function questaoBelongsToLevel(questao, nivel) {
 function getActiveLevel() {
     return expandedLevel ?? nivelAtual;
 }
+
+// ============================================================================
+// SECTION: Data Loading
+// ============================================================================
 
 // Load commands from JSON files (comandos.json + commands.json)
 async function loadCommandsFromJSON() {
@@ -124,34 +136,47 @@ async function loadCommandsFromJSON() {
     }
 }
 
-// DOM Elements
+// ============================================================================
+// SECTION: DOM Elements
+// ============================================================================
+
 const commandInput = document.getElementById('commandInput');
 const outputArea = document.getElementById('outputArea');
 const progressBar = document.getElementById('progressBar');
 const progressText = document.getElementById('progressText');
 const levelIndicator = document.getElementById('levelIndicator');
 const headerLevelIndicator = document.getElementById('headerLevelIndicator');
-const instructionsPanel = document.getElementById('instrucoes-content');
 const instructionsPanelContainer = document.getElementById('instrucoes');
 const levelTrail = document.getElementById('levelTrail');
 const toggleInstructionsBtn = document.getElementById('toggleInstructions');
 const hintButton = document.getElementById('hintButton');
 const hintDisplay = document.getElementById('hintDisplay');
 const jewelCollection = document.getElementById('jewelCollection');
+const jewelCount = document.getElementById('jewelCount');
+const currentJewelGem = document.getElementById('currentJewelGem');
+const currentJewelName = document.getElementById('currentJewelName');
 
-// Joias — uma por nível (10 questões cada)
+// ============================================================================
+// SECTION: Jewel Configuration
+// ============================================================================
+
+// Joias — uma por nível (10 questões cada); imagens em preciosas/*.png
 const JEWELS = [
-    { level: 1, name: 'Rubi', color: '#c0392b', highlight: '#ff6b6b', glow: 'rgba(192, 57, 43, 0.55)' },
-    { level: 2, name: 'Âmbar', color: '#d35400', highlight: '#ffb347', glow: 'rgba(211, 84, 0, 0.55)' },
-    { level: 3, name: 'Topázio', color: '#f39c12', highlight: '#ffe066', glow: 'rgba(243, 156, 18, 0.55)' },
-    { level: 4, name: 'Esmeralda', color: '#27ae60', highlight: '#7bed9f', glow: 'rgba(39, 174, 96, 0.55)' },
-    { level: 5, name: 'Turquesa', color: '#16a085', highlight: '#55efc4', glow: 'rgba(22, 160, 133, 0.55)' },
-    { level: 6, name: 'Safira', color: '#2980b9', highlight: '#74b9ff', glow: 'rgba(41, 128, 185, 0.55)' },
-    { level: 7, name: 'Ametista', color: '#8e44ad', highlight: '#d6a2e8', glow: 'rgba(142, 68, 173, 0.55)' },
-    { level: 8, name: 'Opala', color: '#6c5ce7', highlight: '#a29bfe', glow: 'rgba(108, 92, 231, 0.55)' },
-    { level: 9, name: 'Pérola', color: '#b2bec3', highlight: '#ffffff', glow: 'rgba(178, 190, 195, 0.45)' },
-    { level: 10, name: 'Diamante', color: '#dfe6e9', highlight: '#ffffff', glow: 'rgba(223, 230, 233, 0.65)' }
+    { level: 1, name: 'Ágata', color: '#c0392b', highlight: '#ff6b6b', glow: 'rgba(192, 57, 43, 0.55)', image: 'preciosas/agata.png' },
+    { level: 2, name: 'Aguamarinha', color: '#1abc9c', highlight: '#7bedd6', glow: 'rgba(26, 188, 156, 0.55)', image: 'preciosas/aguamarinha.png' },
+    { level: 3, name: 'Amazonita', color: '#27ae60', highlight: '#7bed9f', glow: 'rgba(39, 174, 96, 0.55)', image: 'preciosas/amazonita.png' },
+    { level: 4, name: 'Ametista', color: '#8e44ad', highlight: '#d6a2e8', glow: 'rgba(142, 68, 173, 0.55)', image: 'preciosas/ametista.png' },
+    { level: 5, name: 'Ametrina Bolivianita', color: '#9b59b6', highlight: '#e8daef', glow: 'rgba(155, 89, 182, 0.55)', image: 'preciosas/ametrinabolivianita.png' },
+    { level: 6, name: 'Andaluzita', color: '#e67e22', highlight: '#f5b041', glow: 'rgba(230, 126, 34, 0.55)', image: 'preciosas/andaluzita.png' },
+    { level: 7, name: 'Apatita', color: '#2980b9', highlight: '#74b9ff', glow: 'rgba(41, 128, 185, 0.55)', image: 'preciosas/apatita.png' },
+    { level: 8, name: 'Aventurina', color: '#16a085', highlight: '#55efc4', glow: 'rgba(22, 160, 133, 0.55)', image: 'preciosas/aventurina.png' },
+    { level: 9, name: 'Benitoita', color: '#3498db', highlight: '#85c1e9', glow: 'rgba(52, 152, 219, 0.55)', image: 'preciosas/benitoita.png' },
+    { level: 10, name: 'Berilo Verde', color: '#2ecc71', highlight: '#abebc6', glow: 'rgba(46, 204, 113, 0.55)', image: 'preciosas/beriloverde.png' }
 ];
+
+// ============================================================================
+// SECTION: Jewel Helper Functions
+// ============================================================================
 
 function getJewelConfig(level) {
     return JEWELS[level - 1] || JEWELS[0];
@@ -167,6 +192,10 @@ marked.setOptions({
     gfm: true
 });
 
+// ============================================================================
+// SECTION: State Management
+// ============================================================================
+
 // Level system state
 let nivelAtual = 1;
 let maxUnlockedLevel = 1; // Track the highest unlocked level separately
@@ -177,6 +206,10 @@ let hintClickCount = 0; // Track hint clicks for progressive hints
 let expandedLevel = 1; // Track which level is currently expanded
 let completedLevels = new Set();
 let earnedJewels = new Set();
+
+// ============================================================================
+// SECTION: Progress Management
+// ============================================================================
 
 // Load progress from localStorage
 function loadProgress() {
@@ -247,6 +280,10 @@ function saveProgress() {
     localStorage.setItem('syntaxProgress', JSON.stringify(progress));
 }
 
+// ============================================================================
+// SECTION: UI Rendering Functions
+// ============================================================================
+
 function renderJewelGem(level, size = 'md') {
     const jewel = getJewelConfig(level);
     const earned = hasJewel(level);
@@ -258,7 +295,7 @@ function renderJewelGem(level, size = 'md') {
             aria-hidden="${earned ? 'false' : 'true'}"
         >
             <span class="jewel-gem__shine"></span>
-            <span class="jewel-gem__core"></span>
+            <span class="jewel-gem__core" style="background-image: url('${jewel.image}');"></span>
         </span>
     `;
 }
@@ -266,18 +303,34 @@ function renderJewelGem(level, size = 'md') {
 function renderJewelCollection() {
     if (!jewelCollection) return;
 
-    let html = '<div class="jewel-collection-inner">';
+    if (jewelCount) {
+        jewelCount.textContent = `${earnedJewels.size}/${maxLevel}`;
+    }
+
+    let html = '';
     for (let i = 1; i <= maxLevel; i++) {
         const jewel = getJewelConfig(i);
         const earned = hasJewel(i);
         html += `
-            <div class="jewel-slot ${earned ? 'jewel-slot--earned' : ''}" data-level="${i}" title="${earned ? jewel.name : `Nível ${i}`}">
+            <div class="jewel-slot ${earned ? 'jewel-slot--earned' : ''}" data-level="${i}"
+                title="${earned ? jewel.name : `Nível ${i} — ${jewel.name}`}">
                 ${renderJewelGem(i, 'xs')}
             </div>
         `;
     }
-    html += '</div>';
     jewelCollection.innerHTML = html;
+    updateCurrentJewelBadge();
+}
+
+function updateCurrentJewelBadge() {
+    const level = getActiveLevel();
+    const jewel = getJewelConfig(level);
+    if (currentJewelName) {
+        currentJewelName.textContent = jewel.name;
+    }
+    if (currentJewelGem) {
+        currentJewelGem.innerHTML = renderJewelGem(level, 'md');
+    }
 }
 
 function awardJewel(level) {
@@ -323,13 +376,93 @@ function showJewelUnlockAnimation(levelCompleted) {
     }, 3500);
 }
 
+// Lista de pedras preciosas disponíveis no diretório
+let PRECIOUS_STONES = [];
+
+// Carregar lista de pedras do arquivo JSON
+async function loadPreciousStones() {
+    try {
+        const response = await fetch('json/pedas.json');
+        const data = await response.text();
+        // Extrair a constante pedrasSintax do arquivo
+        const match = data.match(/const pedrasSintax = \[([\s\S]*?)\];/);
+        if (match) {
+            // Avaliar a expressão para obter o array
+            const arrayString = 'const pedrasSintax = [' + match[1] + '];';
+            eval(arrayString);
+            PRECIOUS_STONES = pedrasSintax;
+            console.log(`Loaded ${PRECIOUS_STONES.length} precious stones from JSON`);
+        }
+    } catch (error) {
+        console.error('Error loading precious stones:', error);
+        // Fallback para lista hardcoded se falhar
+        PRECIOUS_STONES = [
+            'agata.png', 'aguamarinha.png', 'amazonita.png', 'ambar.png', 'ametista.png',
+            'ametrinabolivianita.png', 'amolita.png', 'andaluzita.png', 'apatita.png', 'aventurina.png',
+            'azeviche.png', 'benitoita.png', 'beriloverde.png', 'calcedonias.png', 'charoita.png',
+            'cianita.png', 'citrino.png', 'coral.png', 'cornalina.png', 'crisoprásio.png',
+            'diamante.png', 'diopside.png', 'esmeralda.png', 'esmeraldatrapiche.png', 'fluorita.png',
+            'gemasorganicaseespeciais.png', 'goshenita.png', 'grandidierita.png', 'heliodoro.png', 'heliotropio.png',
+            'hematita.png', 'jaspe.png', 'jeremejevita.png', 'larimar.png', 'moldavita.png',
+            'morganita.png', 'musgravite.png', 'obsidianaflocodeneve.png', 'obsidianita.png', 'onix.png',
+            'painita.png', 'pedradalua.png', 'pedradosol.png', 'perolabranca.png', 'perolanegra.png',
+            'pirita.png', 'poudretteita.png', 'quartzofume.png', 'quartzorosa.png', 'quartzorutilado.png',
+            'quartzos.png', 'quartzoturmalinado.png', 'rodocrosita.png', 'rodonita.png', 'rubi.png',
+            'safira.png', 'safiraestrela.png', 'safirapadparadscha.png', 'serendibita.png', 'sugilita.png',
+            'taaffeita.png', 'tectita.png', 'titanita.png', 'variedadesdeberiloecorindon.png'
+        ];
+    }
+}
+
+// Função para mostrar uma pedra aleatória por 5 segundos quando a resposta estiver correta
+function showRandomStoneAnimation() {
+    if (PRECIOUS_STONES.length === 0) {
+        console.warn('No precious stones loaded');
+        return;
+    }
+    
+    const randomStone = PRECIOUS_STONES[Math.floor(Math.random() * PRECIOUS_STONES.length)];
+    
+    // Verificar se é um objeto (novo formato) ou string (formato antigo)
+    let stoneFile, stoneName;
+    if (typeof randomStone === 'object' && randomStone.arquivo) {
+        stoneFile = `${randomStone.arquivo}.png`;
+        stoneName = randomStone.nome;
+    } else {
+        stoneFile = randomStone;
+        stoneName = randomStone.replace('.png', '').replace(/([A-Z])/g, ' $1').trim();
+    }
+    
+    const animation = document.createElement('div');
+    animation.className = 'stone-animation';
+    animation.innerHTML = `
+        <div class="stone-animation-content">
+            <div class="stone-sparkles" aria-hidden="true"></div>
+            <div class="stone-image-wrap">
+                <img src="preciosas/${stoneFile}" alt="${stoneName}" class="stone-image">
+            </div>
+            <p class="stone-label">✨ ${stoneName} ✨</p>
+        </div>
+    `;
+    document.body.appendChild(animation);
+
+    requestAnimationFrame(() => {
+        animation.classList.add('show');
+    });
+
+    setTimeout(() => {
+        animation.classList.remove('show');
+        setTimeout(() => animation.remove(), 500);
+    }, 5000);
+}
+
 // Questões do nível pelo intervalo fixo (ex.: Nível 2 → Q.11–20)
 function getCommandsForLevel(level) {
     const { start, end } = questaoRangeForLevel(level);
     return gitCommands.filter((cmd) => cmd.questao >= start && cmd.questao <= end);
 }
 
-// Questões de todos os níveis até o informado (inclusive)
+// Get commands for all levels up to a specific level
 function getCommandsUpToLevel(level) {
     const { end } = questaoRangeForLevel(level);
     return gitCommands.filter((cmd) => cmd.questao <= end);
@@ -348,21 +481,23 @@ function renderLevelTrail() {
     let html = '<div class="level-trail-container">';
     
     for (let i = 1; i <= maxLevel; i++) {
-        const isCompleted = completedLevels.has(i);
+        const isCompleted = isLevelComplete(i);
         const isUnlocked = i <= maxUnlockedLevel;
         const isExpanded = expandedLevel === i;
         const levelCommands = getCommandsForLevel(i);
         const completedCount = levelCommands.filter(cmd => comandosCorretos.has(cmd.comando)).length;
         const { start: qStart, end: qEnd } = questaoRangeForLevel(i);
+        const jewel = getJewelConfig(i);
         
         html += `
             <div class="level-item ${isCompleted ? 'completed' : ''} ${isUnlocked ? 'unlocked' : 'locked'} ${isExpanded ? 'expanded' : ''}" data-level="${i}">
-                <div class="level-header" onclick="toggleLevel(${i})">
+                <div class="level-header" role="button" tabindex="0" data-level="${i}"
+                    aria-expanded="${isExpanded}" aria-label="Nível ${i}, ${jewel.name}">
                     <div class="level-number ${hasJewel(i) ? 'level-number--jewel' : ''}">
                         ${hasJewel(i) ? renderJewelGem(i, 'sm') : i}
                     </div>
-                    <div class="level-info">
-                        <span class="level-title">Nível ${i}</span>
+                    <div class="level-item__info">
+                        <span class="level-title">Nível ${i} · ${jewel.name}</span>
                         <span class="level-range">Q. ${qStart}–${qEnd}</span>
                         <span class="level-progress">${completedCount}/10</span>
                     </div>
@@ -376,10 +511,12 @@ function renderLevelTrail() {
                             const isQuestionCompleted = comandosCorretos.has(cmd.comando);
                             const isCurrentQuestion = i === expandedLevel && index === currentExerciseIndex;
                             return `
-                                <div class="question-item ${isQuestionCompleted ? 'completed' : ''} ${isCurrentQuestion ? 'current' : ''}" data-question="${index}">
+                                <div class="question-item ${isQuestionCompleted ? 'completed' : ''} ${isCurrentQuestion ? 'current' : ''}"
+                                    data-level="${i}" data-question="${index}" role="button" tabindex="0"
+                                    aria-label="Questão ${cmd.questao}: ${cmd.comando}">
                                     <span class="question-number">${cmd.questao}</span>
                                     <span class="question-command">${cmd.comando}</span>
-                                    ${isQuestionCompleted ? '<span class="question-status">✓</span>' : ''}
+                                    ${isQuestionCompleted ? '<span class="question-status" aria-hidden="true">✓</span>' : ''}
                                 </div>
                             `;
                         }).join('')}
@@ -391,6 +528,51 @@ function renderLevelTrail() {
     
     html += '</div>';
     levelTrail.innerHTML = html;
+    bindLevelTrailEvents();
+}
+
+function selectQuestion(level, questionIndex) {
+    if (level > maxUnlockedLevel) return;
+    expandedLevel = level;
+    currentExerciseIndex = questionIndex;
+    saveProgress();
+    renderLevelTrail();
+    updateProgressUI();
+    hintClickCount = 0;
+    hideHint();
+    commandInput?.focus();
+}
+
+function bindLevelTrailEvents() {
+    if (!levelTrail) return;
+
+    levelTrail.querySelectorAll('.level-header').forEach((header) => {
+        const level = Number(header.dataset.level);
+        const activate = () => toggleLevel(level);
+        header.addEventListener('click', activate);
+        header.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                activate();
+            }
+        });
+    });
+
+    levelTrail.querySelectorAll('.question-item').forEach((item) => {
+        const level = Number(item.dataset.level);
+        const questionIndex = Number(item.dataset.question);
+        const activate = () => selectQuestion(level, questionIndex);
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            activate();
+        });
+        item.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                activate();
+            }
+        });
+    });
 }
 
 // Toggle level expansion
@@ -419,7 +601,6 @@ function toggleLevel(level) {
     
     saveProgress();
     renderLevelTrail();
-    updateInstructions();
     updateProgressUI();
 }
 
@@ -443,7 +624,6 @@ function levelUp() {
     saveProgress();
     updateProgressUI();
     renderLevelTrail();
-    updateInstructions();
     hintClickCount = 0;
     hideHint();
 }
@@ -495,36 +675,6 @@ function getCurrentExercise() {
     return levelCommands[levelCommands.length - 1];
 }
 
-// Update instructions panel with current exercise
-function updateInstructions() {
-    if (!instructionsPanel) return;
-    
-    const exercise = getCurrentExercise();
-    if (!exercise) {
-        instructionsPanel.innerHTML = '<p>Carregando exercícios...</p>';
-        return;
-    }
-    
-    const currentLevel = getActiveLevel();
-    const globalQuestion = exercise.questao;
-    const { start: qStart, end: qEnd } = questaoRangeForLevel(currentLevel);
-    const objetivosBlock = exercise.objetivos?.length
-        ? `\n\n## Objetivos\n\n${exercise.objetivos.map((o) => `- ${o}`).join('\n')}`
-        : '';
-
-    const markdownContent = `# ${exercise.titulo}
-
-**Questão ${globalQuestion}** de ${TOTAL_QUESTIONS} · **Nível ${currentLevel}** (questões ${qStart}–${qEnd})
-
-${exercise.descricao}${objetivosBlock}
-
-## Comando alvo
-
-\`\`${exercise.comando}\`\``;
-    
-    instructionsPanel.innerHTML = marked.parse(markdownContent);
-}
-
 // Move to next exercise
 function moveToNextExercise() {
     const currentLevel = getActiveLevel();
@@ -532,8 +682,6 @@ function moveToNextExercise() {
     const completedInLevel = levelCommands.filter(cmd => comandosCorretos.has(cmd.comando)).length;
     
     if (completedInLevel < levelCommands.length) {
-        updateInstructions();
-        // Reset hint when moving to next exercise
         hintClickCount = 0;
         hideHint();
     }
@@ -542,15 +690,18 @@ function moveToNextExercise() {
 // Toggle instructions panel
 function toggleInstructions() {
     isInstructionsCollapsed = !isInstructionsCollapsed;
-    
+    const icon = toggleInstructionsBtn?.querySelector('.panel__collapse-icon');
+
     if (isInstructionsCollapsed) {
         instructionsPanelContainer.classList.add('collapsed');
-        toggleInstructionsBtn.classList.add('rotated');
-        toggleInstructionsBtn.querySelector('.toggle-icon').textContent = '▶';
+        toggleInstructionsBtn?.classList.add('rotated');
+        if (icon) icon.textContent = '▶';
+        toggleInstructionsBtn?.setAttribute('aria-expanded', 'false');
     } else {
         instructionsPanelContainer.classList.remove('collapsed');
-        toggleInstructionsBtn.classList.remove('rotated');
-        toggleInstructionsBtn.querySelector('.toggle-icon').textContent = '◀';
+        toggleInstructionsBtn?.classList.remove('rotated');
+        if (icon) icon.textContent = '◀';
+        toggleInstructionsBtn?.setAttribute('aria-expanded', 'true');
     }
     
     // Focus input when expanding
@@ -736,6 +887,10 @@ function validateCommand(command) {
     };
 }
 
+// ============================================================================
+// SECTION: Result Display Functions
+// ============================================================================
+
 // Create result element for correct command
 function createCorrectResult(command, match) {
     const resultDiv = document.createElement('div');
@@ -856,12 +1011,20 @@ function createIncorrectResult(command, match, similarity = null, allSimilar = n
     return resultDiv;
 }
 
+// ============================================================================
+// SECTION: Utility Functions
+// ============================================================================
+
 // Escape HTML to prevent XSS
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
 }
+
+// ============================================================================
+// SECTION: Event Listeners and Initialization
+// ============================================================================
 
 // Handle command input
 async function handleCommand() {
@@ -872,7 +1035,7 @@ async function handleCommand() {
     }
 
     // Remove welcome message if it exists
-    const welcomeMessage = outputArea.querySelector('.welcome-message');
+    const welcomeMessage = outputArea.querySelector('.terminal__welcome, .welcome-message');
     if (welcomeMessage) {
         welcomeMessage.remove();
     }
@@ -886,6 +1049,9 @@ async function handleCommand() {
         resultElement = createCorrectResult(validation.command, validation.match);
         commandInput.classList.add('success');
         commandInput.classList.remove('error');
+        
+        // Show random stone animation for correct answer
+        showRandomStoneAnimation();
         
         // Track correct answer
         if (validation.match && !comandosCorretos.has(validation.match.comando)) {
@@ -937,11 +1103,11 @@ commandInput.addEventListener('keydown', (e) => {
 // Focus input on page load
 window.addEventListener('load', async () => {
     await loadCommandsFromJSON();
+    await loadPreciousStones();
     loadProgress();
     updateProgressUI();
     renderLevelTrail();
     renderJewelCollection();
-    updateInstructions();
     commandInput.focus();
 });
 
@@ -959,9 +1125,13 @@ commandInput.addEventListener('input', () => {
 });
 
 // Keep focus on input when clicking anywhere in the terminal
-document.querySelector('.terminal').addEventListener('click', () => {
+document.querySelector('.terminal')?.addEventListener('click', () => {
     commandInput.focus();
 });
+
+// Expor para testes e depuração
+window.toggleLevel = toggleLevel;
+window.selectQuestion = selectQuestion;
 
 // Add real-time validation feedback (optional - for instant feedback)
 commandInput.addEventListener('input', () => {

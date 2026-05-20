@@ -290,7 +290,7 @@
   {
     "comando": "git switch main",
     "nivel": 4,
-    "regex": "^git switch \\w+$",
+    "regex": "^git switch main$",
     "descricao": "Alterna para uma branch (comando moderno).",
     "exemploCorreto": "git switch main",
     "questao": 37
@@ -306,7 +306,7 @@
   {
     "comando": "git merge feature-login",
     "nivel": 4,
-    "regex": "^git merge \\w+$",
+    "regex": "^git merge feature-login$",
     "descricao": "Combina uma branch na branch atual.",
     "exemploCorreto": "git merge feature-login",
     "questao": 39
@@ -338,7 +338,7 @@
   {
     "comando": "git branch -D feature-login",
     "nivel": 5,
-    "regex": "^git branch -D \\w+$",
+    "regex": "^git branch -D feature-login$",
     "descricao": "Força a deleção de uma branch.",
     "exemploCorreto": "git branch -D feature-login",
     "questao": 43

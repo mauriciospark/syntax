@@ -1,6 +1,6 @@
 # Syntax - Validador de Sintaxe Git
 
-**Versão:** 0.1.0  
+**Versão:** 0.2.0  
 **Proprietário:** Mauricio Spark  
 **Marca:** SparkMaurício  
 **Linhagem:** SPARK  
@@ -23,6 +23,7 @@ A arquitetura modular do Syntax permite carregar dinamicamente até 10 níveis d
 - **Sistema de Dicas**: Dicas progressivas que ajudam o usuário sem revelar a resposta completa
 - **Persistência de Progresso**: Salva o progresso do usuário no localStorage
 - **Layout Fixo Desktop**: Interface de aplicação desktop com rolagem independente
+- **Animação de Pedras Preciosas**: Exibe uma pedra aleatória por 5 segundos ao responder corretamente, com efeitos de brilho e flutuação
 
 ## Estrutura do Projeto
 
@@ -33,8 +34,11 @@ syntax/
 ├── js/
 │   └── script.js          # Lógica principal da aplicação
 ├── json/
-│   └── comandos.json      # Configuração dinâmica de comandos e níveis (até 10 níveis)
+│   ├── comandos.json      # Configuração dinâmica de comandos e níveis (até 10 níveis)
+│   ├── pedas.json        # Lista de pedras preciosas para animação (opcional)
+│   └── commands.json     # Configuração alternativa de comandos
 ├── favicon/               # Ícones e logo
+├── preciosas/            # Imagens de pedras preciosas para animação
 ├── docs/                  # Documentação
 └── index.html             # Página principal
 ```

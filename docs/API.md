@@ -1,6 +1,6 @@
 # API do Syntax
 
-**Versão:** 0.1.0  
+**Versão:** 0.2.0  
 **Proprietário:** Mauricio Spark  
 **Marca:** SparkMaurício  
 **Linhagem:** SPARK  
@@ -344,6 +344,57 @@ console.log(distance); // 1
 
 ---
 
+### loadPreciousStones()
+
+**Descrição**: Carrega a lista de pedras preciosas do arquivo JSON para animação.
+
+**Sintaxe**:
+```javascript
+async function loadPreciousStones()
+```
+
+**Retorno**: Promise<void>
+
+**Exemplo**:
+```javascript
+await loadPreciousStones();
+```
+
+**Uso Interno**: Chamado automaticamente ao carregar a página. Carrega pedras de `json/pedas.json` e as armazena na variável global `PRECIOUS_STONES`.
+
+**Comportamento**:
+- Faz uma requisição fetch para `json/pedas.json`
+- Parseia o conteúdo e extrai a constante `pedrasSintax`
+- Armazena as pedras em `PRECIOUS_STONES`
+- Fallback para lista hardcoded se falhar
+
+---
+
+### showRandomStoneAnimation()
+
+**Descrição**: Exibe uma animação de uma pedra preciosa aleatória por 5 segundos.
+
+**Sintaxe**:
+```javascript
+function showRandomStoneAnimation(): void
+```
+
+**Retorno**: void
+
+**Exemplo**:
+```javascript
+showRandomStoneAnimation();
+```
+
+**Comportamento**:
+- Seleciona uma pedra aleatória do array `PRECIOUS_STONES`
+- Cria um elemento DOM com a imagem da pedra
+- Aplica animações de brilho e flutuação
+- Remove o elemento após 5 segundos
+- Suporta formato de objeto (arquivo, nome) ou string (nome do arquivo)
+
+---
+
 ### toggleInstructions()
 
 **Descrição**: Alterna a visibilidade do painel de instruções.
@@ -477,6 +528,12 @@ Estado do painel de instruções (colapsado ou expandido).
 let hintClickCount = 0;
 ```
 Contador de cliques no botão de dica.
+
+### PRECIOUS_STONES
+```javascript
+let PRECIOUS_STONES = [];
+```
+Array contendo as pedras preciosas disponíveis para animação. Carregado dinamicamente do arquivo `json/pedas.json`.
 
 ## Elementos DOM
 
